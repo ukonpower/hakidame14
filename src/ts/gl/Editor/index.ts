@@ -162,31 +162,6 @@ export class GLEditor extends MXP.Exportable {
 
 		} );
 
-		// unload
-
-		const onBeforeUnload = ( e: BeforeUnloadEvent ) => {
-
-			if ( this.unsaved ) {
-
-				e.preventDefault();
-				e.returnValue = "";
-
-			}
-
-		};
-
-		window.addEventListener( "beforeunload", onBeforeUnload );
-
-		// dispose
-
-		this.disposed = false;
-
-		this.once( 'dispose', () => {
-
-			window.removeEventListener( "beforeunload", onBeforeUnload );
-
-		} );
-
 		// resize
 
 		window.addEventListener( 'resize', this.resize.bind( this ) );
@@ -220,6 +195,49 @@ export class GLEditor extends MXP.Exportable {
 		this.scene.on( "update/music", ( buffer: AudioBuffer ) => {
 
 			this.audioBuffer = buffer;
+
+		} );
+
+		// blidge
+
+		this.scene.on( "update/blidge/frame", ( e: MXP.BLidgeFrame ) => {
+
+			this.scene.seek( e.current );
+
+			if ( e.playing && ! this.scene.framePlay.playing ) {
+
+				this.scene.play();
+
+			} else if ( ! e.playing && this.scene.framePlay.playing ) {
+
+				this.scene.stop();
+
+			}
+
+		} );
+
+		// unload
+
+		const onBeforeUnload = ( e: BeforeUnloadEvent ) => {
+
+			if ( this.unsaved ) {
+
+				e.preventDefault();
+				e.returnValue = "";
+
+			}
+
+		};
+
+		window.addEventListener( "beforeunload", onBeforeUnload );
+
+		// dispose
+
+		this.disposed = false;
+
+		this.once( 'dispose', () => {
+
+			window.removeEventListener( "beforeunload", onBeforeUnload );
 
 		} );
 

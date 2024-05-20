@@ -14,7 +14,6 @@ export class BLidgeClient extends MXP.Component {
 	private camera: MXP.Entity;
 	private entities: Map<string, MXP.Entity>;
 
-
 	// connection
 
 	private connection: {
@@ -135,7 +134,7 @@ export class BLidgeClient extends MXP.Component {
 
 	}
 
-	public getPropsSerialized(): MXP.ExportableProps | null {
+	public getPropsSerialized(): MXP.ExportableProps {
 
 		return {
 			...super.getPropsSerialized(),
