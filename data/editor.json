@@ -3,7 +3,7 @@
 		{
 			"setting": {
 				"name": "OREngine",
-				"timeline/duration": 679.6000000000003,
+				"timeline/duration": 600,
 				"timeline/fps": 60
 			},
 			"objectOverride": [

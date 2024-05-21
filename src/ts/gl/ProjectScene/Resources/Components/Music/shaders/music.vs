@@ -116,9 +116,13 @@ vec2 hihat1( float time, float loop ) {
 	vec2 o = vec2( 0.0 );
 
 	float l4 = loop * 4.0;
+	float fl = fract( loop / 4.0 );
 
-	o += hihat( time, fract( l4 ) ) * (step( 0.4, whiteNoise( floor( l4 )) ) * 0.5 + 0.5);
-	o += hihat( time, fract( l4 + 0.5 ) ) * step( 0.5, whiteNoise(  floor( l4 + 0.5 ) * 10.0 + 0.1 ) );
+	float p = mod( floor( fl * 16.0 ), 2.0 ) + 0.5;
+	float p2 = mod( floor( fl * 16.0 ), 2.0 ) + 0.5;
+
+	o += hihat( time, fract( l4 ) ) * p;// * (step( 0.4, whiteNoise( floor( l4 )) ) * 0.5 + 0.5);
+	o += hihat( time, fract( l4 + 0.5 ) ) * p2;// * step( 0.5, whiteNoise(  floor( l4 + 0.5 ) * 10.0 + 0.1 ) );
 	o *= 0.04;
 	
 	return o;
@@ -137,99 +141,10 @@ float kick( float time, float loop ) {
 	t -= 0.1 * exp( -70.0 * envTime );
 	t += 0.1;
 
-	float o = ( smoothstep( -0.5, 0.5, sin( t * 190.0 ) ) * 2.0 - 1.0 ) * smoothstep( 1.0, 0.1, envTime );
-	o *= 0.25;
+	float o = ( linearstep( -0.8, 0.8, sin( t * 190.0 ) ) * 2.0 - 1.0 ) * smoothstep( 1.0, 0.0, envTime );
+	o *= 0.20;
 
     return o;
-
-}
-
-vec2 kick1( float time, float loop ) {
-
-	vec2 o = vec2( 0.0 );
-
-	float loop2 = loop - 0.25;
-	float loop3 = loop - 0.625;
-
-	o += kick( time, loop ) * float[]( 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0  )[int( loop )];
-	o += kick( time, loop2 ) * float[]( 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0  )[int( loop2 )];
-	o += kick( time, loop3 ) * float[]( 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0 )[int( loop3 )];
-
-
-	return o;
-
-}
-
-/*-------------------------------
-	Mooooon
--------------------------------*/
-
-float moooon( float time, float loop ) {
-
-	float envTime = fract( loop );
-
-	float t = time;
-	t -= 1.0 * exp( -7.0 * envTime );
-
-	float o = 0.0;
-	o = ( smoothstep( -1.0, 1.0, sin( t * 200.0 ) ) * 2.0 - 1.0 ) * smoothstep( 1.0, 0.0, envTime );
-	o *= 0.35;
-
-    return o;
-
-} 
-
-/*-------------------------------
-	xylophone
--------------------------------*/
-
-const float xylophoneMelody[] = float[](
-	4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0,
-	4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0,
-	4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0,
-	4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0, 11.0, 4.0, 9.0
-);
-
-const float xylophoneMelody2[] = float[](
-	4.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0,
-	4.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0,
-	4.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0,
-	4.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0,
-	6.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0,
-	6.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0,
-	6.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0,
-	6.0, 9.0, 11.0, 16.0, 18.0, 16.0, 11.0, 9.0
-);
-
-vec2 xylophone1( float time, float loop, float type ) {
-
-	vec2 o = vec2( 0.0 );
-
-	float envTime = fract( loop );
-
-	float t = time;
-	t -= 0.02 * exp( -70.0 * envTime );
-	t += 0.02;
-
-	float s = xylophoneMelody[int( loop )];
-
-	if( type == 1.0 ) {
-
-		s = xylophoneMelody2[int( loop )];
-		
-	}
-
-	for(int i = 0; i < 1; i++){
-
-		float fi = float( i ) / 2.0;
-
-		float v = ( smoothstep( -0.5, 0.5, ssin( t * s2f( s + 12.0 * float( i ) ) ) ) * 2.0 - 1.0 ) * smoothstep( 1.0, 0.1, envTime );
-
-		o += v * 0.03 * ( 1.0 - fi * 1.5 );
-		
-	}
-
-	return o;
 
 }
 
@@ -241,7 +156,7 @@ vec2 dada( float time, float loop ) {
 
 	int index = int( loop );
 	float envTime = fract( loop );
-	float w = mod(envTime * 8.0, 2.0);
+	float w = mod(envTime * 2.0, 1.0);
 
 	vec2 o = vec2( 0.0 );
 
@@ -263,8 +178,8 @@ vec2 dada( float time, float loop ) {
 
 	}
 
-	o *= isin(w, 1.0, 2.0 ) && isin(loop, 1.75, 2.0 ) ? 1.0 : 0.0 ;
-	
+	o *= isin(loop, 3.0, 4.0 ) ? 1.0 : 0.0 ;
+
 	o *= 0.05;
 
 	return o;
@@ -324,10 +239,18 @@ vec2 music( float time ) {
 
 	vec2 o = vec2( 0.0 );
 
-	// click
+	// click -------
 
-	o += step( fract( loop4 ), 0.1 ) * ssin( time * s2f(3.0) * 2.0 ) * 0.03;
-	o += step( fract( loop4 / 4.0 ), 0.05 ) * ssin( time * s2f(12.0) * 2.0 ) * 0.02;
+	// o += step( fract( loop4 ), 0.1 ) * ssin( time * s2f(3.0) * 2.0 ) * 0.03;
+	// o += step( fract( loop4 / 4.0 ), 0.05 ) * ssin( time * s2f(12.0) * 2.0 ) * 0.02;
+
+	// -------------
+
+	o += kick( t, loop1 );
+
+	o += dada( t, loop4 );
+
+	o += hihat1( t, loop4 );
 
 	return o;
 	

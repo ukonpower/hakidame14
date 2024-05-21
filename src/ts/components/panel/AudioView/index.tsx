@@ -80,7 +80,7 @@ export const AudioView = () => {
 			};
 
 			onUpdateSceneProps( glEditor.scene.getPropsSerialized() );
-			onUpdateFramePlay( scene.framePlay );
+			onUpdateFramePlay( scene.frame );
 
 			if ( glEditor.audioBuffer ) {
 

@@ -38,7 +38,7 @@ export class ProjectScene extends MXP.Entity {
 
 	// frame
 
-	public framePlay: FramePlay;
+	public frame: FramePlay;
 	public frameSetting: OREngineProjectFrame;
 
 	// renderer
@@ -98,7 +98,7 @@ export class ProjectScene extends MXP.Entity {
 			fps: 60,
 		};
 
-		this.framePlay = {
+		this.frame = {
 			current: 0,
 			playing: false
 		};
@@ -168,15 +168,15 @@ export class ProjectScene extends MXP.Entity {
 		this.time.delta = ( newTime - this.time.current ) / 1000;
 		this.time.current = newTime;
 
-		if ( this.framePlay.playing ) {
+		if ( this.frame.playing ) {
 
-			this.framePlay.current = this.framePlay.current + this.frameSetting.fps * this.time.delta;
+			this.frame.current = this.frame.current + this.frameSetting.fps * this.time.delta;
 
-			this.emit( "update/frame/play", [ this.framePlay ] );
+			this.emit( "update/frame/play", [ this.frame ] );
 
 		}
 
-		this.time.code = this.framePlay.current / this.frameSetting.fps;
+		this.time.code = this.frame.current / this.frameSetting.fps;
 		this.time.engine += this.time.delta;
 
 		globalUniforms.time.uTime.value = this.time.code;
@@ -188,7 +188,7 @@ export class ProjectScene extends MXP.Entity {
 			timeDelta: this.time.delta,
 			timeCode: this.time.code,
 			forceDraw: param && param.forceDraw,
-			playing: this.framePlay.playing,
+			playing: this.frame.playing,
 		};
 
 		this.root.update( event );
@@ -236,21 +236,21 @@ export class ProjectScene extends MXP.Entity {
 
 	public play() {
 
-		this.framePlay.playing = true;
+		this.frame.playing = true;
 
 	}
 
 	public stop() {
 
-		this.framePlay.playing = false;
+		this.frame.playing = false;
 
 	}
 
 	public seek( frame: number ) {
 
-		this.framePlay.current = frame;
+		this.frame.current = frame;
 
-		this.emit( "update/frame/play", [ this.framePlay ] );
+		this.emit( "update/frame/play", [ this.frame ] );
 
 	}
 

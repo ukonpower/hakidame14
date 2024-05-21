@@ -101,7 +101,7 @@ export class GLEditor extends MXP.Exportable {
 
 			if ( e.key == ' ' ) {
 
-				if ( this.scene.framePlay.playing ) {
+				if ( this.scene.frame.playing ) {
 
 					this.scene.stop( );
 
@@ -204,11 +204,11 @@ export class GLEditor extends MXP.Exportable {
 
 			this.scene.seek( e.current );
 
-			if ( e.playing && ! this.scene.framePlay.playing ) {
+			if ( e.playing && ! this.scene.frame.playing ) {
 
 				this.scene.play();
 
-			} else if ( ! e.playing && this.scene.framePlay.playing ) {
+			} else if ( ! e.playing && this.scene.frame.playing ) {
 
 				this.scene.stop();
 
@@ -254,6 +254,16 @@ export class GLEditor extends MXP.Exportable {
 		// update
 
 		this.scene.update();
+
+		if ( this.scene.frame.playing ) {
+
+			if ( this.scene.frame.current > this.scene.frameSetting.duration ) {
+
+				this.scene.frame.current = 0;
+
+			}
+
+		}
 
 		// debugger
 

@@ -8,7 +8,7 @@ import { TimelineCanvasRenderer } from './TimelineCanvasRenderer';
 
 export const TimelineCanvas = ( ) => {
 
-	const { viewPort, viewPortScale, frameSetting, musicBuffer } = useContext( TimelineContext );
+	const { viewPort, viewPortScale, frameSetting, musicBuffer, musicBufferVersion } = useContext( TimelineContext );
 
 	const [ renderer, setRenderer ] = useState<TimelineCanvasRenderer>();
 
@@ -62,7 +62,7 @@ export const TimelineCanvas = ( ) => {
 
 		}
 
-	}, [ renderer, musicBuffer ] );
+	}, [ renderer, musicBuffer, musicBufferVersion ] );
 
 	return <div className={style.timelineCanvas} ref={wrapperElmRef}>
 	</div>;
