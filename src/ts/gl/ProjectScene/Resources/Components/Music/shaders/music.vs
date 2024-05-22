@@ -121,9 +121,9 @@ vec2 hihat1( float time, float loop ) {
 	float p = mod( floor( fl * 16.0 ), 2.0 ) + 0.5;
 	float p2 = mod( floor( fl * 16.0 ), 2.0 ) + 0.5;
 
-	o += hihat( time, fract( l4 ) ) * p;// * (step( 0.4, whiteNoise( floor( l4 )) ) * 0.5 + 0.5);
-	o += hihat( time, fract( l4 + 0.5 ) ) * p2;// * step( 0.5, whiteNoise(  floor( l4 + 0.5 ) * 10.0 + 0.1 ) );
-	o *= 0.04;
+	o += hihat( time, fract( l4 ) ) * p;
+	o += hihat( time, fract( l4 + 0.5 ) ) * p2;
+	o *= 0.02;
 	
 	return o;
   
@@ -138,13 +138,49 @@ float kick( float time, float loop ) {
 	float envTime = fract( loop );
 
 	float t = time;
-	t -= 0.1 * exp( -70.0 * envTime );
-	t += 0.1;
+	t -= 0.2 * exp( -70.0 * envTime );
+	t += 0.2;
 
 	float o = ( linearstep( -0.8, 0.8, sin( t * 190.0 ) ) * 2.0 - 1.0 ) * smoothstep( 1.0, 0.0, envTime );
 	o *= 0.20;
 
     return o;
+
+}
+
+vec2 kick1( float time, float loop ) {
+
+	vec2 o = vec2( 0.0 );
+
+	float loop2 = loop - 0.25;
+	float loop3 = loop - 0.5;
+
+	o += kick( time, loop ) * float[]( 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0  )[int( loop )];
+	// o += kick( time, loop2 ) * float[]( 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0  )[int( loop2 )];
+	// o += kick( time, loop3 ) * float[]( 0. 0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0 )[int( loop3 )];
+
+
+	return o;
+
+}
+
+vec2 deepKick( float time, float loop ) {
+
+	vec2 o = vec2( 0.0 );
+
+	float envTime = fract( loop );
+	float env = smoothstep( 1.0, 0.0, envTime );
+
+	float t = time;
+	t -= exp( -5.0 * envTime );
+
+	o += slope(
+		sin( t * 130.0 + sin( t * 100.0 ) * 1.0 ), 0.5
+	)* env;
+
+	o *= 0.1;
+
+	return o;
 
 }
 
@@ -178,7 +214,7 @@ vec2 dada( float time, float loop ) {
 
 	}
 
-	o *= isin(loop, 3.0, 4.0 ) ? 1.0 : 0.0 ;
+	o *= isin(loop, 7.0, 8.0 ) ? 1.0 : 0.0 ;
 
 	o *= 0.05;
 
@@ -206,9 +242,10 @@ vec2 faaa( float time, float loop ) {
 	for( int i = 0; i < 3; i ++ ) {
 
 		float scale = mainCord[ index + 4 * i ];
-		float freq = s2f(scale + 12.0); 
+		float freq = s2f(scale - 12.0); 
 
-		o += ( sin( time * freq ) + sin( time * freq * 1.007 ) );
+		// o += ( sin( time * freq ) + sin( time * freq * 1.007 ) );
+		o += tri( time * freq ) * 0.5; 
 
 	}
 
@@ -246,9 +283,11 @@ vec2 music( float time ) {
 
 	// -------------
 
-	o += kick( t, loop1 );
+	o += kick1( t, loop4 );
 
-	o += dada( t, loop4 );
+	o += deepKick( t, loop32 * pow( 0.5, 3.0 ) );
+
+	o += dada( t, loop8 );
 
 	o += hihat1( t, loop4 );
 

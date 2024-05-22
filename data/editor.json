@@ -26,38 +26,6 @@
 							"props": {}
 						}
 					]
-				},
-				{
-					"path": "/root/blidgeRoot/SkyBox",
-					"components": [
-						{
-							"key": "geometry",
-							"name": "SphereGeometry",
-							"props": {
-								"vertCount": 272
-							}
-						},
-						{
-							"key": "material",
-							"name": "Material",
-							"props": {
-								"name": "",
-								"deferred": true,
-								"forward": false,
-								"shadowMap": false,
-								"ui": false,
-								"useLight": true,
-								"depthTest": true,
-								"cullFace": false,
-								"drawType": "TRIANGLES"
-							}
-						},
-						{
-							"key": "skybox",
-							"name": "SkyBox",
-							"props": {}
-						}
-					]
 				}
 			],
 			"scene": {
