@@ -77,29 +77,51 @@ bool isin( float time, float start, float end ) {
 
 float clap( float time, float loop ) {
 
-	float envTime = fract(loop) * 10.0;
+	float envTime = fract(loop) * 7.0;
 
 	float o = 0.0;
 	
-	float env = mix( exp( envTime * - 8.0 ), exp( fract(envTime * 14.0 ) * -5.0), exp( envTime  * -10.0  ) );
+	float env = exp( envTime * - 5.0 );
 	
-	o += fbm( envTime * 780.0 ) * env * 1.3;
+	o += fbm( time * 3000.0 ) * env * 1.3;
 	
 	return o;
 
 }
 
-vec2 clap1( float time, float loop ) {
+// vec2 clap1( float time, float loop ) {
+
+// 	vec2 o = vec2( 0.0 );
+
+// 	float l = loop;
+
+// 	o += clap( time, l );
+// 	// * float[]( 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0  )[int(l)];
+	
+// 	return o * 0.5;
+
+// }
+
+
+vec2 moistclap( float time, float loop ) {
 
 	vec2 o = vec2( 0.0 );
 
-	float l = loop - 0.5;
+	float l = loop;
 
-	o += clap( time, l ) * float[]( 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0  )[int(l)];
+	float tt = floor( loop * 16.0 ) / 16.0;
+
+
+	for(int i = 0; i < 8; i++){
+
+		o += clap( time, l - (1.0 / 8.0) * float( i ) ) * step( 0.5, fbm( tt + float( i ) ) );
+		
+	}
 	
 	return o * 0.5;
 
 }
+
 
 /*-------------------------------
 	Hihat
@@ -119,10 +141,8 @@ vec2 hihat1( float time, float loop ) {
 	float fl = fract( loop / 4.0 );
 
 	float p = mod( floor( fl * 16.0 ), 2.0 ) + 0.5;
-	float p2 = mod( floor( fl * 16.0 ), 2.0 ) + 0.5;
 
 	o += hihat( time, fract( l4 ) ) * p;
-	o += hihat( time, fract( l4 + 0.5 ) ) * p2;
 	o *= 0.02;
 	
 	return o;
@@ -138,10 +158,10 @@ float kick( float time, float loop ) {
 	float envTime = fract( loop );
 
 	float t = time;
-	t -= 0.2 * exp( -70.0 * envTime );
-	t += 0.2;
+	t -= 0.1 * exp( -70.0 * envTime );
+	t += 0.1;
 
-	float o = ( linearstep( -0.8, 0.8, sin( t * 190.0 ) ) * 2.0 - 1.0 ) * smoothstep( 1.0, 0.0, envTime );
+	float o = ( linearstep( -0.8, 0.8, sin( t * 150.0 ) ) * 2.0 - 1.0 ) * smoothstep( 1.0, 0.0, envTime );
 	o *= 0.20;
 
     return o;
@@ -155,10 +175,7 @@ vec2 kick1( float time, float loop ) {
 	float loop2 = loop - 0.25;
 	float loop3 = loop - 0.5;
 
-	o += kick( time, loop ) * float[]( 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0  )[int( loop )];
-	// o += kick( time, loop2 ) * float[]( 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0  )[int( loop2 )];
-	// o += kick( time, loop3 ) * float[]( 0. 0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0 )[int( loop3 )];
-
+	o += kick( time, loop ) * float[]( 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0  )[int( loop )];
 
 	return o;
 
@@ -179,6 +196,35 @@ vec2 deepKick( float time, float loop ) {
 	)* env;
 
 	o *= 0.1;
+
+	return o;
+
+}
+
+/*-------------------------------
+	BASSS
+-------------------------------*/
+
+float bass( float time, float loop, float freq ) {
+
+	float envTime = fract( loop );
+
+	float t = time;
+	float tt = t * (s2f(-48.0) * freq);
+	float o = slope( ssin( tt ), 0.6 ) * abs(ssin( tt * 0.5 )); 
+	o *= smoothstep( 0.9, 0.8, envTime ) *  0.3 * (freq > 0.0 ? 1.0 : 0.0);
+
+    return o;
+
+}
+
+vec2 bass1( float time, float loop ) {
+
+	vec2 o = vec2( 0.0 );
+
+	float l = loop / 4.0;
+
+	o += bass( time, l, float[]( 1.0, 0.9 )[int( l )] );
 
 	return o;
 
@@ -255,6 +301,110 @@ vec2 faaa( float time, float loop ) {
 	
 }
 
+/*-------------------------------
+	turnAround
+-------------------------------*/
+
+const float TACODE[] = float[](
+	4.0, 2.0, 0.0, 2.0,
+	7.0, 6.0, 4.0, 6.0,
+	11.0, 11.0, 9.0, 11.0
+);
+
+vec2 turnAround( float time, float loop ) {
+
+	int index = int( loop );
+
+	vec2 o = vec2( 0.0 );
+
+	float l8 = loop * 12.0;
+	float l4 = loop * 2.0;
+
+	float l = l4 - exp( -( mod(loop, 8.0) / 4.0 ) * 11.8 ) * 8.0;
+
+	float w = smoothstep( 0.0, 0.01, ssin( l ) );
+
+	for( int i = 0; i < 3; i ++ ) {
+
+		float scale = TACODE[ int(loop / 4.0) + 4 * i ];
+		float freq = s2f(scale - 24.0 ); 
+
+		o += saw( time * freq ) * w ; 
+
+	}
+
+	o *= 0.03;
+
+	return o;
+	
+}
+
+/*-------------------------------
+	Try
+-------------------------------*/
+
+const float KODAMA_CODE[] = float[](
+	-24.0, 0.0, 0.0, 0.0,
+	-5.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0,
+	3.0, 0.0, 0.0, 0.0
+);
+
+vec2 kodama( float time, float loop ) {
+
+	int index = int( loop );
+
+	vec2 o = vec2( 0.0 );
+
+	float w = smoothstep( 0.0, 1.0, ssin( mod(loop, 8.0) * 4.0 ) );
+
+	for( int i = 0; i < 4; i ++ ) {
+
+		float scale = KODAMA_CODE[ int(0.0 / 4.0) + 4 * i ];
+
+		float freq = s2f(scale - 12.0 - 3.0 ); 
+		o += ssin( (time) * freq ) * w ; 
+
+	}
+
+	o *= 0.03;
+
+	return o;
+	
+}
+
+/*-------------------------------
+	Try
+-------------------------------*/
+
+const float CODE[] = float[](
+	-24.0, 2.0, 0.0, 2.0,
+	-5.0, 6.0, 4.0, 6.0,
+	0.0, 11.0, 9.0, 11.0,
+	3.0, 11.0, 9.0, 11.0
+);
+
+vec2 justDoIt( float time, float loop ) {
+
+	int index = int( loop );
+
+	vec2 o = vec2( 0.0 );
+
+	float w = smoothstep( 0.0, 1.0, ssin( mod(loop, 8.0) * 4.0 ) );
+
+	for( int i = 0; i < 4; i ++ ) {
+
+
+
+	}
+
+	o *= 0.03;
+
+	return o;
+	
+}
+
+
 vec2 music( float time ) {
 
 	float t = time * (uBPM / 60.0);
@@ -283,13 +433,21 @@ vec2 music( float time ) {
 
 	// -------------
 
-	o += kick1( t, loop4 );
+	o += kick1( t, loop8 );
 
-	o += deepKick( t, loop32 * pow( 0.5, 3.0 ) );
+	// o += bass1( t, loop8 );
 
-	o += dada( t, loop8 );
+	o += moistclap( t, loop16 );
 
-	o += hihat1( t, loop4 );
+	// o += dada( t, loop8 );
+
+	// o += hihat1( t, loop8 );
+
+	// o += turnAround( t, loop16 );
+
+	// o += kodama( t, loop16 );
+
+	o += justDoIt( t, loop16 );
 
 	return o;
 	
