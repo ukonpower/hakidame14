@@ -492,7 +492,13 @@ export class Entity extends Exportable {
 
 		this.parent && this.parent.remove( this );
 
-		this.components.forEach( c => c.setEntity( null ) );
+		this.components.forEach( c => {
+
+			c.setEntity( null );
+
+			c.dispose();
+
+		} );
 
 		this.components.clear();
 

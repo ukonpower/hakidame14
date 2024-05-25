@@ -456,9 +456,8 @@ export class GLEditor extends MXP.Exportable {
 
 		this.disposed = true;
 
-		this.scene.dispose();
+		this.scene.disposeRecursive();
 		this.keyBoard.dispose();
-		this.scene.dispose();
 		this.frameDebugger.dispose();
 
 	}

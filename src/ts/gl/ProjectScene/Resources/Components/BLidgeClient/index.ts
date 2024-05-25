@@ -3,7 +3,7 @@ import * as MXP from 'maxpower';
 import { router } from './router';
 import SceneData from './scene/scene.json';
 
-import { gl, mainCmaera } from '~/ts/Globals';
+import { gl } from '~/ts/Globals';
 
 export class BLidgeClient extends MXP.Component {
 
@@ -11,7 +11,6 @@ export class BLidgeClient extends MXP.Component {
 	private type: "websocket" | "json" | null;
 
 	private blidgeRoot: MXP.Entity | null;
-	private camera: MXP.Entity;
 	private entities: Map<string, MXP.Entity>;
 
 	// connection
@@ -34,7 +33,6 @@ export class BLidgeClient extends MXP.Component {
 
 		super();
 
-		this.camera = mainCmaera;
 		this.entities = new Map();
 
 		// state
@@ -165,17 +163,17 @@ export class BLidgeClient extends MXP.Component {
 
 		const _ = ( node: MXP.BLidgeNode ): MXP.Entity => {
 
-			const entity: MXP.Entity = node.type == 'camera' ? this.camera : ( this.entities.get( node.name ) || router( node ) );
+			const entity: MXP.Entity = ( this.entities.get( node.name ) || router( node ) );
 
-			if ( node.type == 'camera' ) {
+			// if ( node.type == 'camera' ) {
 
-				const cameraParam = node.param as MXP.BLidgeCameraParam;
-				const renderCamera = this.camera.getComponent<MXP.RenderCamera>( "camera" )!;
+			// 	const cameraParam = node.param as MXP.BLidgeCameraParam;
+			// 	const renderCamera = this.camera.getComponent<MXP.RenderCamera>( "camera" )!;
 
-				renderCamera.fov = cameraParam.fov;
-				renderCamera.needsUpdate = true;
+			// 	renderCamera.fov = cameraParam.fov;
+			// 	renderCamera.needsUpdate = true;
 
-			}
+			// }
 
 			entity.addComponent( "blidger", new MXP.BLidger( { blidge, node, disableEdit: true } ) );
 

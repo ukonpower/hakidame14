@@ -7,7 +7,7 @@ import { GPUState } from '../gl/ProjectScene/utils/GPUState';
 export const canvas = document.createElement( "canvas" );
 export const gl = canvas.getContext( 'webgl2', { antialias: false } )!;
 export const power = new GLP.Power( gl );
-export const mainCmaera = new MXP.Entity( { name: "camera" } );
+// export const mainCmaera = new MXP.Entity( { name: "camera" } );
 
 export const globalUniforms: {[key: string]: GLP.Uniforms} = {
 	time: {

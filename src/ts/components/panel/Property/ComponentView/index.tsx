@@ -106,7 +106,7 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 	}, [ component, keyName, reflesh ] );
 
-	const Check = () => {
+	const Head = () => {
 
 		return <div className={style.head}>
 			<div className={style.check}>
@@ -124,7 +124,7 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 	return <div className={style.compoView} data-disable_component={component.disableEdit}>
 		<div className={style.content}>
-			<PropertyBlock label={<Check />} accordion={true} defaultClose={false} bg>
+			<PropertyBlock label={<Head />} accordion={true} defaultClose={false} bg>
 				{propElms}
 			</PropertyBlock>
 		</div>

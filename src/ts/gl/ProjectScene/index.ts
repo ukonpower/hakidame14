@@ -1,7 +1,7 @@
 import * as GLP from 'glpower';
 import * as MXP from 'maxpower';
 
-import { canvas, gl, globalUniforms, mainCmaera } from '../../Globals';
+import { canvas, gl, globalUniforms } from '../../Globals';
 import { ProjectSerializer, OREngineProjectData, OREngineProjectFrame } from '../IO/ProjectSerializer';
 
 import { Renderer } from './Renderer';
@@ -107,7 +107,7 @@ export class ProjectScene extends MXP.Entity {
 
 		// camera
 
-		this.camera = mainCmaera;
+		this.camera = new MXP.Entity( { name: "camera" } );
 		this.camera.noExport = true;
 		this.camera.position.set( 0, 1, 10 );
 		this.cameraComponent = this.camera.addComponent( "mainCamera", new MainCamera() );

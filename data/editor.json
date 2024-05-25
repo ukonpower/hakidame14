@@ -26,6 +26,58 @@
 							"props": {}
 						}
 					]
+				},
+				{
+					"path": "/root/blidgeRoot/Empty",
+					"components": [
+						{
+							"key": "material",
+							"name": "OREngineCube",
+							"props": {
+								"name": "",
+								"deferred": true,
+								"forward": false,
+								"shadowMap": true,
+								"ui": false,
+								"useLight": true,
+								"depthTest": true,
+								"cullFace": true,
+								"drawType": "TRIANGLES"
+							}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/SkyBox",
+					"components": [
+						{
+							"key": "geometry",
+							"name": "SphereGeometry",
+							"props": {
+								"vertCount": 272
+							}
+						},
+						{
+							"key": "material",
+							"name": "Material",
+							"props": {
+								"name": "",
+								"deferred": true,
+								"forward": false,
+								"shadowMap": false,
+								"ui": false,
+								"useLight": true,
+								"depthTest": true,
+								"cullFace": false,
+								"drawType": "TRIANGLES"
+							}
+						},
+						{
+							"key": "skybox",
+							"name": "SkyBox",
+							"props": {}
+						}
+					]
 				}
 			],
 			"scene": {
@@ -52,7 +104,7 @@
 	],
 	"settings": {
 		"currentProjectName": "OREngine",
-		"resolutionScale": 0.25,
+		"resolutionScale": 0.5,
 		"viewType": "render"
 	}
 }

@@ -4,6 +4,7 @@ import * as MXP from 'maxpower';
 import { LookAt } from '../LookAt';
 import { OrbitControls } from '../OrbitControls';
 import { ShakeViewer } from '../ShakeViewer';
+import { VJCamera } from '../VJCamera';
 
 import bloomBlurFrag from './shaders/bloomBlur.fs';
 import bloomBrightFrag from './shaders/bloomBright.fs';
@@ -563,7 +564,8 @@ export class MainCamera extends MXP.Component {
 			entity.addComponent( "camera", this.cameraComponent );
 			entity.addComponent( "scenePostProcess", this.scenePostProcess );
 			entity.addComponent( "postProcess", this.postProcess );
-			entity.addComponent( "orbitControls", this.orbitControls );
+			entity.addComponent( "vjCamera", new VJCamera() );
+			// entity.addComponent( "orbitControls", new OrbitControls( canvas ) );
 			// entity.addComponent( 'lookAt', this.lookAt );
 			// entity.addComponent( 'shakeViewer', this.shakeViewer );
 

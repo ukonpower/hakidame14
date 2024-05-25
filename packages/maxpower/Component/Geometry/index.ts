@@ -33,7 +33,7 @@ export class Geometry extends Component {
 	}
 
 
-	public getProps(): Exportable | null {
+	public getProps(): ExportableProps | null {
 
 		return {
 			vertCount: {

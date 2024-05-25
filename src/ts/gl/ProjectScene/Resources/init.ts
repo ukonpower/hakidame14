@@ -7,6 +7,7 @@ import { Music } from './Components/Music';
 import { ShakeViewer } from "./Components/ShakeViewer";
 import { SkyBox } from "./Components/SkyBox";
 import { TurnTable } from './Components/TurnTable';
+import { VJCamera } from './Components/VJCamera';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
 
@@ -74,6 +75,8 @@ export const initResouces = () => {
 		power: 1.0,
 		speed: 1.0
 	} );
+
+	comView.register( "vjCamera", VJCamera );
 
 	comView.register( "turntable", TurnTable );
 
