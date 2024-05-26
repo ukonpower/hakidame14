@@ -32,6 +32,10 @@ export const globalUniforms: {[key: string]: GLP.Uniforms} = {
 		uAspectRatio: {
 			value: 1.0,
 			type: '1f'
+		},
+		uResolution: {
+			value: new GLP.Vector(),
+			type: '2f'
 		}
 	},
 	camera: {

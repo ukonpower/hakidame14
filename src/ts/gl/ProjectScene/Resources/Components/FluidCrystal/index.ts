@@ -4,6 +4,8 @@ import * as MXP from 'maxpower';
 import fluidCrystalFrag from './shaders/fluidCrystal.fs';
 import fluidCrystalVert from './shaders/fluidCrystal.vs';
 
+import { globalUniforms } from '~/ts/Globals';
+
 export class FluidCrystal extends MXP.Component {
 
 	private material: MXP.Material;
@@ -13,6 +15,13 @@ export class FluidCrystal extends MXP.Component {
 		super();
 
 		this.material = new MXP.Material( {
+			type: [ "forward" ],
+			frag: MXP.hotGet( "fluidCrystalFrag", fluidCrystalFrag ),
+			vert: MXP.hotGet( "fluidCrystalVert", fluidCrystalVert ),
+			uniforms: GLP.UniformsUtils.merge( {
+				uResolution: globalUniforms.resolution.uResolution,
+			}, globalUniforms.time )
+
 		} );
 
 		if ( import.meta.hot ) {
@@ -21,7 +30,7 @@ export class FluidCrystal extends MXP.Component {
 
 				if ( module ) {
 
-					this.material.frag = MXP.hotUpdate( 'fluidCrystal', module.default );
+					this.material.frag = MXP.hotUpdate( 'fluidCrystalFrag', module.default );
 
 					this.material.requestUpdate();
 
@@ -33,12 +42,11 @@ export class FluidCrystal extends MXP.Component {
 
 				if ( module ) {
 
-					this.material.vert = MXP.hotUpdate( 'fluidCrystal', module.default );
+					this.material.vert = MXP.hotUpdate( 'fluidCrystalVert', module.default );
 
 					this.material.requestUpdate();
 
 				}
-
 
 			} );
 
@@ -47,6 +55,15 @@ export class FluidCrystal extends MXP.Component {
 	}
 
 	public setEntity( entity: MXP.Entity ): void {
+
+		entity.addComponent( "material", this.material );
+
+	}
+
+	public unsetEntityImpl( entity: MXP.Entity ): void {
+
+		entity.removeComponent( "material" );
+
 	}
 
 }
