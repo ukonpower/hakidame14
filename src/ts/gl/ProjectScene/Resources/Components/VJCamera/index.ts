@@ -34,10 +34,6 @@ export class VJCamera extends MXP.Component {
 
 	}
 
-	protected setEntityImpl( entity: MXP.Entity | null, prevEntity: MXP.Entity | null ): void {
-
-	}
-
 	private move() {
 
 		this.animator.animate( "pos", new GLP.Vector(

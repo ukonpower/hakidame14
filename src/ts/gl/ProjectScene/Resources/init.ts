@@ -2,6 +2,7 @@ import * as MXP from 'maxpower';
 
 
 import { BLidgeClient } from "./Components/BLidgeClient";
+import { FluidCrystal } from './Components/FluidCrystal';
 import { LookAt } from "./Components/LookAt";
 import { Music } from './Components/Music';
 import { ShakeViewer } from "./Components/ShakeViewer";
@@ -32,6 +33,8 @@ export const initResouces = () => {
 	comObject.register( "light", MXP.Light, {
 		lightType: "directional",
 	} );
+
+	comObject.register( "FluidCrystal", FluidCrystal );
 
 	// geometry
 

@@ -31,19 +31,9 @@
 					"path": "/root/blidgeRoot/Empty",
 					"components": [
 						{
-							"key": "material",
-							"name": "OREngineCube",
-							"props": {
-								"name": "",
-								"deferred": true,
-								"forward": false,
-								"shadowMap": true,
-								"ui": false,
-								"useLight": true,
-								"depthTest": true,
-								"cullFace": true,
-								"drawType": "TRIANGLES"
-							}
+							"key": "FluidCrystal",
+							"name": "FluidCrystal",
+							"props": {}
 						}
 					]
 				},
@@ -104,7 +94,7 @@
 	],
 	"settings": {
 		"currentProjectName": "OREngine",
-		"resolutionScale": 0.5,
+		"resolutionScale": 0.25,
 		"viewType": "render"
 	}
 }

@@ -332,7 +332,7 @@ export class Entity extends Exportable {
 
 		if ( prevComponent ) {
 
-			prevComponent.setEntity( null );
+			prevComponent.unsetEntity();
 
 		}
 
@@ -494,7 +494,7 @@ export class Entity extends Exportable {
 
 		this.components.forEach( c => {
 
-			c.setEntity( null );
+			c.unsetEntity();
 
 			c.dispose();
 

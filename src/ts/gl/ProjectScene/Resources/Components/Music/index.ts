@@ -6,7 +6,6 @@ import { shaderParse } from '../../../Renderer/ShaderParser';
 import musicFrag from './shaders/music.fs';
 import musicVert from './shaders/music.vs';
 
-
 import { power } from '~/ts/Globals';
 
 const BPM = 85;
@@ -215,17 +214,15 @@ export class Music extends MXP.Component {
 
 	}
 
-	public setEntityImpl( entity: MXP.Entity | null, prevEntity: MXP.Entity | null ): void {
+	public setEntityImpl( entity: MXP.Entity ): void {
 
-		if ( entity ) {
+		this.notice();
 
-			this.notice();
+	}
 
-		} else {
+	protected unsetEntityImpl( prevEntity: MXP.Entity ): void {
 
-			this.stop();
-
-		}
+		this.stop();
 
 	}
 

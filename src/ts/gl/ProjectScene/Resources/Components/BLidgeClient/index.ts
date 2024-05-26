@@ -141,7 +141,7 @@ export class BLidgeClient extends MXP.Component {
 
 	}
 
-	protected setEntityImpl( entity: MXP.Entity | null, prevEntity: MXP.Entity | null ): void {
+	protected setEntityImpl( entity: MXP.Entity, prevEntity: MXP.Entity ): void {
 
 		if ( prevEntity && this.blidgeRoot ) {
 

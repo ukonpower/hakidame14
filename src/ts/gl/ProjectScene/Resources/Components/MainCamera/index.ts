@@ -557,43 +557,39 @@ export class MainCamera extends MXP.Component {
 
 	}
 
-	public setEntityImpl( entity: MXP.Entity | null, prevEntity: MXP.Entity | null ): void {
+	public setEntityImpl( entity: MXP.Entity, prevEntity: MXP.Entity | null ): void {
 
-		if ( entity ) {
+		entity.addComponent( "camera", this.cameraComponent );
+		entity.addComponent( "scenePostProcess", this.scenePostProcess );
+		entity.addComponent( "postProcess", this.postProcess );
+		entity.addComponent( "vjCamera", new VJCamera() );
+		// entity.addComponent( "orbitControls", new OrbitControls( canvas ) );
+		// entity.addComponent( 'lookAt', this.lookAt );
+		// entity.addComponent( 'shakeViewer', this.shakeViewer );
 
-			entity.addComponent( "camera", this.cameraComponent );
-			entity.addComponent( "scenePostProcess", this.scenePostProcess );
-			entity.addComponent( "postProcess", this.postProcess );
-			entity.addComponent( "vjCamera", new VJCamera() );
-			// entity.addComponent( "orbitControls", new OrbitControls( canvas ) );
-			// entity.addComponent( 'lookAt', this.lookAt );
-			// entity.addComponent( 'shakeViewer', this.shakeViewer );
+		// events
 
-			// events
+		entity.on( 'sceneCreated', ( root: MXP.Entity, ) => {
 
-			entity.on( 'sceneCreated', ( root: MXP.Entity, ) => {
+			const camera = root.getEntityByName( "Camera" ) || null;
 
-				const camera = root.getEntityByName( "Camera" ) || null;
+			const lookAtTarget = root.getEntityByName( "CameraTarget" ) || null;
+			this.lookAt.setTarget( lookAtTarget );
 
-				const lookAtTarget = root.getEntityByName( "CameraTarget" ) || null;
-				this.lookAt.setTarget( lookAtTarget );
+			const ortbitControls = entity.getComponent<OrbitControls>( "orbitControls" );
 
-				const ortbitControls = entity.getComponent<OrbitControls>( "orbitControls" );
+			if ( ortbitControls && camera && lookAtTarget ) {
 
-				if ( ortbitControls && camera && lookAtTarget ) {
+				ortbitControls.setPosition( camera.position, lookAtTarget.position );
 
-					ortbitControls.setPosition( camera.position, lookAtTarget.position );
-
-				}
+			}
 
 
-				this.dofTarget = root.getEntityByName( 'CameraTargetDof' ) || null;
-				this.baseFov = this.cameraComponent.fov;
-				this.updateCameraParams( this.resolution );
+			this.dofTarget = root.getEntityByName( 'CameraTargetDof' ) || null;
+			this.baseFov = this.cameraComponent.fov;
+			this.updateCameraParams( this.resolution );
 
-			} );
-
-		}
+		} );
 
 		if ( prevEntity ) {
 
@@ -603,6 +599,11 @@ export class MainCamera extends MXP.Component {
 
 	}
 
+	public unsetEntityImpl( prevEntity: MXP.Entity ): void {
+
+		prevEntity.off( 'sceneCreated' );
+
+	}
 
 	private guassWeight( num: number ) {
 

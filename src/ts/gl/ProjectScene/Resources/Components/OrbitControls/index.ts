@@ -105,13 +105,9 @@ export class OrbitControls extends MXP.Component {
 
 	}
 
-	protected setEntityImpl( entity: MXP.Entity | null, prevEntity: MXP.Entity | null ): void {
+	protected setEntityImpl( entity: MXP.Entity ): void {
 
-		if ( entity ) {
-
-			this.setPosition( entity.position, this.target );
-
-		}
+		this.setPosition( entity.position, this.target );
 
 	}
 

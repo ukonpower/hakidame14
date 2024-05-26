@@ -49,7 +49,7 @@ export class Component extends Exportable {
 
 	}
 
-	public noticeChanged( type?: string ) {
+	public noticeChanged( type1?: string ) {
 
 		this.emit( 'changed', [ type ] );
 
@@ -61,13 +61,25 @@ export class Component extends Exportable {
 
 	}
 
-	public setEntity( entity: Entity | null ) {
+	public setEntity( entity: Entity ) {
 
 		const beforeEntity = this.entity;
 
 		this.entity = entity;
 
 		this.setEntityImpl( this.entity, beforeEntity );
+
+	}
+
+	public unsetEntity() {
+
+		if ( this.entity === null ) return;
+
+		const beforeEntity = this.entity;
+
+		this.entity = null;
+
+		this.unsetEntityImpl( beforeEntity );
 
 	}
 
@@ -111,7 +123,9 @@ export class Component extends Exportable {
 
 	}
 
-	protected setEntityImpl( entity: Entity | null, prevEntity: Entity | null ) {}
+	protected setEntityImpl( entity: Entity, prevEntity: Entity | null ) {}
+
+	protected unsetEntityImpl( prevEntity: Entity ) {}
 
 	protected preUpdateImpl( event: ComponentUpdateEvent ) {}
 
