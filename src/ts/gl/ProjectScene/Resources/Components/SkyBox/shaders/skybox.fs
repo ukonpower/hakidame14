@@ -6,49 +6,44 @@
 
 uniform float uTimeE;
 
-uniform vec3 cameraPosition;
-uniform vec2 uResolution;
-uniform float uAspectRatio;
 
 void main( void ) {
 
 	#include <frag_in>
 
 	vec3 normal = normalize( - vNormal );
-	outRoughness = 1.0;
-	outColor *= 0.0;
-	outEmission = vec3( 0.0, 0.05, 0.1);
 
-	float n = noiseV( outPos * 0.05 + uTimeE * 0.1 );
+	vec2 uv = vUv;
+	uv.y /= PI / 2.0;
+	vec2 p = uv;
+	float size = 4.0;
 
-	vec3 n2Pos = outPos;
-	n2Pos.xz *= rotate( n2Pos.y * 0.02 );
-	float n2 = noiseV( n2Pos * 0.04 + vec3( 0.0, 0.0, uTimeE * 0.1 + n ) );
+	vec3 h;
 
-	float phase = 4.5;
+	for( int i = 0; i < 7; i++ ) {
 
-	float line = smoothstep( 0.88, 0.9, fract( n2 * phase ) );
-	float pattern = smoothstep( 0.2, 0.1, length( fract( ( vUv + vec2( floor(vUv.y * 150.0) / 150.0 * 0.25, 0.0 ) ) * vec2( 2.0, 1.0 ) * 150.0 ) - 0.5 )) * step( n2 * phase, 2.0 ) * 0.8;
+		p = floor( uv * size ) / size;
+		h = hash( vec3( p * 10.0, float( i ) ) );
 
-	float emit = min( line + pattern, 1.0 );
+		if( h.x < 0.3 ) {
+			break;
+		}
 
-	outEmission += emit;
+		size *= 2.0;
 
-	outEmissionIntensity = 1.0 + emit * 50.0 * smoothstep( 0.4, 1.0, n);
+	}
 
-	outEmission *= 0.2;
+	uv -= p;
+	uv *= size;
 
-	// outEmission += normal * sin( uTimeE );
+	float emit = 0.0;
+	emit += smoothstep( 0.4, 0.39, length( uv - 0.5 ));
+	emit *= smoothstep( 0.5, 0.0, abs( vUv.y - 0.5 ) );
+
+	outColor.xyz *= 0.0;
+	outEmission = vec3( 1.0 );
+	outEmissionIntensity = 3.0 * emit * h.y;
 	
-	// outEmission *= vec3( 1.0, 1.0, 0.0 ) * 3.0;
-
-	#ifdef IS_FORWARD
-
-		outColor = vec4( outEmission * outEmissionIntensity, 1.0 );
-	
-	#endif
-
-	outEnv = 0.0;
 
 	#include <frag_out>
 

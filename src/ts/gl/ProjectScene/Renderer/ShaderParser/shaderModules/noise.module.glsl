@@ -4,16 +4,14 @@ float random(vec2 p){
 	return fract(sin(dot(p.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
+// https://www.shadertoy.com/view/4djSRW
 
-// https://www.shadertoy.com/view/XlXcW4
-
-const uint hc = 1103515245U;
-vec3 hash( uvec3 x )
+vec3 hash(vec3 p3)
 {
-  x = ((x>>8U)^x.yzx)*hc;
-  x = ((x>>8U)^x.yzx)*hc;
-  x = ((x>>8U)^x.yzx)*hc;
-  return vec3(x)*(1.0/float(0xffffffffU));
+	p3 = fract(p3 * vec3(.1031, .1030, .0973));
+  p3 += dot(p3, p3.yxz+33.33);
+  return fract((p3.xxy + p3.yxx)*p3.zyx);
+
 }
 
 // https://www.shadertoy.com/view/3tcyD7

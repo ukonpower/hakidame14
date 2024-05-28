@@ -18,7 +18,7 @@ vec2 D( vec3 p ) {
 	vec2 d = vec2( 99999.0, 0.0 );
 	
 	float n = noiseCyc( p * 1.3 + uTimeE * 0.5 ).x;
-	float radius = 0.7 + n * 0.2;
+	float radius = 0.4 + n * 0.1;
 	d = opAdd( d, vec2( sdSphere( p, radius ), 1.0 ) );
 	
 	return d;

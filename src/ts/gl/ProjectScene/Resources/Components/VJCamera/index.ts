@@ -37,9 +37,9 @@ export class VJCamera extends MXP.Component {
 	private move() {
 
 		this.animator.animate( "pos", new GLP.Vector(
-			( Math.random() - 0.5 ) * 10.0,
-			( Math.random() - 0.5 ) * 10.0,
-			( Math.random() - 0.5 ) * 10.0
+			( Math.random() - 0.5 ) * 5.0,
+			( Math.random() - 0.5 ) * 5.0,
+			( Math.random() - 0.5 ) * 5.0
 		) );
 
 	}

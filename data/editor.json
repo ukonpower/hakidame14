@@ -14,7 +14,7 @@
 							"key": "blidgeClient",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "json",
+								"mode": "websocket",
 								"gltfPath": "/scene.glb",
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
@@ -28,7 +28,7 @@
 					]
 				},
 				{
-					"path": "/root/blidgeRoot/Crystal",
+					"path": "/root/blidgeRoot/FluidCrystal",
 					"components": [
 						{
 							"key": "material",
