@@ -9,7 +9,7 @@ import light_h from './shaderModules/light_h.module.glsl';
 import noise from './shaderModules/noise.module.glsl';
 import pmrem from './shaderModules/pmrem.module.glsl';
 import raymarch_normal from './shaderModules/raymarch_normal.module.glsl';
-import raymarch_ray_object from './shaderModules/raymarch_ray_object.glsl';
+import raymarch_ray_object from './shaderModules/raymarch_ray_object.module.glsl';
 import rotate from './shaderModules/rotate.module.glsl';
 import sdf from './shaderModules/sdf.module.glsl';
 import vert_h from './shaderModules/vert_h.module.glsl';
