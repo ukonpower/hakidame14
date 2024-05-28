@@ -17,10 +17,8 @@ uniform float uAspectRatio;
 vec2 D( vec3 p ) {
 
 	vec2 d = vec2( 99999.0, 0.0 );
-	float n = fbm( p * 1.3 + uTimeE * 0.5 );
-	float radius = 0.7 + n * 0.8;
-
-	// float radius = 1.0;
+	float n = noiseCyc( p * 1.3 + uTimeE * 0.5 ).x;
+	float radius = 0.7 + n * 0.2;
 
 	d = add( d, vec2( sdSphere( p, radius ), 1.0 ) );
 	
@@ -89,15 +87,17 @@ void main( void ) {
 
 		for( int i = 0; i < 4; i++ ) {
 
-			vec2 v = ( normal.xy ) * ( 0.1 + ( float(i) / 4.0 ) * 0.015 );
-			v.x *= uAspectRatio;
+			vec2 v = ( normal.xy ) * 0.1;// * ( 0.1 + ( float(i) / 4.0 ) * 0.015 );
+			// v.x *= uAspectRatio;
+			// v *= 0.0;
 			outColor.x += texture( uDeferredTexture, uv + v * 1.0 ).x;
-			outColor.y += texture( uDeferredTexture, uv + v * 1.5 ).y;
-			outColor.z += texture( uDeferredTexture, uv + v * 2.0 ).z;
+			outColor.y += texture( uDeferredTexture, uv + v * 1.1 ).y;
+			outColor.z += texture( uDeferredTexture, uv + v * 1.2 ).z;
 
 		}
 
 		outColor.xyz /= 4.0;
+		outColor.xyz *= vec3( 1.0, 0.5, 0.5 );
 		outColor.xyz += fresnel( dot( outNormal, -rayDir ) ) * 0.4;
 
 	#endif

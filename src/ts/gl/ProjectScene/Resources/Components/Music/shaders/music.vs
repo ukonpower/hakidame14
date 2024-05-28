@@ -83,7 +83,7 @@ float bigClap( float time, float loop ) {
 	
 	float env = exp( envTime * - 10.0 );
 	
-	o += fbm( time * 3000.0 ) * env * 1.3;
+	o += fbm( fract( time ) * 2000.0 ) * env * 1.3;
 	
 	return o;
 
@@ -141,7 +141,7 @@ vec2 moistclap( float time, float loop ) {
 
 float hihat( float time, float loop ) {
 
-	return noise(time * 22000.0) * max(0.0,1.0-min(0.85,loop*4.25)-(loop-0.25)*0.3);
+	return fbm(time * 22000.0) * max(0.0,1.0-min(0.85,loop*4.25)-(loop-0.25)*0.3);
 
 }
 

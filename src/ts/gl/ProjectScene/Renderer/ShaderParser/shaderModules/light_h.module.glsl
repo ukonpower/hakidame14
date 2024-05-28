@@ -149,7 +149,6 @@ float gSmith( float dNV, float dNL, float roughness ) {
 	
 }
 
-//[
 float fresnel( float d ) {
 	
 	float f0 = 0.04;
@@ -157,7 +156,6 @@ float fresnel( float d ) {
 	return f0 + ( 1.0 - f0 ) * pow( 1.0 - d, 5.0 );
 
 }
-//]
 
 vec3 RE( Geometry geo, Material mat, Light light) {
 
