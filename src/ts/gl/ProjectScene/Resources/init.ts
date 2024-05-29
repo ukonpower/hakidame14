@@ -5,8 +5,10 @@ import { BLidgeClient } from "./Components/BLidgeClient";
 import { FluidCrystal } from './Components/FluidCrystal';
 import { LookAt } from "./Components/LookAt";
 import { Music } from './Components/Music';
+import { OrbitControls } from './Components/OrbitControls';
 import { ShakeViewer } from "./Components/ShakeViewer";
 import { SkyBox } from "./Components/SkyBox";
+import { TemplateComponent } from './Components/TemplateComponent';
 import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
 import { OREngineCube } from './Materials/OREngineCube';
@@ -33,8 +35,6 @@ export const initResouces = () => {
 	comObject.register( "light", MXP.Light, {
 		lightType: "directional",
 	} );
-
-	comObject.register( "FluidCrystal", FluidCrystal );
 
 	// geometry
 
@@ -68,7 +68,7 @@ export const initResouces = () => {
 	comMaterial.register( "material", OREngineLogo );
 	comMaterial.register( "material", OREngineCube );
 
-	// view
+	// controls
 
 	const comView = resource.componentCategory( "Controls" );
 
@@ -79,6 +79,8 @@ export const initResouces = () => {
 		speed: 1.0
 	} );
 
+	comView.register( "orbitControls", OrbitControls );
+
 	comView.register( "vjCamera", VJCamera );
 
 	comView.register( "turntable", TurnTable );
@@ -87,7 +89,12 @@ export const initResouces = () => {
 
 	const comEntity = resource.componentCategory( "Entity" );
 
-	comEntity.register( "skybox", SkyBox );
+	comEntity.register( "SkyBox", SkyBox );
+
+	comEntity.register( "FluidCrystal", FluidCrystal );
+
+	comEntity.register( "Template", TemplateComponent );
+
 
 	// Other
 

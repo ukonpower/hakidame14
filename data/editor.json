@@ -57,9 +57,9 @@
 					"components": [
 						{
 							"key": "geometry",
-							"name": "SphereGeometry",
+							"name": "CylinderGeometry",
 							"props": {
-								"vertCount": 272
+								"vertCount": 363
 							}
 						},
 						{

@@ -22,9 +22,9 @@ export class OrbitControls extends MXP.Component {
 	private distance: number;
 	private distanceVel: number;
 
-	constructor( targetElm: HTMLElement ) {
+	constructor( params: MXP.ComponentParams & {targetElm?: HTMLElement} ) {
 
-		super();
+		super( params );
 
 		this.pointer = new Pointer();
 		this.keyborad = new Keyboard();
@@ -39,6 +39,8 @@ export class OrbitControls extends MXP.Component {
 		this.distance = 5.0;
 		this.distanceVel = 0.0;
 		this.lookatMatrix = new GLP.Matrix();
+
+		const targetElm = params && params.targetElm || document.body;
 
 		this.pointer.setElement( targetElm );
 
