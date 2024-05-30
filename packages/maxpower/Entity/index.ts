@@ -328,9 +328,9 @@ export class Entity extends Exportable {
 
 	public addComponent<T extends Component>( component: T ) {
 
-		const name = ( component.constructor as typeof Component ).key;
+		const key = component.key;
 
-		const prevComponent = this.components.get( name );
+		const prevComponent = this.components.get( key );
 
 		if ( prevComponent ) {
 
@@ -340,9 +340,9 @@ export class Entity extends Exportable {
 
 		component.setEntity( this );
 
-		this.components.set( name, component );
+		this.components.set( key, component );
 
-		if ( name == "blidger" ) {
+		if ( key == "blidger" ) {
 
 			this.appendBlidger( component as unknown as BLidger );
 
@@ -358,15 +358,22 @@ export class Entity extends Exportable {
 
 	}
 
-	public removeComponent( name: string ) {
+	public removeComponentByKey( key: string ) {
 
-		const component = this.components.get( name );
+		const component = this.components.get( key );
 
-		this.components.delete( name );
+		this.components.delete( key );
 
 		return component;
 
 	}
+
+	public removeComponent( component: Component ) {
+
+		return this.removeComponentByKey( component.key );
+
+	}
+
 
 	/*-------------------------------
 		BLidger

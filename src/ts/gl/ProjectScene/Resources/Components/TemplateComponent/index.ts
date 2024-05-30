@@ -76,8 +76,8 @@ export class TemplateComponent extends MXP.Component {
 
 	public unsetEntityImpl( entity: MXP.Entity ): void {
 
-		entity.removeComponent( "material" );
-		entity.removeComponent( "geometry" );
+		entity.removeComponent( this.material );
+		entity.removeComponent( this.geometry );
 
 	}
 

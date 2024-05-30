@@ -22,6 +22,7 @@ export type BuiltInComponents =
 ( string & {} );
 
 export type ComponentParams = {
+	keyOverride?: string,
 	disableEdit?: boolean
 }
 
@@ -29,9 +30,12 @@ export class Component extends Exportable {
 
 	public readonly uuid: string;
 
+	public keyOverride: string | null = null;
+
 	public entity: Entity | null;
 	public enabled: boolean;
 	public disableEdit: boolean;
+
 
 	constructor( params?: ComponentParams ) {
 
@@ -40,6 +44,7 @@ export class Component extends Exportable {
 		params = params ?? {};
 
 		this.enabled = true;
+		this.keyOverride = params.keyOverride || null;
 		this.disableEdit = params.disableEdit || false;
 
 		this.entity = null;
@@ -51,6 +56,14 @@ export class Component extends Exportable {
 	public static get key() {
 
 		return "";
+
+	}
+
+	public get key() {
+
+		if ( this.keyOverride ) return this.keyOverride;
+
+		return ( this.constructor as typeof Component ).key;
 
 	}
 

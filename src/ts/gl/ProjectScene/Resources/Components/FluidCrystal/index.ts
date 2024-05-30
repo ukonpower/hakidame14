@@ -68,7 +68,7 @@ export class FluidCrystal extends MXP.Component {
 
 	public unsetEntityImpl( entity: MXP.Entity ): void {
 
-		entity.removeComponent( "material" );
+		entity.removeComponent( this.material );
 
 	}
 

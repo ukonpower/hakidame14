@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"files.exclude": {
-			"**/src/ts/components": true,
+			// "**/src/ts/components": true,
 		},
 		"editor.formatOnSave": true,
 		"editor.insertSpaces": false,

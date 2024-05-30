@@ -98,13 +98,13 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 		if ( entity ) {
 
-			entity.removeComponent( keyName );
+			entity.removeComponent( component );
 
 		}
 
 		reflesh && reflesh();
 
-	}, [ component, keyName, reflesh ] );
+	}, [ component, reflesh ] );
 
 	const Head = () => {
 

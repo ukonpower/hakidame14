@@ -123,9 +123,6 @@ export class ProjectScene extends MXP.Entity {
 		this.add( this.root );
 		this.root.name = "root";
 
-		console.log( MXP.Material.key );
-
-
 	}
 
 	public init( project?: OREngineProjectData ) {

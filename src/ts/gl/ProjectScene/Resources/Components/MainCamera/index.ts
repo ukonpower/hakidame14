@@ -116,7 +116,7 @@ export class MainCamera extends MXP.Component {
 		this.renderTarget = this.cameraComponent.renderTarget;
 
 		this.lookAt = new LookAt();
-		this.orbitControls = new OrbitControls( canvas );
+		this.orbitControls = new OrbitControls( { elm: canvas } );
 		this.shakeViewer = new ShakeViewer();
 
 		// resolution
@@ -531,6 +531,7 @@ export class MainCamera extends MXP.Component {
 		// postprocess
 
 		this.scenePostProcess = new MXP.PostProcess( {
+			keyOverride: 'scenePostProcess',
 			input: this.renderTarget.shadingBuffer.textures,
 			passes: [
 				this.colorCollection,
@@ -546,6 +547,7 @@ export class MainCamera extends MXP.Component {
 		} );
 
 		this.postProcess = new MXP.PostProcess( {
+			keyOverride: 'postProcess',
 			input: this.renderTarget.uiBuffer.textures,
 			passes: [
 				this.bloomBright,
