@@ -110,7 +110,7 @@ export class ProjectScene extends MXP.Entity {
 		this.camera = new MXP.Entity( { name: "camera" } );
 		this.camera.noExport = true;
 		this.camera.position.set( 0, 1, 10 );
-		this.cameraComponent = this.camera.addComponent( "mainCamera", new MainCamera() );
+		this.cameraComponent = this.camera.addComponent( new MainCamera() );
 
 		// renderer
 
@@ -122,6 +122,9 @@ export class ProjectScene extends MXP.Entity {
 		this.root = new MXP.Entity();
 		this.add( this.root );
 		this.root.name = "root";
+
+		console.log( MXP.Material.key );
+
 
 	}
 

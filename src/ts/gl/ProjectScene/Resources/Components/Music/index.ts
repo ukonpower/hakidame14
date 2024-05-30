@@ -198,6 +198,12 @@ export class Music extends MXP.Component {
 
 	}
 
+	static get key(): string {
+
+		return "music";
+
+	}
+
 	protected updateImpl( event: MXP.ComponentUpdateEvent ): void {
 
 		if ( ! event.playing || event.timeCode < 0 ) {

@@ -57,7 +57,7 @@ export class ProjectSerializer extends GLP.EventEmitter {
 
 					if ( compItem ) {
 
-						const component = e.addComponent( c.key, new compItem.component() );
+						const component = e.addComponent( new compItem.component() );
 
 						component.setProps( c.props );
 

@@ -50,7 +50,7 @@ export const ShaderMinifierLoader = (): Plugin => {
 
 			if ( ! filter( id ) ) return;
 
-			if ( process.platform == "darwin" || true ) {
+			if ( process.platform == "darwin" ) {
 
 				return {
 					code: `export default ${JSON.stringify( code )};`,
@@ -61,7 +61,7 @@ export const ShaderMinifierLoader = (): Plugin => {
 
 			code = code.replaceAll( "\\n", "\n" );
 			code = code.replaceAll( "\\t", "\t" );
-			code = code.replaceAll( "precision highp float;", "\/\/\[\nprecision highp float;\n\/\/\]\n" );
+			code = code.replaceAll( "precision highp float;", "//[\nprecision highp float;\n//]\n" );
 
 			const fileName = id.replaceAll( '/', "_" ) + new Date().getTime();
 			const inputFilePath = `./tmp/${fileName}_in.txt`;

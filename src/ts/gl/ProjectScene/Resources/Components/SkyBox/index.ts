@@ -44,10 +44,16 @@ export class SkyBox extends MXP.Component {
 
 	}
 
+	static get key(): string {
+
+		return "skybox";
+
+	}
+
 	protected setEntityImpl( entity: MXP.Entity ): void {
 
-		entity.addComponent( "geometry", this.geometry );
-		entity.addComponent( "material", this.material );
+		entity.addComponent( this.geometry );
+		entity.addComponent( this.material );
 
 	}
 

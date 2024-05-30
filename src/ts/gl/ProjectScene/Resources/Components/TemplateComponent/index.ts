@@ -60,10 +60,17 @@ export class TemplateComponent extends MXP.Component {
 
 	}
 
+	static get key(): string {
+
+		return "templateComponent";
+
+	}
+
+
 	public setEntity( entity: MXP.Entity ): void {
 
-		entity.addComponent( "material", this.material );
-		entity.addComponent( "geometry", this.geometry );
+		entity.addComponent( this.material );
+		entity.addComponent( this.geometry );
 
 	}
 

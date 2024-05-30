@@ -30,7 +30,6 @@ export class Component extends Exportable {
 	public readonly uuid: string;
 
 	public entity: Entity | null;
-
 	public enabled: boolean;
 	public disableEdit: boolean;
 
@@ -49,7 +48,13 @@ export class Component extends Exportable {
 
 	}
 
-	public noticeChanged( type1?: string ) {
+	public static get key() {
+
+		return "";
+
+	}
+
+	public noticeChanged( type?: string ) {
 
 		this.emit( 'changed', [ type ] );
 

@@ -1,6 +1,6 @@
 import * as GLP from 'glpower';
 
-// import { GLTF, GLTFLoader } from '../Loaders/GLTFLoader';
+import { GLTF, GLTFLoader } from '../Loaders/GLTFLoader';
 
 export type BLidgeNodeType = 'empty' | 'cube' | 'sphere' | 'cylinder' | 'mesh' | 'camera' | 'plane' | 'light' | 'gltf';
 
@@ -175,8 +175,8 @@ export class BLidge extends GLP.EventEmitter {
 
 	// gltf
 
-	// private gltfLoader: GLTFLoader;
-	// public gltf?: GLTF;
+	private gltfLoader: GLTFLoader;
+	public gltf?: GLTF;
 
 	// scene
 
@@ -202,7 +202,7 @@ export class BLidge extends GLP.EventEmitter {
 			playing: false,
 		};
 
-		// this.gltfLoader = new GLTFLoader( gl );
+		this.gltfLoader = new GLTFLoader( gl );
 
 		if ( url ) {
 
@@ -308,15 +308,15 @@ export class BLidge extends GLP.EventEmitter {
 
 		if ( gltfPath ) {
 
-			// const loader = new GLTFLoader( this.gl );
+			const loader = new GLTFLoader( this.gl );
 
-			// await loader.load( gltfPath ).then( gltf => {
+			await loader.load( gltfPath ).then( gltf => {
 
-			// 	this.gltf = gltf;
+				this.gltf = gltf;
 
-			// 	this.emit( "gltfLoaded", [ gltf ] );
+				this.emit( "gltfLoaded", [ gltf ] );
 
-			// } );
+			} );
 
 		}
 
@@ -503,25 +503,23 @@ export class BLidge extends GLP.EventEmitter {
 		Props
 	-------------------------------*/
 
-	public get gltfPrm(): Promise<null> {
+	public get gltfPrm(): Promise<GLTF> {
 
-		// if ( this.gltf ) {
+		if ( this.gltf ) {
 
-		// 	return Promise.resolve( this.gltf );
+			return Promise.resolve( this.gltf );
 
-		// }
+		}
 
-		// return new Promise( ( resolve ) => {
+		return new Promise( ( resolve ) => {
 
-		// 	this.on( "gltfLoaded", ( gltf: GLTF ) => {
+			this.on( "gltfLoaded", ( gltf: GLTF ) => {
 
-		// 		resolve( gltf );
+				resolve( gltf );
 
-		// 	} );
+			} );
 
-		// } );
-
-		return Promise.resolve( null );
+		} );
 
 	}
 

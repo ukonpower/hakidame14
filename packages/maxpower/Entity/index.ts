@@ -188,8 +188,8 @@ export class Entity extends Exportable {
 		const visibility = ( event.visibility || event.visibility === undefined ) && this.visible;
 		childEvent.visibility = visibility;
 
-		const geometry = this.getComponentEnabled<Geometry>( 'geometry' );
-		const material = this.getComponentEnabled<Material>( 'material' );
+		const geometry = this.getComponent<Geometry>( 'geometry' );
+		const material = this.getComponent<Material>( 'material' );
 
 		if ( geometry && material && ( visibility || event.forceDraw ) ) {
 
@@ -201,25 +201,25 @@ export class Entity extends Exportable {
 
 		}
 
-		const camera = this.getComponentEnabled<Camera>( 'camera' );
+		const camera = this.getComponent<Camera>( 'camera' );
 
-		if ( camera ) {
+		if ( camera && camera.enabled ) {
 
 			event.renderStack.camera.push( this );
 
 		}
 
-		const light = this.getComponentEnabled<Light>( 'light' );
+		const light = this.getComponent<Light>( 'light' );
 
-		if ( light ) {
+		if ( light && light.enabled ) {
 
 			event.renderStack.light.push( this );
 
 		}
 
-		const gpuCompute = this.getComponentEnabled<GPUCompute>( "gpuCompute" );
+		const gpuCompute = this.getComponent<GPUCompute>( "gpuCompute" );
 
-		if ( gpuCompute ) {
+		if ( gpuCompute && gpuCompute.enabled ) {
 
 			event.renderStack.gpuCompute.push( this );
 
@@ -326,7 +326,9 @@ export class Entity extends Exportable {
 		Components
 	-------------------------------*/
 
-	public addComponent<T extends Component>( name: BuiltInComponents, component: T ) {
+	public addComponent<T extends Component>( component: T ) {
+
+		const name = ( component.constructor as typeof Component ).key;
 
 		const prevComponent = this.components.get( name );
 
@@ -353,16 +355,6 @@ export class Entity extends Exportable {
 	public getComponent<T extends Component>( name: BuiltInComponents ): T | undefined {
 
 		return this.components.get( name ) as T;
-
-	}
-
-	public getComponentEnabled<T extends Component>( name: BuiltInComponents ): T | undefined {
-
-		const component = this.components.get( name ) as T;
-
-		if ( ! component || ! component.enabled ) return undefined;
-
-		return component;
 
 	}
 

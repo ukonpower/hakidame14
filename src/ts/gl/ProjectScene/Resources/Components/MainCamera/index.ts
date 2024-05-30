@@ -559,10 +559,10 @@ export class MainCamera extends MXP.Component {
 
 	public setEntityImpl( entity: MXP.Entity, prevEntity: MXP.Entity | null ): void {
 
-		entity.addComponent( "camera", this.cameraComponent );
-		entity.addComponent( "scenePostProcess", this.scenePostProcess );
-		entity.addComponent( "postProcess", this.postProcess );
-		entity.addComponent( "vjCamera", new VJCamera() );
+		entity.addComponent( this.cameraComponent );
+		entity.addComponent( this.scenePostProcess );
+		entity.addComponent( this.postProcess );
+		entity.addComponent( new VJCamera() );
 		// entity.addComponent( "orbitControls", new OrbitControls( canvas ) );
 		// entity.addComponent( 'lookAt', this.lookAt );
 		// entity.addComponent( 'shakeViewer', this.shakeViewer );

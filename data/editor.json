@@ -11,7 +11,7 @@
 					"path": "/root",
 					"components": [
 						{
-							"key": "blidgeClient",
+							"key": "",
 							"name": "BLidgeClient",
 							"props": {
 								"mode": "websocket",
@@ -19,11 +19,6 @@
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
 							}
-						},
-						{
-							"key": "music",
-							"name": "Music",
-							"props": {}
 						}
 					]
 				},
@@ -33,20 +28,10 @@
 						{
 							"key": "material",
 							"name": "Material",
-							"props": {
-								"name": "",
-								"deferred": false,
-								"forward": true,
-								"shadowMap": false,
-								"ui": false,
-								"useLight": true,
-								"depthTest": true,
-								"cullFace": true,
-								"drawType": "TRIANGLES"
-							}
+							"props": {}
 						},
 						{
-							"key": "FluidCrystal",
+							"key": "fluidCrystal",
 							"name": "FluidCrystal",
 							"props": {}
 						}
@@ -65,17 +50,7 @@
 						{
 							"key": "material",
 							"name": "Material",
-							"props": {
-								"name": "",
-								"deferred": true,
-								"forward": false,
-								"shadowMap": false,
-								"ui": false,
-								"useLight": true,
-								"depthTest": true,
-								"cullFace": false,
-								"drawType": "TRIANGLES"
-							}
+							"props": {}
 						},
 						{
 							"key": "skybox",
