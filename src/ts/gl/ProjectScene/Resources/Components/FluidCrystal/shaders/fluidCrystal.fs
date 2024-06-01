@@ -5,7 +5,7 @@
 #include <sdf>
 #include <noise>
 #include <rotate>
-#include <light_h>
+#include <light>
 
 uniform float uTimeE;
 uniform vec3 cameraPosition;

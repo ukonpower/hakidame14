@@ -1,4 +1,3 @@
-//[
 in vec2 vUv;
 in vec3 vNormal;
 in vec3 vViewNormal;
@@ -31,4 +30,3 @@ uniform mat4 projectionMatrix;
 	layout (location = 0) out vec4 outColor0;
 	layout (location = 1) out vec4 outColor1;
 #endif
-//]
