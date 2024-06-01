@@ -125,9 +125,7 @@ export class ProjectSerializer extends GLP.EventEmitter {
 
 			entity.children.forEach( c => {
 
-				const hasBlidger = c.getComponent( "blidger" );
-
-				if ( hasBlidger || c.noExport ) return;
+				if ( c.noExport ) return;
 
 				childs.push( _( c ) );
 

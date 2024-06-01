@@ -24,21 +24,11 @@ export class BLidgeClient extends MXP.Component {
 
 	private gltfPath: string;
 
-	// frame
-
-	private playing: boolean;
-	private playTime: number;
-
 	constructor() {
 
 		super();
 
 		this.entities = new Map();
-
-		// state
-
-		this.playing = false;
-		this.playTime = 0;
 
 		// connection
 
@@ -165,16 +155,6 @@ export class BLidgeClient extends MXP.Component {
 
 			const entity: MXP.Entity = ( this.entities.get( node.name ) || router( node ) );
 
-			// if ( node.type == 'camera' ) {
-
-			// 	const cameraParam = node.param as MXP.BLidgeCameraParam;
-			// 	const renderCamera = this.camera.getComponent<MXP.RenderCamera>( "camera" )!;
-
-			// 	renderCamera.fov = cameraParam.fov;
-			// 	renderCamera.needsUpdate = true;
-
-			// }
-
 			entity.addComponent( new MXP.BLidger( { blidge, node, disableEdit: true } ) );
 
 			node.children.forEach( c => {
@@ -195,9 +175,11 @@ export class BLidgeClient extends MXP.Component {
 
 		const newBLidgeRoot = blidge.root && _( blidge.root );
 
+
 		if ( newBLidgeRoot ) {
 
 			newBLidgeRoot.name = "blidgeRoot";
+			newBLidgeRoot.noExport = true;
 
 			if ( this.blidgeRoot && this.entity ) {
 

@@ -83,7 +83,7 @@ export class BLidger extends Component {
 
 	}
 
-	public static key(): string {
+	public static get key(): string {
 
 		return "blidger";
 
