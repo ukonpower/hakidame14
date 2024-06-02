@@ -6,7 +6,7 @@ import style from './index.module.scss';
 import { TimelineCanvasRenderer } from './TimelineCanvasRenderer';
 
 
-export const TimelineCanvas = ( ) => {
+export const TimelineCanvas = () => {
 
 	const { viewPort, viewPortScale, frameSetting, musicBuffer, musicBufferVersion } = useContext( TimelineContext );
 
