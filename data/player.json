@@ -9,7 +9,7 @@
 			"path": "/root",
 			"components": [
 				{
-					"key": "blidgeClient",
+					"key": "",
 					"name": "BLidgeClient",
 					"props": {
 						"mode": "json",
@@ -26,22 +26,17 @@
 			]
 		},
 		{
-			"path": "/root/blidgeRoot/Empty",
+			"path": "/root/blidgeRoot/Crystal",
 			"components": [
 				{
 					"key": "material",
-					"name": "OREngineCube",
-					"props": {
-						"name": "",
-						"deferred": true,
-						"forward": false,
-						"shadowMap": true,
-						"ui": false,
-						"useLight": true,
-						"depthTest": true,
-						"cullFace": true,
-						"drawType": "TRIANGLES"
-					}
+					"name": "Material",
+					"props": {}
+				},
+				{
+					"key": "fluidCrystal",
+					"name": "FluidCrystal",
+					"props": {}
 				}
 			]
 		},
@@ -50,25 +45,15 @@
 			"components": [
 				{
 					"key": "geometry",
-					"name": "SphereGeometry",
+					"name": "CylinderGeometry",
 					"props": {
-						"vertCount": 272
+						"vertCount": 363
 					}
 				},
 				{
 					"key": "material",
 					"name": "Material",
-					"props": {
-						"name": "",
-						"deferred": true,
-						"forward": false,
-						"shadowMap": false,
-						"ui": false,
-						"useLight": true,
-						"depthTest": true,
-						"cullFace": false,
-						"drawType": "TRIANGLES"
-					}
+					"props": {}
 				},
 				{
 					"key": "skybox",

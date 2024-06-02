@@ -2,7 +2,7 @@
 	"projects": [
 		{
 			"setting": {
-				"name": "OREngine",
+				"name": "Hakidame14",
 				"timeline/duration": 678,
 				"timeline/fps": 60
 			},
@@ -88,7 +88,7 @@
 		}
 	],
 	"settings": {
-		"currentProjectName": "OREngine",
+		"currentProjectName": "Hakidame14",
 		"resolutionScale": 0.25,
 		"viewType": "render"
 	}
