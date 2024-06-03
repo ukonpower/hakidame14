@@ -15,6 +15,7 @@ import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
+import { FlashLine } from './Components/Effects/FlashLine';
 
 
 export const initResouces = () => {
@@ -95,6 +96,8 @@ export const initResouces = () => {
 	comEntity.register( FluidCrystal );
 
 	comEntity.register( TemplateComponent );
+
+	comEntity.register(FlashLine)
 
 
 	// Other

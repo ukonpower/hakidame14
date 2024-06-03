@@ -14,7 +14,7 @@
 							"key": "",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "json",
+								"mode": "websocket",
 								"gltfPath": "/scene.glb",
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
@@ -28,7 +28,29 @@
 					]
 				},
 				{
-					"path": "/root/blidgeRoot/Crystal",
+					"path": "/root/blidgeRoot/Effects",
+					"components": [
+						{
+							"key": "material",
+							"name": "Material",
+							"props": {}
+						},
+						{
+							"key": "geometry",
+							"name": "CylinderGeometry",
+							"props": {
+								"vertCount": 36
+							}
+						},
+						{
+							"key": "flashLine",
+							"name": "FlashLine",
+							"props": {}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/FluidCrystal",
 					"components": [
 						{
 							"key": "material",
@@ -89,7 +111,7 @@
 	],
 	"settings": {
 		"currentProjectName": "Hakidame14",
-		"resolutionScale": 0.25,
+		"resolutionScale": 0.125,
 		"viewType": "render"
 	}
 }

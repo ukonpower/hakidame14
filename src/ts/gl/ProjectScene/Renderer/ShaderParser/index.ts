@@ -8,6 +8,7 @@ import raymarch_normal from './shaderModules/raymarch_normal.module.glsl';
 import rotate from './shaderModules/rotate.module.glsl';
 import sdf from './shaderModules/sdf.module.glsl';
 import frag_h from './shaderParts/frag_h.part.glsl';
+import uniformTime from './shaderParts/uniform_time.part.glsl';
 import frag_in from './shaderParts/frag_in.part.glsl';
 import frag_out from './shaderParts/frag_out.part.glsl';
 import lighting from './shaderParts/lighting.part.glsl';
@@ -72,6 +73,7 @@ export const shaderInclude = ( shader: string ) => {
 		"frag_out": frag_out,
 		"rm_normal": raymarch_normal,
 		"rm_ray_obj": raymarch_ray_object,
+		"uni_time": uniformTime,
 		"pmrem": pmrem,
 	};
 

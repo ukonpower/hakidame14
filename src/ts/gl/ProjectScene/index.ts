@@ -188,6 +188,7 @@ export class ProjectScene extends MXP.Entity {
 		this.time.engine += this.time.delta;
 
 		globalUniforms.time.uTime.value = this.time.code;
+		globalUniforms.time.uTimeF.value = this.time.code % 1;
 		globalUniforms.time.uTimeE.value = this.time.engine;
 		globalUniforms.time.uTimeEF.value = this.time.engine % 1;
 

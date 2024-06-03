@@ -15,6 +15,10 @@ export const globalUniforms: {[key: string]: GLP.Uniforms} = {
 			value: 0,
 			type: "1f"
 		},
+		uTimeF: {
+			value: 0,
+			type: "1f"
+		},
 		uTimeE: {
 			value: 0,
 			type: "1f"
