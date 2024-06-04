@@ -319,7 +319,7 @@ export class Renderer extends MXP.Entity {
 
 		for ( let i = 0; i < stack.gpuCompute.length; i ++ ) {
 
-			const gpu = stack.gpuCompute[ i ].getComponent<MXP.GPUCompute>( 'gpuCompute' )!;
+			const gpu = stack.gpuCompute[ i ].getComponent( MXP.GPUCompute )!;
 
 			this.renderPostProcess( gpu );
 
@@ -330,7 +330,7 @@ export class Renderer extends MXP.Entity {
 		for ( let i = 0; i < shadowMapLightList.length; i ++ ) {
 
 			const lightEntity = shadowMapLightList[ i ];
-			const lightComponent = lightEntity.getComponent<MXP.Light>( 'light' )!;
+			const lightComponent = lightEntity.getComponent( MXP.Light )!;
 
 			if ( lightComponent.renderTarget ) {
 
@@ -360,7 +360,7 @@ export class Renderer extends MXP.Entity {
 		for ( let i = 0; i < stack.camera.length; i ++ ) {
 
 			const cameraEntity = stack.camera[ i ];
-			const cameraComponent = cameraEntity.getComponent<MXP.RenderCamera>( 'camera' )!;
+			const cameraComponent = cameraEntity.getComponent( MXP.RenderCamera )!;
 
 			// deferred
 
@@ -391,7 +391,7 @@ export class Renderer extends MXP.Entity {
 
 			// scene
 
-			const prePostprocess = cameraEntity.getComponent<MXP.PostProcess>( 'scenePostProcess' );
+			const prePostprocess = cameraEntity.getComponentByKey<MXP.PostProcess>( 'scenePostProcess' );
 
 			if ( prePostprocess && prePostprocess.enabled ) {
 
@@ -446,7 +446,7 @@ export class Renderer extends MXP.Entity {
 
 			// postprocess
 
-			const postProcess = cameraEntity.getComponent<MXP.PostProcess>( 'postProcess' );
+			const postProcess = cameraEntity.getComponentByKey<MXP.PostProcess>( 'postProcess' );
 
 			if ( postProcess && postProcess.enabled ) {
 
@@ -481,7 +481,7 @@ export class Renderer extends MXP.Entity {
 
 	public renderCamera( renderType: MXP.MaterialRenderType, cameraEntity: MXP.Entity, entities: MXP.Entity[], renderTarget: GLP.GLPowerFrameBuffer | null, renderOption?: RenderOption ) {
 
-		const camera = cameraEntity.getComponent<MXP.Camera>( "camera" ) || cameraEntity.getComponent<MXP.Light>( "light" )!;
+		const camera = cameraEntity.getComponent( MXP.Camera ) || cameraEntity.getComponent( MXP.Light )!;
 
 		renderOption = renderOption || {};
 
@@ -553,8 +553,8 @@ export class Renderer extends MXP.Entity {
 		for ( let i = 0; i < entities.length; i ++ ) {
 
 			const entity = entities[ i ];
-			const material = entity.getComponent<MXP.Material>( "material" )!;
-			const geometry = entity.getComponent<MXP.Geometry>( "geometry" )!;
+			const material = entity.getComponent( MXP.Material )!;
+			const geometry = entity.getComponent( MXP.Geometry )!;
 
 			drawParam.modelMatrixWorld = entity.matrixWorld;
 			drawParam.modelMatrixWorldPrev = entity.matrixWorldPrev;
@@ -570,7 +570,7 @@ export class Renderer extends MXP.Entity {
 
 	private collectLight( lightEntity: MXP.Entity ) {
 
-		const lightComponent = lightEntity.getComponent<MXP.Light>( 'light' )!;
+		const lightComponent = lightEntity.getComponent( MXP.Light )!;
 		const type = lightComponent.lightType;
 
 		const info: LightInfo = {

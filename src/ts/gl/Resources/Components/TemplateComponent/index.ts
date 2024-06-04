@@ -64,7 +64,7 @@ export class TemplateComponent extends MXP.Component {
 	}
 
 
-	public setEntity( entity: MXP.Entity ): void {
+	public setEntityImpl( entity: MXP.Entity ): void {
 
 		entity.addComponent( this.material );
 		entity.addComponent( this.geometry );

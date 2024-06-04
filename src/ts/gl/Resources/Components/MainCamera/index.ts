@@ -113,7 +113,7 @@ export class MainCamera extends MXP.Component {
 
 		// components
 
-		this.cameraComponent = new MXP.RenderCamera( gl );
+		this.cameraComponent = new MXP.RenderCamera( {gl} );
 		this.renderTarget = this.cameraComponent.renderTarget;
 
 		this.lookAt = new LookAt();
@@ -577,7 +577,7 @@ export class MainCamera extends MXP.Component {
 			const lookAtTarget = root.getEntityByName( "CameraTarget" ) || null;
 			this.lookAt.setTarget( lookAtTarget );
 
-			const ortbitControls = entity.getComponent<OrbitControls>( "orbitControls" );
+			const ortbitControls = entity.getComponent( OrbitControls );
 
 			if ( ortbitControls && camera && lookAtTarget ) {
 

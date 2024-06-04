@@ -17,7 +17,7 @@ export class FlashLine extends MXP.Component {
 
 		// geometry
 
-		this.geometry = new MXP.CylinderGeometry({radiusBottom: 0.02, radiusTop: 0.02, radSegments: 8, height: 30.0});
+		this.geometry = new MXP.CylinderGeometry({radiusBottom: 0.02, radiusTop: 0.02, radSegments: 8, height: 50.0});
 
 		let oPosArray = []
 
@@ -27,7 +27,7 @@ export class FlashLine extends MXP.Component {
 		
 		for (let index = 0; index < num; index++) {
 
-			let rnd = GLP.Maths.randomVector().multiply(new GLP.Vector(5.0,1,5.0))
+			let rnd = GLP.Maths.randomVector().multiply(new GLP.Vector(20,1,20.0))
 			
 			oPosArray.push(
 				rnd.x,rnd.y,rnd.z, Math.random()
@@ -83,7 +83,7 @@ export class FlashLine extends MXP.Component {
 	}
 
 
-	public setEntity( entity: MXP.Entity ): void {
+	public setEntityImpl( entity: MXP.Entity ): void {
 
 		entity.addComponent( this.material );
 		entity.addComponent( this.geometry );

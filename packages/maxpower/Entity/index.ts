@@ -188,8 +188,8 @@ export class Entity extends Exportable {
 		const visibility = ( event.visibility || event.visibility === undefined ) && this.visible;
 		childEvent.visibility = visibility;
 
-		const geometry = this.getComponent<Geometry>( 'geometry' );
-		const material = this.getComponent<Material>( 'material' );
+		const geometry = this.getComponent( Geometry );
+		const material = this.getComponent( Material );
 
 		if ( geometry && material && ( visibility || event.forceDraw ) ) {
 
@@ -201,7 +201,7 @@ export class Entity extends Exportable {
 
 		}
 
-		const camera = this.getComponent<Camera>( 'camera' );
+		const camera = this.getComponent( Camera );
 
 		if ( camera && camera.enabled ) {
 
@@ -209,7 +209,7 @@ export class Entity extends Exportable {
 
 		}
 
-		const light = this.getComponent<Light>( 'light' );
+		const light = this.getComponent( Light );
 
 		if ( light && light.enabled ) {
 
@@ -217,7 +217,7 @@ export class Entity extends Exportable {
 
 		}
 
-		const gpuCompute = this.getComponent<GPUCompute>( "gpuCompute" );
+		const gpuCompute = this.getComponent( GPUCompute );
 
 		if ( gpuCompute && gpuCompute.enabled ) {
 
@@ -352,28 +352,42 @@ export class Entity extends Exportable {
 
 	}
 
-	public getComponent<T extends Component>( name: BuiltInComponents ): T | undefined {
+	public getComponentByKey<T extends Component>( name: BuiltInComponents ): T | undefined {
 
 		return this.components.get( name ) as T;
 
 	}
 
-	public removeComponentByKey( key: string ) {
+	public getComponent<T extends typeof Component>( component: T ): InstanceType<T> | undefined {
 
-		const component = this.components.get( key );
-
-		this.components.delete( key );
-
-		return component;
+		return this.getComponentByKey(component.key)
 
 	}
 
 	public removeComponent( component: Component ) {
 
-		return this.removeComponentByKey( component.key );
+
+		this.components.delete( component.key );
+
+		component.unsetEntity()
+
+		return component;
 
 	}
+	
+	public removeComponentByKey( key: string ) {
+		
+		let component = this.components.get( key );
 
+		if( component ) {
+
+			return this.removeComponent( component)
+		
+		}
+
+		return null;
+
+	}
 
 	/*-------------------------------
 		BLidger

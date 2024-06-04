@@ -1,7 +1,7 @@
 import * as MXP from 'maxpower';
 
 import { router } from './router';
-import SceneData from './scene/scene.json';
+import SceneData from '~/ts/gl/Resources/scene.json';
 
 import { gl } from '~/ts/gl/GLGlobals';
 
