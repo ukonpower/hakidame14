@@ -9,15 +9,16 @@ export interface GPUComputeParam extends PostProcessParam{
 } 
 
 export class GPUCompute extends PostProcess {
-	
 
+	declare public passes: GPUComputePass[];
+	
 	constructor( param: GPUComputeParam ) {
 
 		super( param );
 
 	}
 
-	public get key(): string {
+	public static get key(): string {
 		
 		return 'gpuCompute';
 	}

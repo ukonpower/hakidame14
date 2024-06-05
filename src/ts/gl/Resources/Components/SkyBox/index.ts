@@ -12,11 +12,9 @@ export class SkyBox extends MXP.Component {
 	private geometry: MXP.Geometry;
 	private material: MXP.Material;
 
-	constructor( param?: SkyBoxParams ) {
+	constructor( params: SkyBoxParams ) {
 
-		param = param || {};
-
-		super();
+		super(params);
 
 		this.geometry = new MXP.CylinderGeometry( { height: 100, radiusTop: 20, radiusBottom: 20, heightSegments: 10, radSegments: 32, caps: false } );
 		this.material = new MXP.Material( {

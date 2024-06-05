@@ -2,8 +2,8 @@
 	"projects": [
 		{
 			"setting": {
-				"name": "Hakidame14",
-				"timeline/duration": 678,
+				"name": "New Project",
+				"timeline/duration": 600,
 				"timeline/fps": 60
 			},
 			"objectOverride": [
@@ -11,37 +11,20 @@
 					"path": "/root",
 					"components": [
 						{
-							"key": "",
+							"key": "blidgeClient",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "json",
+								"mode": "websocket",
 								"gltfPath": "/scene.glb",
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
 							}
-						},
-						{
-							"key": "music",
-							"name": "Music",
-							"props": {}
 						}
 					]
 				},
 				{
 					"path": "/root/blidgeRoot/Effects",
 					"components": [
-						{
-							"key": "material",
-							"name": "Material",
-							"props": {}
-						},
-						{
-							"key": "geometry",
-							"name": "CylinderGeometry",
-							"props": {
-								"vertCount": 36
-							}
-						},
 						{
 							"key": "flashLine",
 							"name": "FlashLine",
@@ -53,13 +36,6 @@
 					"path": "/root/blidgeRoot/Effects/MatchMove",
 					"components": [
 						{
-							"key": "gpuCompute",
-							"name": "GPUCompute",
-							"props": {
-								"": true
-							}
-						},
-						{
 							"key": "matchMove",
 							"name": "MatchMove",
 							"props": {}
@@ -67,30 +43,8 @@
 					]
 				},
 				{
-					"path": "/root/blidgeRoot/Effects/MatchMove/",
-					"components": [
-						{
-							"key": "geometry",
-							"name": "Geometry",
-							"props": {
-								"vertCount": 10
-							}
-						},
-						{
-							"key": "material",
-							"name": "Material",
-							"props": {}
-						}
-					]
-				},
-				{
 					"path": "/root/blidgeRoot/FluidCrystal",
 					"components": [
-						{
-							"key": "material",
-							"name": "Material",
-							"props": {}
-						},
 						{
 							"key": "fluidCrystal",
 							"name": "FluidCrystal",
@@ -101,18 +55,6 @@
 				{
 					"path": "/root/blidgeRoot/SkyBox",
 					"components": [
-						{
-							"key": "geometry",
-							"name": "CylinderGeometry",
-							"props": {
-								"vertCount": 363
-							}
-						},
-						{
-							"key": "material",
-							"name": "Material",
-							"props": {}
-						},
 						{
 							"key": "skybox",
 							"name": "SkyBox",
@@ -144,8 +86,8 @@
 		}
 	],
 	"settings": {
-		"currentProjectName": "Hakidame14",
-		"resolutionScale": 0.25,
+		"currentProjectName": "New Project",
+		"resolutionScale": 0.5,
 		"viewType": "render"
 	}
 }

@@ -36,7 +36,7 @@ export class GPUComputePass extends PostProcessPass {
 
 		for ( let i = 0; i < param.layerCnt; i ++ ) {
 
-			outputUniforms[ 'gpuSampler' + i ] = {
+			outputUniforms[ 'uGPUOut' + i ] = {
 				value: rt2.textures[ i ],
 				type: '1i'
 			};
@@ -71,7 +71,7 @@ export class GPUComputePass extends PostProcessPass {
 
 		for ( let i = 0; i < this.layerCnt; i ++ ) {
 
-			this.outputUniforms[ 'gpuSampler' + i ].value = this.renderTarget!.textures[ i ];
+			this.outputUniforms[ 'uGPUOut' + i ].value = this.renderTarget!.textures[ i ];
 
 		}
 

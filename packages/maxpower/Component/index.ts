@@ -21,6 +21,8 @@ export type BuiltInComponents =
 	'gpuCompute' |
 ( string & {} );
 
+type ComponentInitiator = 'user' | 'script';
+
 export type ComponentParams = {
 	keyOverride?: string,
 	disableEdit?: boolean
@@ -29,13 +31,11 @@ export type ComponentParams = {
 export class Component extends Exportable {
 
 	public readonly uuid: string;
-
 	public keyOverride: string | null = null;
-
 	public entity: Entity | null;
 	public enabled: boolean;
 	public disableEdit: boolean;
-
+	public initiator?: ComponentInitiator;
 
 	constructor( params?: ComponentParams ) {
 
@@ -46,10 +46,9 @@ export class Component extends Exportable {
 		this.enabled = true;
 		this.keyOverride = params.keyOverride || null;
 		this.disableEdit = params.disableEdit || false;
-
 		this.entity = null;
-
 		this.uuid = GLP.ID.genUUID();
+		this.initiator = 'script';
 
 	}
 

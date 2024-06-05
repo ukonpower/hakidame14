@@ -84,9 +84,7 @@ export const ComponentAdd = ( props: ComponentAddProps ) => {
 					<div className={style.argsInput}>
 						<InputGroup initialValues={initialValues} onSubmit={( e ) => {
 
-							const component = new compItem.component( e );
-
-							props.entity.addComponent( component );
+							props.entity.addComponent( new compItem.component( e ) ).initiator = 'user';
 
 							closeAll && closeAll();
 
@@ -102,7 +100,7 @@ export const ComponentAdd = ( props: ComponentAddProps ) => {
 
 			} else {
 
-				props.entity.addComponent( new compItem.component() );
+				props.entity.addComponent( new compItem.component() ).initiator = 'user';
 
 				closeAll && closeAll();
 

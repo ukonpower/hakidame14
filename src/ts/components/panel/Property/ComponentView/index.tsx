@@ -96,9 +96,6 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 		const entity = component.entity;
 
-		console.log(component.entity);
-		
-
 		if ( entity ) {
 
 			entity.removeComponent( component );

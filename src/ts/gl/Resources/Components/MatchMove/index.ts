@@ -56,7 +56,7 @@ export class MatchMove extends MXP.Component {
 			- 0.2, 0.2, 0.0,
 		] ), 3 );
 
-		markerGeometry.setAttribute( 'index', new Uint8Array( [
+		markerGeometry.setAttribute( 'index', new Uint16Array( [
 			0, 1,
 			1, 2,
 			2, 3,
@@ -82,7 +82,7 @@ export class MatchMove extends MXP.Component {
 		// material
 
 		const markerMaterial = new MXP.Material( {
-			phase: [ "forward" ],
+			phase: [ "ui" ],
 			frag: MXP.hotGet( "matchMoveFrag", matchMoveFrag ),
 			vert: MXP.hotGet( "matchMoveVert", matchMoveVert ),
 			uniforms: GLP.UniformsUtils.merge( globalUniforms.time ),
