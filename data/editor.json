@@ -14,7 +14,7 @@
 							"key": "",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "websocket",
+								"mode": "json",
 								"gltfPath": "/scene.glb",
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
@@ -23,6 +23,62 @@
 						{
 							"key": "music",
 							"name": "Music",
+							"props": {}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/Effects",
+					"components": [
+						{
+							"key": "material",
+							"name": "Material",
+							"props": {}
+						},
+						{
+							"key": "geometry",
+							"name": "CylinderGeometry",
+							"props": {
+								"vertCount": 36
+							}
+						},
+						{
+							"key": "flashLine",
+							"name": "FlashLine",
+							"props": {}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/Effects/MatchMove",
+					"components": [
+						{
+							"key": "gpuCompute",
+							"name": "GPUCompute",
+							"props": {
+								"": true
+							}
+						},
+						{
+							"key": "matchMove",
+							"name": "MatchMove",
+							"props": {}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/Effects/MatchMove/",
+					"components": [
+						{
+							"key": "geometry",
+							"name": "Geometry",
+							"props": {
+								"vertCount": 10
+							}
+						},
+						{
+							"key": "material",
+							"name": "Material",
 							"props": {}
 						}
 					]

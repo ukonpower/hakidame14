@@ -16,6 +16,7 @@ import { VJCamera } from './Components/VJCamera';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
 import { FlashLine } from './Components/Effects/FlashLine';
+import { MatchMove } from './Components/MatchMove';
 
 
 export const initResouces = () => {
@@ -98,6 +99,8 @@ export const initResouces = () => {
 	comEntity.register( TemplateComponent );
 
 	comEntity.register(FlashLine)
+
+	comEntity.register(MatchMove)
 
 
 	// Other

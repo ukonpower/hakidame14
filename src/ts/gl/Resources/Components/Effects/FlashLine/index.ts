@@ -40,7 +40,7 @@ export class FlashLine extends MXP.Component {
 		// material
 
 		this.material = new MXP.Material( {
-			type: ["forward"],
+			phase: ["forward"],
 			frag: MXP.hotGet( "flFrag", flFrag ),
 			vert: MXP.hotGet( "flVert", flVert ),
 			uniforms: GLP.UniformsUtils.merge( globalUniforms.resolution, globalUniforms.time )

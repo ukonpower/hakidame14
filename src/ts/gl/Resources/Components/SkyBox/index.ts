@@ -20,7 +20,7 @@ export class SkyBox extends MXP.Component {
 
 		this.geometry = new MXP.CylinderGeometry( { height: 100, radiusTop: 20, radiusBottom: 20, heightSegments: 10, radSegments: 32, caps: false } );
 		this.material = new MXP.Material( {
-			type: [ "deferred", "envMap" ],
+			phase: [ "deferred", "envMap" ],
 			frag: MXP.hotGet( "skybox", skyboxFrag ),
 			cullFace: false,
 			uniforms: globalUniforms.time

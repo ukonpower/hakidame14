@@ -201,7 +201,7 @@ export class BLidger extends Component {
 
 		} else if ( entity.getComponent( Geometry ) ) {
 
-			entity.addComponent( new Material( { disableEdit: true, name: entity.name, type: [ "deferred", "shadowMap" ] } ) );
+			entity.addComponent( new Material( { disableEdit: true, name: entity.name, phase: [ "deferred", "shadowMap" ] } ) );
 
 		}
 

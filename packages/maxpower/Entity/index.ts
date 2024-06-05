@@ -364,14 +364,18 @@ export class Entity extends Exportable {
 
 	}
 
-	public removeComponent( component: Component ) {
+	public removeComponent( component: Component | typeof Component ) {
 
+		let currentComponent = this.components.get( component.key );
 
-		this.components.delete( component.key );
+		if( currentComponent ) {
 
-		component.unsetEntity()
+			this.components.delete( currentComponent.key );
+			currentComponent.unsetEntity()
 
-		return component;
+		}
+
+		return currentComponent;
 
 	}
 	
@@ -381,7 +385,7 @@ export class Entity extends Exportable {
 
 		if( component ) {
 
-			return this.removeComponent( component)
+			return this.removeComponent( component )
 		
 		}
 

@@ -5,16 +5,16 @@ import { PostProcessPass, PostProcessPassParam } from '../PostProcessPass';
 
 import quadVert from './shaders/quad.vs';
 
-import { gl } from '~/ts/gl/GLGlobals';
-
-
 export interface GPUComputePassParam extends Omit<PostProcessPassParam, 'renderTarget'>{
+	gl: WebGL2RenderingContext,
 	size: GLP.Vector,
 	layerCnt: number,
 }
 
 export class GPUComputePass extends PostProcessPass {
 
+	private gl: WebGL2RenderingContext;
+	
 	public readonly size: GLP.Vector;
 	public readonly layerCnt: number;
 
@@ -25,8 +25,10 @@ export class GPUComputePass extends PostProcessPass {
 
 	public outputUniforms: GLP.Uniforms;
 
-	constructor( gl: WebGL2RenderingContext, param: GPUComputePassParam ) {
+	constructor( param: GPUComputePassParam ) {
 
+		let gl = param.gl;
+		
 		const rt1 = new GLP.GLPowerFrameBuffer( gl ).setTexture( new Array( param.layerCnt ).fill( 0 ).map( () => new GLP.GLPowerTexture( gl ).setting( { type: gl.FLOAT, internalFormat: gl.RGBA32F, format: gl.RGBA, magFilter: gl.NEAREST, minFilter: gl.NEAREST } ) ) ).setSize( param.size );
 		const rt2 = new GLP.GLPowerFrameBuffer( gl ).setTexture( new Array( param.layerCnt ).fill( 0 ).map( () => new GLP.GLPowerTexture( gl ).setting( { type: gl.FLOAT, internalFormat: gl.RGBA32F, format: gl.RGBA, magFilter: gl.NEAREST, minFilter: gl.NEAREST } ) ) ).setSize( param.size );
 
@@ -47,6 +49,8 @@ export class GPUComputePass extends PostProcessPass {
 				type: "2fv"
 			}
 		} ) } );
+
+		this.gl = gl;
 
 		this.size = param.size;
 		this.layerCnt = param.layerCnt;
@@ -82,7 +86,7 @@ export class GPUComputePass extends PostProcessPass {
 
 		for ( let i = 0; i < this.layerCnt; i ++ ) {
 
-			gl.bindTexture( gl.TEXTURE_2D, this.rt2.textures[ i ].getTexture() );
+			this.gl.bindTexture( this.gl.TEXTURE_2D, this.rt2.textures[ i ].getTexture() );
 
 			for ( let j = 0; j < this.size.y; j ++ ) {
 
@@ -91,7 +95,7 @@ export class GPUComputePass extends PostProcessPass {
 					const x = k;
 					const y = j;
 
-					gl.texSubImage2D( gl.TEXTURE_2D, 0, x, y, 1, 1, gl.RGBA, gl.FLOAT, new Float32Array( cb( i, x, y ) ) );
+					this.gl.texSubImage2D( this.gl.TEXTURE_2D, 0, x, y, 1, 1, this.gl.RGBA, this.gl.FLOAT, new Float32Array( cb( i, x, y ) ) );
 
 				}
 
@@ -99,7 +103,7 @@ export class GPUComputePass extends PostProcessPass {
 
 		}
 
-		gl.bindTexture( gl.TEXTURE_2D, null );
+		this.gl.bindTexture( this.gl.TEXTURE_2D, null );
 
 	}
 
