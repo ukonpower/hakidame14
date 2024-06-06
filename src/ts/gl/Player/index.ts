@@ -89,8 +89,6 @@ class App {
 
 		this.scene = new ProjectScene();
 
-		this.scene.init( SceneData );
-
 		this.scene.on( "loaded", () => {
 
 			this.resize();
@@ -101,9 +99,8 @@ class App {
 			playButton.disabled = false;
 
 		} );
-
-		console.log(this.scene);
 		
+		this.scene.init( SceneData );
 
 		this.resize();
 
@@ -117,31 +114,44 @@ class App {
 
 	}
 
-	private animate() {
-
-		this.scene.update();
-
-		
-		
-		window.requestAnimationFrame( this.animate.bind( this ) );
-
-	}
-
 	private play() {
 
 		this.startElm.style.display = "none";
 		this.canvasWrapElm.style.display = 'block';
 		this.canvasWrapElm.style.cursor = 'none';
 
+		this.scene.play()
+		
 		this.resize();
-
 		this.animate();
+
+	}
+	
+	private animate() {
+
+		this.scene.update();
+		
+		// loop --------------------
+
+		if ( this.scene.frame.playing ) {
+
+			if ( this.scene.frame.current > this.scene.frameSetting.duration ) {
+
+				this.scene.frame.current = 0;
+
+			}
+
+		}
+
+		// -------------------------
+		
+		window.requestAnimationFrame( this.animate.bind( this ) );
 
 	}
 
 	private resize() {
 
-		const aspect = 16 / 7;
+		const aspect = 16 / 9;
 		const scale = 1.0;
 
 		this.canvas.width = 1920 * scale;
