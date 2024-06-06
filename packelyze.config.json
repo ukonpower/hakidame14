@@ -1,0 +1,15 @@
+{
+	"input": "lib/_eff.d.ts",
+	"output": "_packelyze-analyzed.json",
+	"builtins": [
+		"es",
+		"dom",
+		"worker",
+		"domprops",
+		"httpHeaders",
+		"node",
+		"react",
+		"cloudflareWorkers"
+	],
+	"writeDts": "_bundled.d.ts"
+}

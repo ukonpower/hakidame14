@@ -2,8 +2,9 @@ import path from 'path';
 
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
-
 import { ShaderMinifierLoader } from './plugins/ShaderMinifierLoader';
+
+import analyzed from "./_packelyze-analyzed.json";
 
 const basePath = ``;
 
@@ -24,9 +25,12 @@ export default defineConfig( {
 			},
 			mangle: {
 				properties: {
+					builtins: true,
+					// keep reserved properties
+					reserved: analyzed.reserved,
+					// minify everything except reserved!
 					regex: /.*/,
-					// reserved: analyzed.reserved,
-				},
+				  }
 			},
 			compress: {
 				passes: 16,
