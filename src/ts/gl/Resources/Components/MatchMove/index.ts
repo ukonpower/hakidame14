@@ -4,6 +4,7 @@ import * as MXP from 'maxpower';
 import matchMoveVert from './shaders/matchMove.vs';
 import matchMoveFrag from './shaders/matchMove.fs';
 import matchMoveLineVert from './shaders/matchMoveLine.vs';
+import matchMoveCompute from './shaders/matchMoveCompute.glsl';
 
 import { gl, globalUniforms } from '~/ts/gl/GLGlobals';
 
@@ -12,10 +13,14 @@ export class MatchMove extends MXP.Component {
 	private compute: MXP.GPUCompute;
 	private markerEntity: MXP.Entity;
 	private lineEntity: MXP.Entity;
+	
+	private cameraEntity: MXP.Entity | null;
 
 	constructor() {
 
 		super();
+
+		this.cameraEntity = null;
 
 		const size = new GLP.Vector( 100 + 1, 70 );
 
@@ -28,9 +33,32 @@ export class MatchMove extends MXP.Component {
 				new MXP.GPUComputePass({
 					gl,
 					size,
-					layerCnt:1
+					dataLayerCount:1,
+					frag: matchMoveCompute,
+					uniforms: GLP.UniformsUtils.merge( {
+						uGBufferPos: {
+							type: "1i",
+							value: null
+						},
+						uViewMatrix: {
+							type: "Matrix4fv",
+							value: null
+						},
+						uProjectionMatrix: {
+							type: "Matrix4fv",
+							value: null
+						},
+					}, globalUniforms.time ),
 				})
 			]
+		})
+
+		this.compute.passes[0].initTexture((layerCnt, x, y) => {
+
+			return [
+				Math.random(), Math.random(),Math.random(), Math.random()
+			]
+
 		})
 
 		/*-------------------------------
@@ -77,7 +105,7 @@ export class MatchMove extends MXP.Component {
 
 		}
 
-		markerGeometry.setAttribute( 'id', new Float32Array( makerIdArray ), 1, { instanceDivisor: 1 } );
+		markerGeometry.setAttribute( 'id', new Float32Array( makerIdArray ), 3, { instanceDivisor: 1 } );
 		
 		// material
 
@@ -85,9 +113,42 @@ export class MatchMove extends MXP.Component {
 			phase: [ "ui" ],
 			frag: MXP.hotGet( "matchMoveFrag", matchMoveFrag ),
 			vert: MXP.hotGet( "matchMoveVert", matchMoveVert ),
-			uniforms: GLP.UniformsUtils.merge( globalUniforms.time ),
-			drawType: "LINES"
+			uniforms: GLP.UniformsUtils.merge( globalUniforms.time,  this.compute.passes[0].outputUniforms, {
+				uAspectRatio: globalUniforms.resolution.uAspectRatio
+			} ),
+			drawType: "LINES",
+			blending: "ADD",
+			depthTest: false,
 		} );
+
+		if ( import.meta.hot ) {
+		
+			import.meta.hot.accept( './shaders/matchMove.fs', ( module ) => {
+		
+				if ( module ) {
+		
+					markerMaterial.frag = MXP.hotUpdate( 'matchMoveFrag', module.default );
+		
+					markerMaterial.requestUpdate();
+		
+				}
+		
+			} );
+		
+			import.meta.hot.accept( './shaders/matchMove.vs', ( module ) => {
+		
+				if ( module ) {
+		
+					markerMaterial.vert = MXP.hotUpdate( 'matchMoveVert', module.default );
+		
+					markerMaterial.requestUpdate();
+		
+				}
+		
+		
+			} );
+		
+		}
 
 		// marker entity
 
@@ -132,43 +193,91 @@ export class MatchMove extends MXP.Component {
 		// material
 
 		const lineMaterial = new MXP.Material( {
-			phase: [ "forward" ],
-			frag: MXP.hotGet( "matchMoveLineFrag", matchMoveFrag ),
-			vert: MXP.hotGet( "matchMoveVert", matchMoveLineVert ),
-			uniforms: GLP.UniformsUtils.merge( globalUniforms.time ),
-			drawType: "LINES"
+			phase: [ "ui" ],
+			frag: MXP.hotGet( "matchMoveFrag", matchMoveFrag ),
+			vert: MXP.hotGet( "matchMoveLineVert", matchMoveLineVert ),
+			uniforms: GLP.UniformsUtils.merge( globalUniforms.time, this.compute.passes[0].outputUniforms ),
+			drawType: "LINES",
+			blending: "ADD",
+			depthTest: false,
 		} );
+
+		if ( import.meta.hot ) {
+		
+			import.meta.hot.accept( './shaders/matchMoveLine.fs', ( module ) => {
+		
+				if ( module ) {
+		
+					lineMaterial.frag = MXP.hotUpdate( 'matchMoveFrag', module.default );
+		
+					lineMaterial.requestUpdate();
+		
+				}
+		
+			} );
+		
+			import.meta.hot.accept( './shaders/matchMoveLine.vs', ( module ) => {
+		
+				if ( module ) {
+		
+					lineMaterial.vert = MXP.hotUpdate( 'matchMoveLineVert', module.default );
+		
+					lineMaterial.requestUpdate();
+		
+				}
+		
+		
+			} );
+		
+		}
 
 		// line entity
 
 		this.lineEntity = new MXP.Entity({name: "Line"});
 		this.lineEntity.addComponent( lineGeometry );
 		this.lineEntity.addComponent( lineMaterial );
-
+		
 	}
 
-	static get key(): string {
+	public static get key(): string {
 
 		return "matchMove";
 
 	}
 
-
-	public setEntity( entity: MXP.Entity ): void {
+	public setEntityImpl( entity: MXP.Entity ): void {
 
 		entity.addComponent( this.compute );
 
 		entity.add( this.markerEntity );
 		entity.add( this.lineEntity );
 
-	}
+		this.cameraEntity = entity.getRootEntity().getEntityByName("camera")  || null
 
+		if( this.cameraEntity ) {
+
+			let renderCamera = this.cameraEntity.getComponent(MXP.RenderCamera);
+
+			if( renderCamera ) {
+
+				let uniforms = this.compute.passes[0].uniforms
+				uniforms.uGBufferPos.value = renderCamera.renderTarget.gBuffer.textures[0];
+				uniforms.uViewMatrix.value = renderCamera.viewMatrix;
+				uniforms.uProjectionMatrix.value = renderCamera.projectionMatrix;
+				
+			}
+			
+		}
+
+	}
+	
 	public unsetEntityImpl( entity: MXP.Entity ): void {
 
 		entity.removeComponent( this.compute )
-
 		entity.remove( this.markerEntity );
 		entity.remove( this.lineEntity );
+
+		this.cameraEntity = null
 
 	}
 

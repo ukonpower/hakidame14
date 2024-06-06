@@ -213,6 +213,8 @@ export class ProjectScene extends MXP.Entity {
 	public resize( resolution: GLP.Vector ) {
 
 		globalUniforms.resolution.uResolution.value.copy( resolution );
+		globalUniforms.resolution.uAspectRatio.value = resolution.x / resolution.y;
+
 		this.renderer.resize( resolution );
 		this.cameraComponent.resize( resolution );
 

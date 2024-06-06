@@ -8,7 +8,7 @@ import quadVert from './shaders/quad.vs';
 export interface GPUComputePassParam extends Omit<PostProcessPassParam, 'renderTarget'>{
 	gl: WebGL2RenderingContext,
 	size: GLP.Vector,
-	layerCnt: number,
+	dataLayerCount: number,
 }
 
 export class GPUComputePass extends PostProcessPass {
@@ -29,31 +29,31 @@ export class GPUComputePass extends PostProcessPass {
 
 		let gl = param.gl;
 		
-		const rt1 = new GLP.GLPowerFrameBuffer( gl ).setTexture( new Array( param.layerCnt ).fill( 0 ).map( () => new GLP.GLPowerTexture( gl ).setting( { type: gl.FLOAT, internalFormat: gl.RGBA32F, format: gl.RGBA, magFilter: gl.NEAREST, minFilter: gl.NEAREST } ) ) ).setSize( param.size );
-		const rt2 = new GLP.GLPowerFrameBuffer( gl ).setTexture( new Array( param.layerCnt ).fill( 0 ).map( () => new GLP.GLPowerTexture( gl ).setting( { type: gl.FLOAT, internalFormat: gl.RGBA32F, format: gl.RGBA, magFilter: gl.NEAREST, minFilter: gl.NEAREST } ) ) ).setSize( param.size );
+		const rt1 = new GLP.GLPowerFrameBuffer( gl ).setTexture( new Array( param.dataLayerCount ).fill( 0 ).map( () => new GLP.GLPowerTexture( gl ).setting( { type: gl.FLOAT, internalFormat: gl.RGBA32F, format: gl.RGBA, magFilter: gl.NEAREST, minFilter: gl.NEAREST } ) ) ).setSize( param.size );
+		const rt2 = new GLP.GLPowerFrameBuffer( gl ).setTexture( new Array( param.dataLayerCount ).fill( 0 ).map( () => new GLP.GLPowerTexture( gl ).setting( { type: gl.FLOAT, internalFormat: gl.RGBA32F, format: gl.RGBA, magFilter: gl.NEAREST, minFilter: gl.NEAREST } ) ) ).setSize( param.size );
 
-		const outputUniforms: GLP.Uniforms = {};
+		const outputUniforms: GLP.Uniforms = {
+			uGPUResolution: {
+				value: param.size,
+				type: "2fv"
+			}
+		};
 
-		for ( let i = 0; i < param.layerCnt; i ++ ) {
+		for ( let i = 0; i < param.dataLayerCount; i ++ ) {
 
-			outputUniforms[ 'uGPUOut' + i ] = {
+			outputUniforms[ 'uGPUSampler' + i ] = {
 				value: rt2.textures[ i ],
 				type: '1i'
 			};
 
 		}
 
-		super( { ...param, vert: param.vert || quadVert, renderTarget: rt1, uniforms: GLP.UniformsUtils.merge( param.uniforms, outputUniforms, {
-			uGPUResolution: {
-				value: param.size,
-				type: "2fv"
-			}
-		} ) } );
+		super( { ...param, vert: param.vert || quadVert, renderTarget: rt1, uniforms: GLP.UniformsUtils.merge( param.uniforms, outputUniforms ) } );
 
 		this.gl = gl;
 
 		this.size = param.size;
-		this.layerCnt = param.layerCnt;
+		this.layerCnt = param.dataLayerCount;
 
 		this.rt1 = rt1;
 		this.rt2 = rt2;
@@ -71,7 +71,7 @@ export class GPUComputePass extends PostProcessPass {
 
 		for ( let i = 0; i < this.layerCnt; i ++ ) {
 
-			this.outputUniforms[ 'uGPUOut' + i ].value = this.renderTarget!.textures[ i ];
+			this.outputUniforms[ 'uGPUSampler' + i ].value = this.renderTarget!.textures[ i ];
 
 		}
 

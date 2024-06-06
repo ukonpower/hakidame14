@@ -14,11 +14,16 @@
 							"key": "blidgeClient",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "websocket",
+								"mode": "json",
 								"gltfPath": "/scene.glb",
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
 							}
+						},
+						{
+							"key": "music",
+							"name": "Music",
+							"props": {}
 						}
 					]
 				},
@@ -87,7 +92,7 @@
 	],
 	"settings": {
 		"currentProjectName": "New Project",
-		"resolutionScale": 0.5,
+		"resolutionScale": 0.25,
 		"viewType": "render"
 	}
 }

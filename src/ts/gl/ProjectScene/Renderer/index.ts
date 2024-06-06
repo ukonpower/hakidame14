@@ -383,7 +383,16 @@ export class Renderer extends MXP.Entity {
 			this.gl.enable( this.gl.BLEND );
 
 			this.renderCamera( "forward", cameraEntity, stack.forward, cameraComponent.renderTarget.forwardBuffer, {
-				cameraOverride: { uniforms: { uDeferredTexture: { value: cameraComponent.renderTarget.shadingBuffer.textures[ 1 ], type: '1i' } } },
+				cameraOverride: { uniforms: {
+					uDeferredTexture: {
+						value: cameraComponent.renderTarget.shadingBuffer.textures[ 1 ],
+						type: '1i'
+					},
+					uEnvMap: {
+						value: this.pmremRender.renderTarget.textures[ 0 ],
+						type: '1i'
+					}
+				} },
 				disableClear: true,
 			} );
 
@@ -948,6 +957,16 @@ export class Renderer extends MXP.Entity {
 
 				}
 
+				if ( material.blending == 'NORMAL' ) {
+
+					this.gl.blendFunc( this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA );
+					
+				} else if ( material.blending == 'ADD' ) {
+					
+					this.gl.blendFunc( this.gl.SRC_ALPHA, this.gl.ONE );
+		
+				}
+				
 				const drawType = getDrawType( material.drawType );
 
 				if ( vao.instanceCount > 0 ) {

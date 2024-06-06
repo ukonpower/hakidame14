@@ -13,6 +13,7 @@ import basicVert from './shaders/basic.vs';
 
 
 export type DrawType = 'TRIANGLES' | 'LINES' | 'POINTS';
+export type Blending = 'ADD' | 'NORMAL';
 
 export interface MaterialParam extends ComponentParams{
 	name?: string,
@@ -23,9 +24,10 @@ export interface MaterialParam extends ComponentParams{
 	uniforms?: GLP.Uniforms;
 	depthTest?: boolean;
 	cullFace? :boolean;
-	blending?: boolean,
+	blending?: Blending,
 	drawType?: DrawType;
 }
+
 
 export class Material extends Component {
 
@@ -39,9 +41,11 @@ export class Material extends Component {
 	public depthTest: boolean;
 	public cullFace: boolean;
 	public drawType: DrawType;
+	public blending: Blending;
 
 	public visibilityFlag: MaterialVisibility;
 	public programCache: MaterialProgramCache;
+
 
 	constructor( params?: MaterialParam ) {
 
@@ -58,6 +62,7 @@ export class Material extends Component {
 		this.depthTest = true;
 		this.cullFace = false;
 		this.drawType = params.drawType || "TRIANGLES"
+		this.blending = params.blending || "NORMAL";
 
 		this.vert = params.vert || basicVert;
 		this.frag = params.frag || basicFrag;

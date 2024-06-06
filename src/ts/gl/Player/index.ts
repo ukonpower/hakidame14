@@ -95,39 +95,17 @@ class App {
 
 			this.resize();
 
-			if ( process.env.NODE_ENV == "production" ) {
-
-				this.scene.update( { forceDraw: true } );
-
-			}
+			this.scene.update( { forceDraw: true } );
 
 			playButton.innerText = '2. Play!';
 			playButton.disabled = false;
 
-			if ( process.env.NODE_ENV == "development" ) {
-
-				this.play();
-
-			}
-
 		} );
 
+		console.log(this.scene);
+		
+
 		this.resize();
-
-		if ( process.env.NODE_ENV == "production" ) {
-
-			this.scene.update( { forceDraw: true } );
-
-		}
-
-		playButton.innerText = '2. Play!';
-		playButton.disabled = false;
-
-		if ( process.env.NODE_ENV == "development" ) {
-
-			// this.play();
-
-		}
 
 		/*-------------------------------
 			Event
@@ -143,6 +121,8 @@ class App {
 
 		this.scene.update();
 
+		
+		
 		window.requestAnimationFrame( this.animate.bind( this ) );
 
 	}

@@ -461,6 +461,18 @@ export class Entity extends Exportable {
 
 	}
 
+	public getRootEntity(): Entity {
+
+		if ( this.parent ) {
+
+			return this.parent.getRootEntity();
+
+		}
+
+		return this;
+
+	}
+
 	/*-------------------------------
 		Event
 	-------------------------------*/

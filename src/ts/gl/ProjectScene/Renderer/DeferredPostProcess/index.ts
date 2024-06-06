@@ -210,15 +210,10 @@ export class DeferredRenderer extends MXP.PostProcess {
 					value: ssao.resolutionInv,
 					type: '2fv'
 				},
-				// uEnvMap: globalUniforms.tex.uEnvTex,
 				uEnvMap: {
 					value: params.envMap,
 					type: '1i'
 				},
-				// uEnvMapCube: {
-				// 	value: params.envMapCube,
-				// 	type: '1i'
-				// },
 				uTime: globalUniforms.time.uTime,
 			} ),
 		} );
@@ -261,7 +256,7 @@ export class DeferredRenderer extends MXP.PostProcess {
 
 	}
 
-	public static key(): string {
+	public static get key(): string {
 
 		return ( super.constructor as typeof MXP.PostProcess ).key + "deferred";
 

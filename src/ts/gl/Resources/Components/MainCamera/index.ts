@@ -560,6 +560,12 @@ export class MainCamera extends MXP.Component {
 
 	}
 
+	public static get key() {
+
+		return 'mainCamera';
+		
+	}
+
 	public setEntityImpl( entity: MXP.Entity, prevEntity: MXP.Entity | null ): void {
 
 		entity.addComponent( this.cameraComponent );

@@ -31,6 +31,9 @@ void main( void ) {
 
 		size *= 2.0;
 
+		uv.y += uTimeE * 0.01;
+
+
 	}
 
 	uv -= p;
@@ -43,7 +46,12 @@ void main( void ) {
 	outColor.xyz *= 0.0;
 	outEmission = vec3( 1.0 );
 	outEmissionIntensity = 3.0 * emit * h.y;
+
+	#ifdef IS_FORWARD
+
+		outColor = vec4( outEmission * outEmissionIntensity, 1.0 );
 	
+	#endif
 
 	#include <frag_out>
 

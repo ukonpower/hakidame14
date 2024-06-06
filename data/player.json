@@ -1,7 +1,7 @@
 {
 	"setting": {
-		"name": "Hakidame14",
-		"timeline/duration": 678,
+		"name": "New Project",
+		"timeline/duration": 600,
 		"timeline/fps": 60
 	},
 	"objectOverride": [
@@ -9,10 +9,10 @@
 			"path": "/root",
 			"components": [
 				{
-					"key": "",
+					"key": "blidgeClient",
 					"name": "BLidgeClient",
 					"props": {
-						"mode": "websocket",
+						"mode": "json",
 						"gltfPath": "/scene.glb",
 						"websocket/connected": true,
 						"websocket/url": "ws://localhost:3100"
@@ -29,18 +29,6 @@
 			"path": "/root/blidgeRoot/Effects",
 			"components": [
 				{
-					"key": "material",
-					"name": "Material",
-					"props": {}
-				},
-				{
-					"key": "geometry",
-					"name": "CylinderGeometry",
-					"props": {
-						"vertCount": 36
-					}
-				},
-				{
 					"key": "flashLine",
 					"name": "FlashLine",
 					"props": {}
@@ -48,13 +36,18 @@
 			]
 		},
 		{
-			"path": "/root/blidgeRoot/FluidCrystal",
+			"path": "/root/blidgeRoot/Effects/MatchMove",
 			"components": [
 				{
-					"key": "material",
-					"name": "Material",
+					"key": "matchMove",
+					"name": "MatchMove",
 					"props": {}
-				},
+				}
+			]
+		},
+		{
+			"path": "/root/blidgeRoot/FluidCrystal",
+			"components": [
 				{
 					"key": "fluidCrystal",
 					"name": "FluidCrystal",
@@ -65,18 +58,6 @@
 		{
 			"path": "/root/blidgeRoot/SkyBox",
 			"components": [
-				{
-					"key": "geometry",
-					"name": "CylinderGeometry",
-					"props": {
-						"vertCount": 363
-					}
-				},
-				{
-					"key": "material",
-					"name": "Material",
-					"props": {}
-				},
 				{
 					"key": "skybox",
 					"name": "SkyBox",
