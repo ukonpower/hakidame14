@@ -18,7 +18,7 @@ export default defineConfig( {
 		outDir: '../dist/',
 		minify: 'terser',
 		terserOptions: {
-			keep_classnames: false,
+			keep_classnames: true,
 			format: {
 				comments: false
 			},
@@ -44,7 +44,6 @@ export default defineConfig( {
 				unsafe_proto: true,
 				unsafe_undefined: true,
 			},
-			// sourceMap: true
 		},
 		rollupOptions: {
 			input: {

@@ -1,7 +1,6 @@
 
 import * as MXP from 'maxpower';
 
-
 import { resource } from '../GLGlobals';
 
 import { BLidgeClient } from "./Components/BLidgeClient";
@@ -18,7 +17,6 @@ import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
-
 
 export const initResouces = () => {
 
