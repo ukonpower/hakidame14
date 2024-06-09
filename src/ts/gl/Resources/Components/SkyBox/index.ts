@@ -1,3 +1,4 @@
+import * as GLP from 'glpower';
 import * as MXP from 'maxpower';
 
 import skyboxFrag from './shaders/skybox.fs';
@@ -21,7 +22,7 @@ export class SkyBox extends MXP.Component {
 			phase: [ "deferred", "envMap" ],
 			frag: MXP.hotGet( "skybox", skyboxFrag ),
 			cullFace: false,
-			uniforms: globalUniforms.time
+			uniforms: GLP.UniformsUtils.merge( globalUniforms.time, globalUniforms.music )
 		} );
 
 		if ( import.meta.hot ) {

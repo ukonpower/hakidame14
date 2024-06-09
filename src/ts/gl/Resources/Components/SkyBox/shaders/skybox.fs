@@ -6,6 +6,7 @@
 
 uniform float uTimeE;
 
+uniform sampler2D uMusicFreqTex;
 
 void main( void ) {
 
@@ -36,11 +37,14 @@ void main( void ) {
 
 	}
 
+	float mtd = texture( uMusicFreqTex, vec2( h.z, 0.0 ) ).x;
+	mtd = smoothstep( 0.0, 0.5, mtd );
+
 	uv -= p;
 	uv *= size;
 
 	float emit = 0.0;
-	emit += smoothstep( 0.4, 0.39, length( uv - 0.5 ));
+	emit += smoothstep( 0.4, 0.39, length( uv - 0.5 ) * 3.0 - mtd * 1.0);
 	emit *= smoothstep( 0.5, 0.0, abs( vUv.y - 0.5 ) );
 
 	outColor.xyz *= 0.0;

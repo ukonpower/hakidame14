@@ -566,7 +566,7 @@ export class MainCamera extends MXP.Component {
 
 	}
 
-	public setEntityImpl( entity: MXP.Entity, prevEntity: MXP.Entity | null ): void {
+	public setEntityImpl( entity: MXP.Entity, ): void {
 
 		entity.addComponent( this.cameraComponent );
 		entity.addComponent( this.scenePostProcess );
@@ -598,12 +598,6 @@ export class MainCamera extends MXP.Component {
 			this.updateCameraParams( this.resolution );
 
 		} );
-
-		if ( prevEntity ) {
-
-			prevEntity.off( 'sceneCreated' );
-
-		}
 
 	}
 

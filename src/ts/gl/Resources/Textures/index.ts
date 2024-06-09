@@ -15,12 +15,4 @@ export const initTextures = () => {
 		type: '1i'
 	};
 
-	// globalUniforms.tex.uEnvTex = {
-	// 	value: new GLPowerTexture( gl ).load( "/env/test.png" ).setting( {
-	// 		magFilter: gl.LINEAR,
-	// 		minFilter: gl.LINEAR,
-	// 	} ),
-	// 	type: '1i'
-	// };
-
 };

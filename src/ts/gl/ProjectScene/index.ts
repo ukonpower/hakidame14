@@ -79,6 +79,13 @@ export class ProjectScene extends MXP.Entity {
 
 		} );
 
+		this.on( "update/music", ( buffer: AudioBuffer, freqTex: GLP.GLPowerTexture, domainTex: GLP.GLPowerTexture ) => {
+
+			globalUniforms.music.uMusicFreqTex.value = freqTex;
+			globalUniforms.music.uMusicDomainTex.value = domainTex;
+
+		} );
+
 		// canvas
 
 		this.canvas = canvas;
@@ -167,7 +174,6 @@ export class ProjectScene extends MXP.Entity {
 		this.root.add( this.renderer );
 
 		this.emit( "update/graph" );
-
 		this.emit( "loaded" );
 
 	}
