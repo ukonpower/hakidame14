@@ -14,7 +14,7 @@
 							"key": "blidgeClient",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "json",
+								"mode": "websocket",
 								"gltfPath": "/scene.glb",
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
@@ -28,11 +28,31 @@
 					]
 				},
 				{
-					"path": "/root/blidgeRoot/Effects",
+					"path": "/root/blidgeRoot/Effects/DashCube",
+					"components": [
+						{
+							"key": "dashCube",
+							"name": "DashCube",
+							"props": {}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/Effects/FlashLine",
 					"components": [
 						{
 							"key": "flashLine",
 							"name": "FlashLine",
+							"props": {}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/Effects/GridCross",
+					"components": [
+						{
+							"key": "gridCross",
+							"name": "GridCross",
 							"props": {}
 						}
 					]
@@ -69,14 +89,13 @@
 				}
 			],
 			"scene": {
-				"name": "root",
-				"childs": []
+				"name": "root"
 			}
 		}
 	],
 	"settings": {
 		"currentProjectName": "New Project",
-		"resolutionScale": 0.25,
+		"resolutionScale": 0.5,
 		"viewType": "render"
 	}
 }

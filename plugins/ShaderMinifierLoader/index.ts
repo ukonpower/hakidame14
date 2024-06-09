@@ -72,7 +72,7 @@ export const ShaderMinifierLoader = (): Plugin => {
 
 			await fs.promises.writeFile( inputFilePath, code );
 
-			const functionPattern = /^\s*(float|vec2|vec3|vec4|mat4|void)\s+(\w+)\s*\(/gm;
+			const functionPattern = /^\s*(float|vec2|vec3|vec4|mat2|mat3|mat4|void)\s+(\w+)\s*\(/gm;
 			const structPattern = /^\s*struct\s+(\w+)\s*\{/gm;
 
 			function extractNames( pattern: RegExp, code: string ) {

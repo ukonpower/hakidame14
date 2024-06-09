@@ -4,7 +4,9 @@ import * as MXP from 'maxpower';
 import { resource } from '../GLGlobals';
 
 import { BLidgeClient } from "./Components/BLidgeClient";
+import { DashCube } from './Components/Effects/DashCube';
 import { FlashLine } from './Components/Effects/FlashLine';
+import { GridCross } from './Components/Effects/GridCross';
 import { FluidCrystal } from './Components/FluidCrystal';
 import { LookAt } from "./Components/LookAt";
 import { MatchMove } from './Components/MatchMove';
@@ -25,18 +27,6 @@ export const initResouces = () => {
 	-------------------------------*/
 
 	resource.clearComponents();
-
-	// object
-
-	const comObject = resource.componentCategory( "Object" );
-
-	comObject.register( MXP.Camera, {
-		cameraType: "perspective",
-	} );
-
-	comObject.register( MXP.Light, {
-		lightType: "directional",
-	} );
 
 	// geometry
 
@@ -101,6 +91,9 @@ export const initResouces = () => {
 
 	comEntity.register( MatchMove );
 
+	comEntity.register( GridCross );
+
+	comEntity.register( DashCube );
 
 	// Other
 

@@ -80,11 +80,9 @@ export class Component extends Exportable {
 
 	public setEntity( entity: Entity ) {
 
-		const beforeEntity = this.entity;
-
 		this.entity = entity;
 
-		this.setEntityImpl( this.entity, beforeEntity );
+		this.setEntityImpl( this.entity );
 
 	}
 
@@ -140,7 +138,7 @@ export class Component extends Exportable {
 
 	}
 
-	protected setEntityImpl( entity: Entity, prevEntity: Entity | null ) {}
+	protected setEntityImpl( entity: Entity ) {}
 
 	protected unsetEntityImpl( prevEntity: Entity ) {}
 
