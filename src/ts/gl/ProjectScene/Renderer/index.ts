@@ -63,10 +63,8 @@ type DrawParam = CameraOverride & { modelMatrixWorld?: GLP.Matrix, modelMatrixWo
 // state
 
 type GPUState = {
-	key: string,
-	command: number,
-	state: boolean,
-}[]
+	[key: string] : {state: boolean},
+}
 
 // texture unit
 
@@ -102,7 +100,7 @@ export class Renderer extends MXP.Entity {
 
 	// gpu state
 
-	private glState: GPUState;
+	private glStateCahce: GPUState;
 
 	// render query
 
@@ -193,18 +191,7 @@ export class Renderer extends MXP.Entity {
 
 		// gpu
 
-		this.glState = [
-			{
-				key: "cullFace",
-				command: this.gl.CULL_FACE,
-				state: false
-			},
-			{
-				key: "depthTest",
-				command: this.gl.DEPTH_TEST,
-				state: false
-			},
-		];
+		this.glStateCahce = {};
 
 		// query
 
@@ -703,21 +690,31 @@ export class Renderer extends MXP.Entity {
 
 		TextureUnitCounter = 0;
 
-		// status
+		// cull face
 
-		for ( let i = 0; i < this.glState.length; i ++ ) {
+		let gpuStateType: number = this.gl.CULL_FACE;
 
-			const item = this.glState[ i ];
-			const newState = ( material as any )[ item.key ];
+		const cullStateCache = this.glStateCahce[ gpuStateType ];
 
-			if ( item.state != newState ) {
+		if ( cullStateCache === undefined || cullStateCache.state != material.cullFace ) {
 
-				item.state = newState;
-				item.state ? this.gl.enable( item.command ) : this.gl.disable( item.command );
-
-			}
+			material.cullFace ? this.gl.enable( gpuStateType ) : this.gl.disable( gpuStateType );
 
 		}
+
+		// depth
+
+		gpuStateType = this.gl.DEPTH_TEST;
+
+		const depthStateCache = this.glStateCahce[ gpuStateType ];
+
+		if ( depthStateCache === undefined || depthStateCache.state != material.depthTest ) {
+
+			material.depthTest ? this.gl.enable( gpuStateType ) : this.gl.disable( gpuStateType );
+
+		}
+
+		// program
 
 		let program = material.programCache[ renderType ];
 
