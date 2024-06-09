@@ -1,11 +1,14 @@
+
 import * as MXP from 'maxpower';
 
 
 import { resource } from '../GLGlobals';
 
 import { BLidgeClient } from "./Components/BLidgeClient";
+import { FlashLine } from './Components/Effects/FlashLine';
 import { FluidCrystal } from './Components/FluidCrystal';
 import { LookAt } from "./Components/LookAt";
+import { MatchMove } from './Components/MatchMove';
 import { Music } from './Components/Music';
 import { OrbitControls } from './Components/OrbitControls';
 import { ShakeViewer } from "./Components/ShakeViewer";
@@ -15,8 +18,6 @@ import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
-import { FlashLine } from './Components/Effects/FlashLine';
-import { MatchMove } from './Components/MatchMove';
 
 
 export const initResouces = () => {
@@ -98,9 +99,9 @@ export const initResouces = () => {
 
 	comEntity.register( TemplateComponent );
 
-	comEntity.register(FlashLine)
+	comEntity.register( FlashLine );
 
-	comEntity.register(MatchMove)
+	comEntity.register( MatchMove );
 
 
 	// Other

@@ -1,4 +1,3 @@
-import { GLPowerTexture, GLPowerTextureCube } from "glpower";
 
 
 import { TexProcedural } from "../../ProjectScene/utils/TexProcedural";

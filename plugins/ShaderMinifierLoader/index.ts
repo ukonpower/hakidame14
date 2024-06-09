@@ -51,16 +51,16 @@ export const ShaderMinifierLoader = (): Plugin => {
 
 			if ( ! filter( id ) ) return;
 
-			let isPart = id.indexOf( '.part.glsl' ) > - 1 ;
+			const isPart = id.indexOf( '.part.glsl' ) > - 1;
 
-			if( isPart ) {
-				
+			if ( isPart ) {
+
 				return {
-					code: `export default ${JSON.stringify( code.replaceAll(/[\n]+/g, "") )};`,
+					code: `export default ${JSON.stringify( code.replaceAll( /[\n]+/g, "" ) )};`,
 					map: { mappings: '' }
 				};
-				
-			} 
+
+			}
 
 			code = code.replaceAll( "\\n", "\n" );
 			code = code.replaceAll( "\\t", "\t" );
@@ -89,21 +89,21 @@ export const ShaderMinifierLoader = (): Plugin => {
 				return names;
 
 			}
-			
+
 			let args = '--format text --preserve-externals';
 
 			let noRenamingList = [ "main", "D" ];
 
-			let isModule = id.indexOf( '.module.glsl' ) > - 1 ;
+			const isModule = id.indexOf( '.module.glsl' ) > - 1;
 
-			if (isModule ) {
+			if ( isModule ) {
 
 				args += " --no-remove-unused";
 				noRenamingList = [ ...noRenamingList, ...extractNames( functionPattern, code ), ...extractNames( structPattern, code ) ];
 
 			}
-			
-			if( noRenamingList.length > 0 ) {	
+
+			if ( noRenamingList.length > 0 ) {
 
 				args += ' --no-renaming-list ' + noRenamingList.join( ',' );
 

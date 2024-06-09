@@ -1,10 +1,10 @@
 import * as GLP from 'glpower';
 import * as MXP from 'maxpower';
 
-import matchMoveVert from './shaders/matchMove.vs';
 import matchMoveFrag from './shaders/matchMove.fs';
-import matchMoveLineVert from './shaders/matchMoveLine.vs';
+import matchMoveVert from './shaders/matchMove.vs';
 import matchMoveCompute from './shaders/matchMoveCompute.glsl';
+import matchMoveLineVert from './shaders/matchMoveLine.vs';
 
 import { gl, globalUniforms } from '~/ts/gl/GLGlobals';
 
@@ -13,7 +13,7 @@ export class MatchMove extends MXP.Component {
 	private compute: MXP.GPUCompute;
 	private markerEntity: MXP.Entity;
 	private lineEntity: MXP.Entity;
-	
+
 	private cameraEntity: MXP.Entity | null;
 
 	constructor() {
@@ -28,12 +28,12 @@ export class MatchMove extends MXP.Component {
 			Compute
 		-------------------------------*/
 
-		this.compute = new MXP.GPUCompute({
+		this.compute = new MXP.GPUCompute( {
 			passes: [
-				new MXP.GPUComputePass({
+				new MXP.GPUComputePass( {
 					gl,
 					size,
-					dataLayerCount:1,
+					dataLayerCount: 1,
 					frag: matchMoveCompute,
 					uniforms: GLP.UniformsUtils.merge( {
 						uGBufferPos: {
@@ -49,17 +49,17 @@ export class MatchMove extends MXP.Component {
 							value: null
 						},
 					}, globalUniforms.time ),
-				})
+				} )
 			]
-		})
+		} );
 
-		this.compute.passes[0].initTexture((layerCnt, x, y) => {
+		this.compute.passes[ 0 ].initTexture( ( layerCnt, x, y ) => {
 
 			return [
-				Math.random(), Math.random(),Math.random(), Math.random()
-			]
+				Math.random(), Math.random(), Math.random(), Math.random()
+			];
 
-		})
+		} );
 
 		/*-------------------------------
 			Marker
@@ -106,14 +106,14 @@ export class MatchMove extends MXP.Component {
 		}
 
 		markerGeometry.setAttribute( 'id', new Float32Array( makerIdArray ), 3, { instanceDivisor: 1 } );
-		
+
 		// material
 
 		const markerMaterial = new MXP.Material( {
 			phase: [ "ui" ],
 			frag: MXP.hotGet( "matchMoveFrag", matchMoveFrag ),
 			vert: MXP.hotGet( "matchMoveVert", matchMoveVert ),
-			uniforms: GLP.UniformsUtils.merge( globalUniforms.time,  this.compute.passes[0].outputUniforms, {
+			uniforms: GLP.UniformsUtils.merge( globalUniforms.time, this.compute.passes[ 0 ].outputUniforms, {
 				uAspectRatio: globalUniforms.resolution.uAspectRatio
 			} ),
 			drawType: "LINES",
@@ -122,37 +122,37 @@ export class MatchMove extends MXP.Component {
 		} );
 
 		if ( import.meta.hot ) {
-		
+
 			import.meta.hot.accept( './shaders/matchMove.fs', ( module ) => {
-		
+
 				if ( module ) {
-		
+
 					markerMaterial.frag = MXP.hotUpdate( 'matchMoveFrag', module.default );
-		
+
 					markerMaterial.requestUpdate();
-		
+
 				}
-		
+
 			} );
-		
+
 			import.meta.hot.accept( './shaders/matchMove.vs', ( module ) => {
-		
+
 				if ( module ) {
-		
+
 					markerMaterial.vert = MXP.hotUpdate( 'matchMoveVert', module.default );
-		
+
 					markerMaterial.requestUpdate();
-		
+
 				}
-		
-		
+
+
 			} );
-		
+
 		}
 
 		// marker entity
 
-		this.markerEntity = new MXP.Entity({name: "Marker"});
+		this.markerEntity = new MXP.Entity( { name: "Marker" } );
 		this.markerEntity.addComponent( markerGeometry );
 		this.markerEntity.addComponent( markerMaterial );
 
@@ -186,9 +186,9 @@ export class MatchMove extends MXP.Component {
 
 		}
 
-		lineGeometry.setAttribute("uv", new Float32Array( lineUVArray ), 2);
-		lineGeometry.setAttribute("index", new Uint16Array( lineIndexArray ), 1);
-		lineGeometry.setAttribute("id", new Float32Array( lineidArray ), 1, {instanceDivisor: 1});
+		lineGeometry.setAttribute( "uv", new Float32Array( lineUVArray ), 2 );
+		lineGeometry.setAttribute( "index", new Uint16Array( lineIndexArray ), 1 );
+		lineGeometry.setAttribute( "id", new Float32Array( lineidArray ), 1, { instanceDivisor: 1 } );
 
 		// material
 
@@ -196,47 +196,47 @@ export class MatchMove extends MXP.Component {
 			phase: [ "ui" ],
 			frag: MXP.hotGet( "matchMoveFrag", matchMoveFrag ),
 			vert: MXP.hotGet( "matchMoveLineVert", matchMoveLineVert ),
-			uniforms: GLP.UniformsUtils.merge( globalUniforms.time, this.compute.passes[0].outputUniforms ),
+			uniforms: GLP.UniformsUtils.merge( globalUniforms.time, this.compute.passes[ 0 ].outputUniforms ),
 			drawType: "LINES",
 			blending: "ADD",
 			depthTest: false,
 		} );
 
 		if ( import.meta.hot ) {
-		
+
 			import.meta.hot.accept( './shaders/matchMoveLine.fs', ( module ) => {
-		
+
 				if ( module ) {
-		
+
 					lineMaterial.frag = MXP.hotUpdate( 'matchMoveFrag', module.default );
-		
+
 					lineMaterial.requestUpdate();
-		
+
 				}
-		
+
 			} );
-		
+
 			import.meta.hot.accept( './shaders/matchMoveLine.vs', ( module ) => {
-		
+
 				if ( module ) {
-		
+
 					lineMaterial.vert = MXP.hotUpdate( 'matchMoveLineVert', module.default );
-		
+
 					lineMaterial.requestUpdate();
-		
+
 				}
-		
-		
+
+
 			} );
-		
+
 		}
 
 		// line entity
 
-		this.lineEntity = new MXP.Entity({name: "Line"});
+		this.lineEntity = new MXP.Entity( { name: "Line" } );
 		this.lineEntity.addComponent( lineGeometry );
 		this.lineEntity.addComponent( lineMaterial );
-		
+
 	}
 
 	public static get key(): string {
@@ -252,32 +252,32 @@ export class MatchMove extends MXP.Component {
 		entity.add( this.markerEntity );
 		entity.add( this.lineEntity );
 
-		this.cameraEntity = entity.getRootEntity().getEntityByName("camera")  || null
+		this.cameraEntity = entity.getRootEntity().getEntityByName( "camera" ) || null;
 
-		if( this.cameraEntity ) {
+		if ( this.cameraEntity ) {
 
-			let renderCamera = this.cameraEntity.getComponent(MXP.RenderCamera);
+			const renderCamera = this.cameraEntity.getComponent( MXP.RenderCamera );
 
-			if( renderCamera ) {
+			if ( renderCamera ) {
 
-				let uniforms = this.compute.passes[0].uniforms
-				uniforms.uGBufferPos.value = renderCamera.renderTarget.gBuffer.textures[0];
+				const uniforms = this.compute.passes[ 0 ].uniforms;
+				uniforms.uGBufferPos.value = renderCamera.renderTarget.gBuffer.textures[ 0 ];
 				uniforms.uViewMatrix.value = renderCamera.viewMatrix;
 				uniforms.uProjectionMatrix.value = renderCamera.projectionMatrix;
-				
+
 			}
-			
+
 		}
 
 	}
-	
+
 	public unsetEntityImpl( entity: MXP.Entity ): void {
 
-		entity.removeComponent( this.compute )
+		entity.removeComponent( this.compute );
 		entity.remove( this.markerEntity );
 		entity.remove( this.lineEntity );
 
-		this.cameraEntity = null
+		this.cameraEntity = null;
 
 	}
 

@@ -1,8 +1,8 @@
 
-import * as GLP from 'glpower';
 import * as MXP from 'maxpower';
 
 type ComponentArgs = {[key: string]: any}
+import * as GLP from 'glpower';
 
 export type ResouceComponentItem = {
 	key: string;
@@ -12,7 +12,7 @@ export type ResouceComponentItem = {
 
 export class OREngineResource extends GLP.EventEmitter {
 
-	public componentListCategrized: Map<string, ( ResouceComponentItem )[]> = new Map();
+	public comListCats: Map<string, ( ResouceComponentItem )[]> = new Map();
 	public componentList: ( ResouceComponentItem )[] = [];
 
 	constructor() {
@@ -40,17 +40,17 @@ export class OREngineResource extends GLP.EventEmitter {
 
 	public clearComponents() {
 
-		this.componentList.length = 0;
+		this.componentList = [];
 
-		this.componentListCategrized.clear();
+		this.comListCats.clear();
 
 	}
 
 	public componentCategory( catName: string ) {
 
-		const catCompList = this.componentListCategrized.get( catName ) || [];
+		const catCompList = this.comListCats.get( catName ) || [];
 
-		this.componentListCategrized.set( catName, catCompList );
+		this.comListCats.set( catName, catCompList );
 
 		return {
 			register: ( component: typeof MXP.Component, defaultArgs?: ComponentArgs ) => {

@@ -168,7 +168,8 @@ export class ProjectScene extends MXP.Entity {
 
 		this.emit( "update/graph" );
 
-		this.emit("loaded")
+		this.emit( "loaded" );
+
 	}
 
 	public update( param?: Undefineder<MXP.EntityUpdateEvent> ) {

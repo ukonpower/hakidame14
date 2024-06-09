@@ -14,7 +14,7 @@ export class SkyBox extends MXP.Component {
 
 	constructor( params: SkyBoxParams ) {
 
-		super(params);
+		super( params );
 
 		this.geometry = new MXP.CylinderGeometry( { height: 100, radiusTop: 20, radiusBottom: 20, heightSegments: 10, radSegments: 32, caps: false } );
 		this.material = new MXP.Material( {

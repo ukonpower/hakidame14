@@ -1,7 +1,7 @@
 import * as GLP from 'glpower';
 
 import { Component, ComponentParams } from "..";
-import { Exportable, ExportableProps } from '../../Exportable';
+import { ExportableProps } from '../../Exportable';
 
 export type GeometryParam = {
 }

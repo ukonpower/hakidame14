@@ -1,9 +1,10 @@
 import * as MXP from 'maxpower';
 
 import { router } from './router';
-import SceneData from '~/ts/gl/Resources/scene.json';
 
 import { gl } from '~/ts/gl/GLGlobals';
+import SceneData from '~/ts/gl/Resources/scene.json';
+
 
 export class BLidgeClient extends MXP.Component {
 
@@ -67,10 +68,10 @@ export class BLidgeClient extends MXP.Component {
 
 	public static get key() {
 
-		return "blidgeClient"
-		
+		return "blidgeClient";
+
 	}
-	
+
 	public getProps(): MXP.ExportableProps {
 
 		const connect = this.connection.enabled;

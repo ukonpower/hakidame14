@@ -99,7 +99,7 @@ class App {
 			playButton.disabled = false;
 
 		} );
-		
+
 		this.scene.init( SceneData );
 
 		this.resize();
@@ -120,17 +120,17 @@ class App {
 		this.canvasWrapElm.style.display = 'block';
 		this.canvasWrapElm.style.cursor = 'none';
 
-		this.scene.play()
-		
+		this.scene.play();
+
 		this.resize();
 		this.animate();
 
 	}
-	
+
 	private animate() {
 
 		this.scene.update();
-		
+
 		// loop --------------------
 
 		if ( this.scene.frame.playing ) {
@@ -144,7 +144,7 @@ class App {
 		}
 
 		// -------------------------
-		
+
 		window.requestAnimationFrame( this.animate.bind( this ) );
 
 	}

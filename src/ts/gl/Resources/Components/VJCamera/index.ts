@@ -76,7 +76,6 @@ export class VJCamera extends MXP.Component {
 
 		}
 
-		
 
 	}
 

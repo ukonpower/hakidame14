@@ -61,7 +61,7 @@ export class Material extends Component {
 		this.useLight = true;
 		this.depthTest = true;
 		this.cullFace = false;
-		this.drawType = params.drawType || "TRIANGLES"
+		this.drawType = params.drawType || "TRIANGLES";
 		this.blending = params.blending || "NORMAL";
 
 		this.vert = params.vert || basicVert;

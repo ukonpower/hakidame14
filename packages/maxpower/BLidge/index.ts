@@ -326,8 +326,8 @@ export class BLidge extends GLP.EventEmitter {
 		this.frame.end = data.frame.end;
 		this.frame.fps = data.frame.fps;
 
-		this.curveGroups.length = 0;
-		this.nodes.length = 0;
+		this.curveGroups = [];
+		this.nodes = [];
 
 		// actions
 
@@ -368,7 +368,7 @@ export class BLidge extends GLP.EventEmitter {
 
 		// node
 
-		this.nodes.length = 0;
+		this.nodes = [];
 
 		const _ = ( nodeParam: BLidgeNodeParam ): BLidgeNode => {
 

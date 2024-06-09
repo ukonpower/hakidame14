@@ -1,6 +1,6 @@
 
 import * as MXP from 'maxpower';
-import { MouseEvent, ReactNode, useCallback, useContext, useRef, useState } from 'react';
+import { MouseEvent, ReactNode, useCallback, useContext, useRef } from 'react';
 
 import { MouseMenuContext } from '../../MouseMenu/useMouseMenu';
 
@@ -110,7 +110,7 @@ export const ComponentAdd = ( props: ComponentAddProps ) => {
 
 		const cagegoryGroupList: ReactNode[] = [];
 
-		resources.componentListCategrized.forEach( ( compList, catName ) => {
+		resources.comListCats.forEach( ( compList, catName ) => {
 
 			cagegoryGroupList.push(
 				<ComponentCategoryGroup key={catName} categoryName={catName} componentList={compList} onClick={onClickComponentItem} />

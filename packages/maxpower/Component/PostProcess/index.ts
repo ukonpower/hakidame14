@@ -73,7 +73,7 @@ export class PostProcess extends Component {
 		}
 
 	}
-	
+
 	public resize( resolution: GLP.Vector ): void {
 
 		for ( let i = 0; i < this.passes.length; i ++ ) {

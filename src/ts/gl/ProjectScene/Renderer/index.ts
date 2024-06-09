@@ -8,8 +8,6 @@ import { PMREMRender } from './PMREMRender';
 import { ProgramManager } from "./ProgramManager";
 import { shaderParse } from "./ShaderParser";
 
-import { gpuState } from '~/ts/gl/GLGlobals';
-
 
 // render stack
 
@@ -235,7 +233,7 @@ export class Renderer extends MXP.Entity {
 
 		// 		this.queryList.forEach( q => this.gl.deleteQuery( q ) );
 
-		// 		this.queryList.length = 0;
+		// 		this.queryList = [];
 
 		// 	} else {
 
@@ -284,7 +282,7 @@ export class Renderer extends MXP.Entity {
 
 			const l = lightKeys[ i ] as MXP.LightType;
 			prevLightsNum[ l ] = this.lights[ l ].length;
-			this.lights[ l ].length = 0;
+			this.lights[ l ] = [];
 
 		}
 
@@ -960,13 +958,13 @@ export class Renderer extends MXP.Entity {
 				if ( material.blending == 'NORMAL' ) {
 
 					this.gl.blendFunc( this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA );
-					
+
 				} else if ( material.blending == 'ADD' ) {
-					
+
 					this.gl.blendFunc( this.gl.SRC_ALPHA, this.gl.ONE );
-		
+
 				}
-				
+
 				const drawType = getDrawType( material.drawType );
 
 				if ( vao.instanceCount > 0 ) {

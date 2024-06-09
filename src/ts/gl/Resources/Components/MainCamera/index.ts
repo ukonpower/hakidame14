@@ -113,7 +113,7 @@ export class MainCamera extends MXP.Component {
 
 		// components
 
-		this.cameraComponent = new MXP.RenderCamera( {gl} );
+		this.cameraComponent = new MXP.RenderCamera( { gl } );
 		this.renderTarget = this.cameraComponent.renderTarget;
 
 		this.lookAt = new LookAt();
@@ -563,7 +563,7 @@ export class MainCamera extends MXP.Component {
 	public static get key() {
 
 		return 'mainCamera';
-		
+
 	}
 
 	public setEntityImpl( entity: MXP.Entity, prevEntity: MXP.Entity | null ): void {
@@ -572,7 +572,7 @@ export class MainCamera extends MXP.Component {
 		entity.addComponent( this.scenePostProcess );
 		entity.addComponent( this.postProcess );
 		// entity.addComponent( this.orbitControls );
-		entity.addComponent( new VJCamera())
+		entity.addComponent( new VJCamera() );
 
 		// events
 

@@ -23,7 +23,7 @@ export class RenderCamera extends Camera {
 
 		super( param );
 
-		let gl = param?.gl
+		const gl = param?.gl;
 
 		const gBuffer = new GLP.GLPowerFrameBuffer( gl );
 		gBuffer.setTexture( [

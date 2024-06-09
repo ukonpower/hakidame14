@@ -6,12 +6,12 @@ import { PostProcess, PostProcessParam } from '../PostProcess';
 export interface GPUComputeParam extends PostProcessParam{
 	input?: GLP.GLPowerTexture[];
 	passes: GPUComputePass[];
-} 
+}
 
 export class GPUCompute extends PostProcess {
 
 	declare public passes: GPUComputePass[];
-	
+
 	constructor( param: GPUComputeParam ) {
 
 		super( param );
@@ -19,8 +19,9 @@ export class GPUCompute extends PostProcess {
 	}
 
 	public static get key(): string {
-		
+
 		return 'gpuCompute';
+
 	}
 
 }

@@ -360,33 +360,33 @@ export class Entity extends Exportable {
 
 	public getComponent<T extends typeof Component>( component: T ): InstanceType<T> | undefined {
 
-		return this.getComponentByKey(component.key)
+		return this.getComponentByKey( component.key );
 
 	}
 
 	public removeComponent( component: Component | typeof Component ) {
 
-		let currentComponent = this.components.get( component.key );
+		const currentComponent = this.components.get( component.key );
 
-		if( currentComponent ) {
+		if ( currentComponent ) {
 
 			this.components.delete( currentComponent.key );
-			currentComponent.unsetEntity()
+			currentComponent.unsetEntity();
 
 		}
 
 		return currentComponent;
 
 	}
-	
+
 	public removeComponentByKey( key: string ) {
-		
-		let component = this.components.get( key );
 
-		if( component ) {
+		const component = this.components.get( key );
 
-			return this.removeComponent( component )
-		
+		if ( component ) {
+
+			return this.removeComponent( component );
+
 		}
 
 		return null;

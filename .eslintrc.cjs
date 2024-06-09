@@ -39,7 +39,7 @@ module.exports = {
 						position: 'before',
 					},
 				],
-				"pathGroupsExcludedImportTypes": [ ],
+				"pathGroupsExcludedImportTypes": [],
 			}
 		]
 	},

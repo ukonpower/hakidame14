@@ -17,30 +17,30 @@ export class FlashLine extends MXP.Component {
 
 		// geometry
 
-		this.geometry = new MXP.CylinderGeometry({radiusBottom: 0.02, radiusTop: 0.02, radSegments: 8, height: 50.0});
+		this.geometry = new MXP.CylinderGeometry( { radiusBottom: 0.02, radiusTop: 0.02, radSegments: 8, height: 50.0 } );
 
-		let oPosArray = []
+		const oPosArray = [];
 
-		let num = 32;
+		const num = 32;
 
 		// let range = new Math.random();
-		
-		for (let index = 0; index < num; index++) {
 
-			let rnd = GLP.Maths.randomVector().multiply(new GLP.Vector(20,1,20.0))
-			
+		for ( let index = 0; index < num; index ++ ) {
+
+			const rnd = GLP.Maths.randomVector().multiply( new GLP.Vector( 20, 1, 20.0 ) );
+
 			oPosArray.push(
-				rnd.x,rnd.y,rnd.z, Math.random()
-			)
-			
+				rnd.x, rnd.y, rnd.z, Math.random()
+			);
+
 		}
-		
-		this.geometry.setAttribute("oPos", new Float32Array(oPosArray), 4, {instanceDivisor: 1} )
+
+		this.geometry.setAttribute( "oPos", new Float32Array( oPosArray ), 4, { instanceDivisor: 1 } );
 
 		// material
 
 		this.material = new MXP.Material( {
-			phase: ["forward", "envMap"],
+			phase: [ "forward", "envMap" ],
 			frag: MXP.hotGet( "flFrag", flFrag ),
 			vert: MXP.hotGet( "flVert", flVert ),
 			uniforms: GLP.UniformsUtils.merge( globalUniforms.resolution, globalUniforms.time )
