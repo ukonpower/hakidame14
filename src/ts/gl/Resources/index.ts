@@ -1,8 +1,8 @@
 
+import * as GLP from 'glpower';
 import * as MXP from 'maxpower';
 
 type ComponentArgs = {[key: string]: any}
-import * as GLP from 'glpower';
 
 export type ResouceComponentItem = {
 	key: string;

@@ -1,7 +1,7 @@
 
 import * as MXP from 'maxpower';
 
-import { resource } from '../GLGlobals';
+import { gl, resource } from '../GLGlobals';
 
 import { BLidgeClient } from "./Components/BLidgeClient";
 import { DashCube } from './Components/Effects/DashCube';
@@ -17,6 +17,7 @@ import { SkyBox } from "./Components/SkyBox";
 import { TemplateComponent } from './Components/TemplateComponent';
 import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
+import { Font1, Font1 } from './Fonts/Font1';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
 
@@ -101,6 +102,12 @@ export const initResouces = () => {
 
 	comOther.register( BLidgeClient );
 	comOther.register( Music );
+
+	/*-------------------------------
+		Fonts
+	-------------------------------*/
+
+	const font1 = new Font1( gl );
 
 
 };
