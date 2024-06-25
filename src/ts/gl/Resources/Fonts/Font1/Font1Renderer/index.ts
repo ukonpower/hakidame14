@@ -72,6 +72,13 @@ export class Font1Renderer {
 
 		context.closePath();
 
+		const margin = canvas.height * 0.11;
+
+		context.clearRect( 0, 0, canvas.width, margin );
+
+		context.clearRect( 0, canvas.height - margin, canvas.width, margin );
+
+
 	}
 
 }
