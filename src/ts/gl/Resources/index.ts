@@ -14,6 +14,8 @@ export class OREngineResource extends GLP.EventEmitter {
 
 	public comListCats: Map<string, ( ResouceComponentItem )[]> = new Map();
 	public componentList: ( ResouceComponentItem )[] = [];
+	public textures: {[key: string]: GLP.GLPowerTexture} = {};
+	public fonts: {[key: string]: GLP.GLPowerTexture} = {};
 
 	constructor() {
 
@@ -21,12 +23,19 @@ export class OREngineResource extends GLP.EventEmitter {
 
 	}
 
-	static get key(): string {
+	public clear() {
 
-		return "blidgeClient";
+		this.componentList = [];
+
+		this.comListCats.clear();
+
+		this.textures = {};
 
 	}
 
+	/*-------------------------------
+		Component
+	-------------------------------*/
 
 	public getComponent( name: string ) {
 
@@ -35,14 +44,6 @@ export class OREngineResource extends GLP.EventEmitter {
 			return c.component.name == name;
 
 		} );
-
-	}
-
-	public clearComponents() {
-
-		this.componentList = [];
-
-		this.comListCats.clear();
 
 	}
 
@@ -67,6 +68,22 @@ export class OREngineResource extends GLP.EventEmitter {
 
 			}
 		};
+
+	}
+
+	/*-------------------------------
+		Texture
+	-------------------------------*/
+
+	public setTexture( key: string, texture: GLP.GLPowerTexture ) {
+
+		this.textures[ key ] = texture;
+
+	}
+
+	public getTexture( key: string ) {
+
+		return this.textures[ key ];
 
 	}
 

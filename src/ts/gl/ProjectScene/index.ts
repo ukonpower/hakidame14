@@ -5,7 +5,6 @@ import { canvas, gl, globalUniforms } from '../GLGlobals';
 import { MainCamera } from '../Resources/Components/MainCamera';
 import { OrbitControls } from '../Resources/Components/OrbitControls';
 import { initResouces } from '../Resources/init';
-import { initTextures } from '../Resources/Textures';
 
 import { OREngineProjectData, ProjectSerializer, OREngineProjectFrame } from './IO/ProjectSerializer';
 import { Renderer } from './Renderer';
@@ -61,7 +60,6 @@ export class ProjectScene extends MXP.Entity {
 		// resources
 
 		initResouces();
-		initTextures();
 
 		// project
 

@@ -128,21 +128,20 @@ export class Font1 extends GLP.GLPowerTexture {
 
 		}
 
-		renderer.render( charContext, data[ 'D' ] );
+		super.attach( texCanvas );
 
 		// debug
+		// const wrapper = document.createElement( 'div' );
+		// wrapper.style.position = 'absolute';
+		// wrapper.style.top = '0';
+		// wrapper.style.left = '0';
+		// wrapper.style.width = '100vw';
+		// wrapper.style.zIndex = '1000';
+		// document.body.appendChild( wrapper );
 
-		const wrapper = document.createElement( 'div' );
-		wrapper.style.position = 'absolute';
-		wrapper.style.top = '0';
-		wrapper.style.left = '0';
-		wrapper.style.width = '100vw';
-		wrapper.style.zIndex = '1000';
-		document.body.appendChild( wrapper );
+		// texCanvas.style.width = '100%';
 
-		texCanvas.style.width = '100%';
-
-		wrapper.appendChild( texCanvas );
+		// wrapper.appendChild( texCanvas );
 
 	}
 

@@ -68,6 +68,16 @@
 					]
 				},
 				{
+					"path": "/root/blidgeRoot/Effects/Text",
+					"components": [
+						{
+							"key": "text",
+							"name": "Text",
+							"props": {}
+						}
+					]
+				},
+				{
 					"path": "/root/blidgeRoot/FluidCrystal",
 					"components": [
 						{
@@ -95,7 +105,7 @@
 	],
 	"settings": {
 		"currentProjectName": "New Project",
-		"resolutionScale": 0.125,
+		"resolutionScale": 0.25,
 		"viewType": "render"
 	}
 }

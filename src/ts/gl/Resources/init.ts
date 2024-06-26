@@ -2,6 +2,7 @@
 import * as MXP from 'maxpower';
 
 import { gl, resource } from '../GLGlobals';
+import { TexProcedural } from '../ProjectScene/utils/TexProcedural';
 
 import { BLidgeClient } from "./Components/BLidgeClient";
 import { DashCube } from './Components/Effects/DashCube';
@@ -15,11 +16,12 @@ import { OrbitControls } from './Components/OrbitControls';
 import { ShakeViewer } from "./Components/ShakeViewer";
 import { SkyBox } from "./Components/SkyBox";
 import { TemplateComponent } from './Components/TemplateComponent';
+import { Text } from './Components/Text';
 import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
-import { Font1, Font1 } from './Fonts/Font1';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
+import noiseFrag from './Textures/noise.fs';
 
 export const initResouces = () => {
 
@@ -27,7 +29,7 @@ export const initResouces = () => {
 		Components
 	-------------------------------*/
 
-	resource.clearComponents();
+	resource.clear();
 
 	// geometry
 
@@ -96,6 +98,8 @@ export const initResouces = () => {
 
 	comEntity.register( DashCube );
 
+	comEntity.register( Text );
+
 	// Other
 
 	const comOther = resource.componentCategory( "Other" );
@@ -104,10 +108,11 @@ export const initResouces = () => {
 	comOther.register( Music );
 
 	/*-------------------------------
-		Fonts
+		Textures
 	-------------------------------*/
 
-	const font1 = new Font1( gl );
-
+	resource.setTexture( "noise", new TexProcedural( gl, {
+		frag: noiseFrag,
+	} ) );
 
 };
