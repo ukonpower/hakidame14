@@ -31,7 +31,6 @@ export type ComponentParams = {
 export class Component extends Exportable {
 
 	public readonly uuid: string;
-	public keyOverride: string | null = null;
 	public entity: Entity | null;
 	public enabled: boolean;
 	public disableEdit: boolean;
@@ -49,20 +48,6 @@ export class Component extends Exportable {
 		this.entity = null;
 		this.uuid = GLP.ID.genUUID();
 		this.initiator = 'script';
-
-	}
-
-	public static get key() {
-
-		return "";
-
-	}
-
-	public get key() {
-
-		if ( this.keyOverride ) return this.keyOverride;
-
-		return ( this.constructor as typeof Component ).key;
 
 	}
 

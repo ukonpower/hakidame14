@@ -1,5 +1,7 @@
 import * as GLP from 'glpower';
 
+import { Font } from '..';
+
 import { Font1Renderer } from './Font1Renderer';
 
 type TFont = {
@@ -96,7 +98,7 @@ const decodeFont = ( fontData: TFont ) => {
 
 };
 
-export class Font1 extends GLP.GLPowerTexture {
+export class Font1 extends Font {
 
 	constructor( gl: WebGL2RenderingContext ) {
 
@@ -106,9 +108,11 @@ export class Font1 extends GLP.GLPowerTexture {
 
 		const data = decodeFont( FONT_DATA );
 
+		const scale = 2.0;
+
 		const charCanvas = document.createElement( 'canvas' );
-		charCanvas.width = 64;
-		charCanvas.height = 100;
+		charCanvas.width = 64 * scale;
+		charCanvas.height = 100 * scale;
 		const charContext = charCanvas.getContext( '2d' )!;
 
 		const texCanvas = document.createElement( 'canvas' );
@@ -126,9 +130,14 @@ export class Font1 extends GLP.GLPowerTexture {
 
 			texContext.drawImage( charCanvas, i * charCanvas.width, 0 );
 
+			this.matrices.set( char, {
+				geo: new GLP.Matrix(),
+				uv: new GLP.Matrix()
+			} );
+
 		}
 
-		super.attach( texCanvas );
+		this.texture.attach( texCanvas );
 
 		// debug
 		// const wrapper = document.createElement( 'div' );
@@ -142,6 +151,12 @@ export class Font1 extends GLP.GLPowerTexture {
 		// texCanvas.style.width = '100%';
 
 		// wrapper.appendChild( texCanvas );
+
+	}
+
+	public static get key() {
+
+		return "font1";
 
 	}
 

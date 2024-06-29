@@ -191,7 +191,7 @@ export class Entity extends Exportable {
 		const geometry = this.getComponent( Geometry );
 		const material = this.getComponent( Material );
 
-		if ( geometry && material && ( visibility || event.forceDraw ) ) {
+		if ( geometry && material && ( geometry.enabled && material.enabled && visibility || event.forceDraw ) ) {
 
 			if ( material.visibilityFlag.deferred ) event.renderStack.deferred.push( this );
 			if ( material.visibilityFlag.shadowMap ) event.renderStack.shadowMap.push( this );

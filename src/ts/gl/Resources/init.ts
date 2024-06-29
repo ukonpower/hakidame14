@@ -19,6 +19,7 @@ import { TemplateComponent } from './Components/TemplateComponent';
 import { Text } from './Components/Text';
 import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
+import { Font1 } from './Fonts/Font1';
 import { OREngineCube } from './Materials/OREngineCube';
 import { OREngineLogo } from './Materials/OREngineLogo';
 import noiseFrag from './Textures/noise.fs';
@@ -111,8 +112,14 @@ export const initResouces = () => {
 		Textures
 	-------------------------------*/
 
-	resource.setTexture( "noise", new TexProcedural( gl, {
+	resource.addTexture( "noise", new TexProcedural( gl, {
 		frag: noiseFrag,
 	} ) );
+
+	/*-------------------------------
+		Fonts
+	-------------------------------*/
+
+	resource.addFont( new Font1( gl ) );
 
 };

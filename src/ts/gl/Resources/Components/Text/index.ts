@@ -1,30 +1,63 @@
 import * as GLP from 'glpower';
 import * as MXP from 'maxpower';
 
+import { Font1 } from '../../Fonts/Font1';
+
 import textFrag from './shaders/text.fs';
 import textVert from './shaders/text.vs';
 
-import { globalUniforms } from '~/ts/gl/GLGlobals';
+import { globalUniforms, resource } from '~/ts/gl/GLGlobals';
 
 export class Text extends MXP.Component {
 
 	private geometry: MXP.Geometry;
 	private material: MXP.Material;
 
+	private interval: number;
+
 	constructor() {
 
 		super();
 
+		const font = resource.getFont( Font1 )!;
+
 		// geometry
 
 		this.geometry = new MXP.PlaneGeometry();
+
+		this.geometry.setAttribute( "uvMatrix", new Float32Array( [
+			...new GLP.Matrix().elm.concat(),
+			// ...new GLP.Matrix().elm.concat(),
+			// ...new GLP.Matrix().elm.concat(),
+			// ...new GLP.Matrix().elm.concat(),
+		] ), 16, {
+			instanceDivisor: 1
+		} );
+
+		console.log( this.geometry.getAttribute( "uvMatrix" ) );
+
+
+		this.geometry.setAttribute( "geoMatrix", new Float32Array( [
+			...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
+			// ...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
+			// ...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
+			// ...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
+		] ), 16, {
+			instanceDivisor: 1
+		} );
+
 
 		// material
 
 		this.material = new MXP.Material( {
 			frag: MXP.hotGet( 'textFrag', textFrag ),
 			vert: MXP.hotGet( 'textVert', textVert ),
-			uniforms: GLP.UniformsUtils.merge( globalUniforms.resolution, globalUniforms.time )
+			uniforms: GLP.UniformsUtils.merge( globalUniforms.resolution, globalUniforms.time, {
+				uTex: {
+					value: font.texture,
+					type: '1i'
+				}
+			} )
 		} );
 
 		if ( import.meta.hot ) {
@@ -55,6 +88,12 @@ export class Text extends MXP.Component {
 
 		}
 
+		this.interval = window.setInterval( () => {
+
+			// this.setText( Math.floor( Math.random() * 100.0 ).toString() );
+
+		}, 1000 );
+
 	}
 
 	static get key(): string {
@@ -63,6 +102,44 @@ export class Text extends MXP.Component {
 
 	}
 
+	public setText( text: string ): void {
+
+
+		console.log( text );
+
+
+		// this.geometry.setAttribute( "position", GLP.TextGeometry( text, 1, 0.1 ) );
+
+		const font = resource.getFont( Font1 )!;
+
+		const uvMatrixArray = [];
+		const geoMatrixArray = [];
+
+		for ( let i = 0; i < text.length; i ++ ) {
+
+			const c = text[ i ];
+
+			const uvMatrix = font.matrices.get( c );
+
+			if ( uvMatrix ) {
+
+				uvMatrixArray.push( ...uvMatrix.uv.elm );
+				geoMatrixArray.push( ...uvMatrix.geo.elm );
+
+			}
+
+		}
+
+		this.geometry.setAttribute( "uvMatrix", new Float32Array( uvMatrixArray ), 3, {
+			instanceDivisor: 1
+		} ).needsUpdate.clear();
+
+
+		this.geometry.setAttribute( "geoMatrix", new Float32Array( geoMatrixArray ), 3, {
+			instanceDivisor: 1
+		} ).needsUpdate.clear();
+
+	}
 
 	public setEntityImpl( entity: MXP.Entity ): void {
 
@@ -75,6 +152,13 @@ export class Text extends MXP.Component {
 
 		entity.removeComponent( this.material );
 		entity.removeComponent( this.geometry );
+
+	}
+
+	public dispose(): void {
+
+		super.dispose();
+		window.clearInterval( this.interval );
 
 	}
 
