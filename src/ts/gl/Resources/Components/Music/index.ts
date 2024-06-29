@@ -333,6 +333,8 @@ export class Music extends MXP.Component {
 
 	public dispose(): void {
 
+		super.dispose();
+
 		this.stop();
 
 		this.frequencyTexture.dispose();

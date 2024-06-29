@@ -518,13 +518,10 @@ export class Entity extends Exportable {
 	public dispose( ) {
 
 		this.emit( "dispose" );
-
 		this.parent && this.parent.remove( this );
-
 		this.components.forEach( c => {
 
 			c.unsetEntity();
-
 			c.dispose();
 
 		} );
@@ -542,6 +539,8 @@ export class Entity extends Exportable {
 			c.disposeRecursive();
 
 		} );
+
+		this.children = [];
 
 	}
 

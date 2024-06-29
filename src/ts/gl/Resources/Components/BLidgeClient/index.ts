@@ -249,4 +249,17 @@ export class BLidgeClient extends MXP.Component {
 
 	}
 
+	public dispose(): void {
+
+		super.dispose();
+
+		if ( this.blidgeRoot ) {
+
+			this.blidgeRoot.disposeRecursive();
+			this.blidgeRoot = null;
+
+		}
+
+	}
+
 }

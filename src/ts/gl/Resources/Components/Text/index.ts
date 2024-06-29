@@ -34,9 +34,6 @@ export class Text extends MXP.Component {
 			instanceDivisor: 1
 		} );
 
-		console.log( this.geometry.getAttribute( "uvMatrix" ) );
-
-
 		this.geometry.setAttribute( "geoMatrix", new Float32Array( [
 			...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
 			// ...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
@@ -90,7 +87,7 @@ export class Text extends MXP.Component {
 
 		this.interval = window.setInterval( () => {
 
-			// this.setText( Math.floor( Math.random() * 100.0 ).toString() );
+			this.setText( Math.floor( Math.random() * 10000.0 ).toString() );
 
 		}, 1000 );
 
@@ -104,11 +101,8 @@ export class Text extends MXP.Component {
 
 	public setText( text: string ): void {
 
-
 		console.log( text );
 
-
-		// this.geometry.setAttribute( "position", GLP.TextGeometry( text, 1, 0.1 ) );
 
 		const font = resource.getFont( Font1 )!;
 
@@ -132,12 +126,12 @@ export class Text extends MXP.Component {
 
 		this.geometry.setAttribute( "uvMatrix", new Float32Array( uvMatrixArray ), 3, {
 			instanceDivisor: 1
-		} ).needsUpdate.clear();
+		} );
 
 
 		this.geometry.setAttribute( "geoMatrix", new Float32Array( geoMatrixArray ), 3, {
 			instanceDivisor: 1
-		} ).needsUpdate.clear();
+		} );
 
 	}
 
