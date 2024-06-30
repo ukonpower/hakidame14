@@ -68,9 +68,9 @@ export class Text extends MXP.Component {
 
 		this.interval = window.setInterval( () => {
 
-			this.setText( "UNKONOW" );
+			this.setText( new Date().getTime().toString() );
 
-		}, 50 );
+		}, 16 );
 
 	}
 
@@ -95,7 +95,7 @@ export class Text extends MXP.Component {
 
 			if ( uvMatrix ) {
 
-				geoMatrixArray.push( ...uvMatrix.geo.clone().applyPosition( new GLP.Vector( i, 0, 0 ) ).elm );
+				geoMatrixArray.push( ...uvMatrix.geo.clone().applyPosition( new GLP.Vector( i - text.length / 2, 0, 0 ) ).elm );
 				uvMatrixArray.push( ...uvMatrix.uv.elm );
 
 			}

@@ -115,9 +115,13 @@ export class Font1 extends Font {
 		charCanvas.height = 100 * scale;
 		const charContext = charCanvas.getContext( '2d' )!;
 
+		const charRowNum = Math.floor( 2048 / charCanvas.width );
+		const charColumnNum = Math.ceil( FONT_DATA.charset.length / charRowNum );
+		const texCanvasSize = new GLP.Vector( 2048, charColumnNum * charCanvas.height );
+
 		const texCanvas = document.createElement( 'canvas' );
-		texCanvas.width = charCanvas.width * FONT_DATA.charset.length;
-		texCanvas.height = charCanvas.height;
+		texCanvas.width = texCanvasSize.x;
+		texCanvas.height = texCanvasSize.y;
 		const texContext = texCanvas.getContext( '2d' )!;
 
 		for ( let i = 0; i < FONT_DATA.charset.length; i ++ ) {
@@ -128,9 +132,17 @@ export class Font1 extends Font {
 
 			renderer.render( charContext, data[ char ] );
 
-			texContext.drawImage( charCanvas, i * charCanvas.width, 0 );
+			const charPos = new GLP.Vector(
+				i % charRowNum,
+				Math.floor( i / charRowNum )
+			);
 
-			const charScale = charCanvas.width / texCanvas.width;
+			texContext.drawImage( charCanvas, charPos.x * charCanvas.width, charPos.y * charCanvas.height );
+
+			const charScale = new GLP.Vector(
+				charCanvas.width / texCanvas.width,
+				charCanvas.height / texCanvas.height
+			);
 
 			this.matrices.set( char, {
 				geo: new GLP.Matrix().setFromTransform(
@@ -139,9 +151,9 @@ export class Font1 extends Font {
 					new GLP.Vector( charCanvas.width / charCanvas.height * 0.5, 0.5, 0.5 ),
 				),
 				uv: new GLP.Matrix().setFromTransform(
-					new GLP.Vector( charScale * i, 0, 0 ),
+					new GLP.Vector( charPos.x * charScale.x, ( charColumnNum - charPos.y - 1 ) * charScale.y, 0 ),
 					undefined,
-					new GLP.Vector( charScale, 1, 1 ),
+					new GLP.Vector( charScale.x, charScale.y, 1 ),
 				)
 			} );
 
@@ -157,9 +169,7 @@ export class Font1 extends Font {
 		// wrapper.style.width = '100vw';
 		// wrapper.style.zIndex = '1000';
 		// document.body.appendChild( wrapper );
-
 		// texCanvas.style.width = '100%';
-
 		// wrapper.appendChild( texCanvas );
 
 	}

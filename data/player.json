@@ -66,6 +66,16 @@
 			]
 		},
 		{
+			"path": "/root/blidgeRoot/Effects/Text",
+			"components": [
+				{
+					"key": "text",
+					"name": "Text",
+					"props": {}
+				}
+			]
+		},
+		{
 			"path": "/root/blidgeRoot/FluidCrystal",
 			"components": [
 				{

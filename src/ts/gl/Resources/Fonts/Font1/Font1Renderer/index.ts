@@ -7,8 +7,7 @@ export class Font1Renderer {
 
 		const canvas = context.canvas;
 
-		context.fillStyle = '#000';
-		context.fillRect( 0, 0, canvas.width, canvas.height );
+		context.clearRect( 0, 0, canvas.width, canvas.height );
 
 		const width = canvas.width;
 		const height = canvas.height;
