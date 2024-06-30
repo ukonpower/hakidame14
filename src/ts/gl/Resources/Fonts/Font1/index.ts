@@ -130,9 +130,19 @@ export class Font1 extends Font {
 
 			texContext.drawImage( charCanvas, i * charCanvas.width, 0 );
 
+			const charScale = charCanvas.width / texCanvas.width;
+
 			this.matrices.set( char, {
-				geo: new GLP.Matrix(),
-				uv: new GLP.Matrix()
+				geo: new GLP.Matrix().setFromTransform(
+					undefined,
+					undefined,
+					new GLP.Vector( charCanvas.width / charCanvas.height * 0.5, 0.5, 0.5 ),
+				),
+				uv: new GLP.Matrix().setFromTransform(
+					new GLP.Vector( charScale * i, 0, 0 ),
+					undefined,
+					new GLP.Vector( charScale, 1, 1 ),
+				)
 			} );
 
 		}

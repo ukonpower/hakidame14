@@ -884,11 +884,9 @@ export class Renderer extends MXP.Entity {
 
 		if ( vao ) {
 
-			const geometryNeedsUpdate = geometry.needsUpdate.get( vao );
+			if ( ! geometry.vaoCache.get( vao ) ) {
 
-			if ( geometryNeedsUpdate === undefined || geometryNeedsUpdate === true ) {
-
-				geometry.createBuffer( this.gl );
+				geometry.createBuffers( this.gl );
 
 				geometry.attributes.forEach( ( attr, key ) => {
 
@@ -906,7 +904,7 @@ export class Renderer extends MXP.Entity {
 
 				} );
 
-				geometry.needsUpdate.set( vao, false );
+				geometry.vaoCache.set( vao, true );
 
 			}
 

@@ -6,7 +6,7 @@ import { Font1 } from '../../Fonts/Font1';
 import textFrag from './shaders/text.fs';
 import textVert from './shaders/text.vs';
 
-import { globalUniforms, resource } from '~/ts/gl/GLGlobals';
+import { gl, globalUniforms, resource } from '~/ts/gl/GLGlobals';
 
 export class Text extends MXP.Component {
 
@@ -24,25 +24,6 @@ export class Text extends MXP.Component {
 		// geometry
 
 		this.geometry = new MXP.PlaneGeometry();
-
-		this.geometry.setAttribute( "uvMatrix", new Float32Array( [
-			...new GLP.Matrix().elm.concat(),
-			// ...new GLP.Matrix().elm.concat(),
-			// ...new GLP.Matrix().elm.concat(),
-			// ...new GLP.Matrix().elm.concat(),
-		] ), 16, {
-			instanceDivisor: 1
-		} );
-
-		this.geometry.setAttribute( "geoMatrix", new Float32Array( [
-			...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
-			// ...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
-			// ...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
-			// ...new GLP.Matrix().applyScale( new GLP.Vector( 1, 1, 1 ) ).elm.concat(),
-		] ), 16, {
-			instanceDivisor: 1
-		} );
-
 
 		// material
 
@@ -87,9 +68,9 @@ export class Text extends MXP.Component {
 
 		this.interval = window.setInterval( () => {
 
-			this.setText( Math.floor( Math.random() * 10000.0 ).toString() );
+			this.setText( "UNKONOW" );
 
-		}, 1000 );
+		}, 50 );
 
 	}
 
@@ -100,9 +81,6 @@ export class Text extends MXP.Component {
 	}
 
 	public setText( text: string ): void {
-
-		console.log( text );
-
 
 		const font = resource.getFont( Font1 )!;
 
@@ -117,21 +95,24 @@ export class Text extends MXP.Component {
 
 			if ( uvMatrix ) {
 
+				geoMatrixArray.push( ...uvMatrix.geo.clone().applyPosition( new GLP.Vector( i, 0, 0 ) ).elm );
 				uvMatrixArray.push( ...uvMatrix.uv.elm );
-				geoMatrixArray.push( ...uvMatrix.geo.elm );
 
 			}
 
 		}
 
-		this.geometry.setAttribute( "uvMatrix", new Float32Array( uvMatrixArray ), 3, {
-			instanceDivisor: 1
+		this.geometry.setAttribute( "geoMatrix", new Float32Array( geoMatrixArray ), 16, {
+			instanceDivisor: 1,
+			usage: gl.DYNAMIC_DRAW
 		} );
 
-
-		this.geometry.setAttribute( "geoMatrix", new Float32Array( geoMatrixArray ), 3, {
-			instanceDivisor: 1
+		this.geometry.setAttribute( "uvMatrix", new Float32Array( uvMatrixArray ), 16, {
+			instanceDivisor: 1,
+			usage: gl.DYNAMIC_DRAW
 		} );
+
+		this.geometry.requestUpdate();
 
 	}
 

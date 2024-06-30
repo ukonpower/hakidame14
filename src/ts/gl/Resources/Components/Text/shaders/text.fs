@@ -8,11 +8,10 @@ void main( void ) {
 	#include <frag_in>
 
 	vec2 uv = vUv;
-	uv.x *= 0.05;
 
 	float font = texture( uTex, uv ).x;
 
-	// if( font < 0.5 ) discard;
+	if( font < 0.5 ) discard;
 
 	outEmission += font;
 	outEmissionIntensity = font * 10.0;

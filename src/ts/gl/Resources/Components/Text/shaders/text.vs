@@ -1,8 +1,8 @@
 #include <common>
 #include <vert_h>
 
-layout(location = 4) in mat4 uvMatrix;
-layout(location = 8) in mat4 geoMatrix;
+layout(location = 8) in mat4 uvMatrix;
+layout(location = 4) in mat4 geoMatrix;
 
 void main( void ) {
 

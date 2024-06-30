@@ -61,7 +61,7 @@ export class Modeler {
 
 		if ( vao ) {
 
-			baseGeometry.createBuffer( this.gl );
+			baseGeometry.createBuffers( this.gl );
 
 			baseGeometry.attributes.forEach( ( attr, key ) => {
 

@@ -20,7 +20,7 @@ export class Geometry extends Component {
 
 	public vertCount: number;
 	public attributes: Map<string, Attribute >;
-	public needsUpdate: Map<GLP.GLPowerVAO, boolean>;
+	public vaoCache: Map<GLP.GLPowerVAO, boolean>;
 
 	constructor( params?: ComponentParams ) {
 
@@ -28,7 +28,7 @@ export class Geometry extends Component {
 
 		this.vertCount = 0;
 		this.attributes = new Map();
-		this.needsUpdate = new Map();
+		this.vaoCache = new Map();
 
 	}
 
@@ -51,11 +51,19 @@ export class Geometry extends Component {
 		};
 
 	}
-	public setProps( props: ExportableProps | null ) {
 
+	public setProps( props: ExportableProps | null ) {
 	}
 
 	public setAttribute( name: DefaultAttributeName | ( string & {} ), array: GLP.TArrayBuffer, size: number, opt?: GLP.AttributeOptions ) {
+
+		const currentAttr = this.attributes.get( name );
+
+		if ( currentAttr && currentAttr.buffer ) {
+
+			currentAttr.buffer.dispose();
+
+		}
 
 		this.attributes.set( name, {
 			array,
@@ -89,11 +97,33 @@ export class Geometry extends Component {
 
 	}
 
-	public createBuffer( gl: WebGL2RenderingContext ) {
+	public createBuffers( gl: WebGL2RenderingContext ) {
 
 		this.attributes.forEach( ( attr, key ) => {
 
-			attr.buffer = new GLP.GLPowerBuffer( gl ).setData( attr.array, key == 'index' ? "ibo" : 'vbo' );
+			if ( ! attr.buffer ) {
+
+				attr.buffer = new GLP.GLPowerBuffer( gl ).setData( attr.array, key == 'index' ? "ibo" : 'vbo', attr.opt && attr.opt.usage );
+
+			}
+
+		} );
+
+	}
+
+	public requestUpdate() {
+
+		this.vaoCache.clear();
+
+	}
+
+	public dispose() {
+
+		super.dispose();
+
+		this.attributes.forEach( ( attr ) => {
+
+			attr.buffer?.dispose();
 
 		} );
 
