@@ -66,11 +66,14 @@ export class Text extends MXP.Component {
 
 		}
 
+		this.setText( new Date().toLocaleString() );
+
+
 		this.interval = window.setInterval( () => {
 
-			this.setText( new Date().getTime().toString() );
+			this.setText( new Date().toLocaleString() );
 
-		}, 16 );
+		}, 1000 );
 
 	}
 
@@ -95,7 +98,7 @@ export class Text extends MXP.Component {
 
 			if ( uvMatrix ) {
 
-				geoMatrixArray.push( ...uvMatrix.geo.clone().applyPosition( new GLP.Vector( i - text.length / 2, 0, 0 ) ).elm );
+				geoMatrixArray.push( ...uvMatrix.geo.clone().applyScale( new GLP.Vector( 0.2 ) ).applyPosition( new GLP.Vector( i - text.length / 2, 0, 0 ) ).elm );
 				uvMatrixArray.push( ...uvMatrix.uv.elm );
 
 			}

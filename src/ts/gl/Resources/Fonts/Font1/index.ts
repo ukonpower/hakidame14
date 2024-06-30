@@ -148,7 +148,7 @@ export class Font1 extends Font {
 				geo: new GLP.Matrix().setFromTransform(
 					undefined,
 					undefined,
-					new GLP.Vector( charCanvas.width / charCanvas.height * 0.5, 0.5, 0.5 ),
+					new GLP.Vector( charCanvas.width / charCanvas.height, 1, 1 ),
 				),
 				uv: new GLP.Matrix().setFromTransform(
 					new GLP.Vector( charPos.x * charScale.x, ( charColumnNum - charPos.y - 1 ) * charScale.y, 0 ),
