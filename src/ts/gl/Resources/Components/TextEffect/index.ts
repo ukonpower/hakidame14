@@ -11,7 +11,6 @@ export class TextEffect extends MXP.Component {
 
 		super();
 
-		return;
 		const interval = window.setInterval( () => {
 
 			const entity = this.entity;
