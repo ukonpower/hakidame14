@@ -14,7 +14,7 @@
 							"key": "blidgeClient",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "json",
+								"mode": "websocket",
 								"gltfPath": "/scene.glb",
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
@@ -71,8 +71,18 @@
 					"path": "/root/blidgeRoot/Effects/Text",
 					"components": [
 						{
-							"key": "text",
-							"name": "Text",
+							"key": "textEffect",
+							"name": "TextEffect",
+							"props": {}
+						}
+					]
+				},
+				{
+					"path": "/root/blidgeRoot/Effects/Text.001",
+					"components": [
+						{
+							"key": "textEffect",
+							"name": "TextEffect",
 							"props": {}
 						}
 					]
@@ -105,7 +115,7 @@
 	],
 	"settings": {
 		"currentProjectName": "New Project",
-		"resolutionScale": 0.25,
+		"resolutionScale": 1,
 		"viewType": "render"
 	}
 }

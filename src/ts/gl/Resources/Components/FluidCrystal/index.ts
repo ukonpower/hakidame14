@@ -24,8 +24,6 @@ export class FluidCrystal extends MXP.Component {
 
 		} );
 
-		this.material.enabled = false;
-
 		if ( import.meta.hot ) {
 
 			import.meta.hot.accept( './shaders/fluidCrystal.fs', ( module ) => {

@@ -13,8 +13,6 @@ export class Text extends MXP.Component {
 	private geometry: MXP.Geometry;
 	private material: MXP.Material;
 
-	private interval: number;
-
 	constructor() {
 
 		super();
@@ -66,15 +64,6 @@ export class Text extends MXP.Component {
 
 		}
 
-		this.setText( new Date().toLocaleString() );
-
-
-		this.interval = window.setInterval( () => {
-
-			this.setText( new Date().toLocaleString() );
-
-		}, 1000 );
-
 	}
 
 	static get key(): string {
@@ -83,7 +72,7 @@ export class Text extends MXP.Component {
 
 	}
 
-	public setText( text: string ): void {
+	public setText( text: string, align?: string ): void {
 
 		const font = resource.getFont( Font1 )!;
 
@@ -98,7 +87,7 @@ export class Text extends MXP.Component {
 
 			if ( uvMatrix ) {
 
-				geoMatrixArray.push( ...uvMatrix.geo.clone().applyScale( new GLP.Vector( 0.2 ) ).applyPosition( new GLP.Vector( i - text.length / 2, 0, 0 ) ).elm );
+				geoMatrixArray.push( ...uvMatrix.geo.clone().applyScale( new GLP.Vector( 0.2 ) ).applyPosition( new GLP.Vector( i - ( align == 'center' ? text.length / 2 : 0 ), 0, 0 ) ).elm );
 				uvMatrixArray.push( ...uvMatrix.uv.elm );
 
 			}
@@ -136,7 +125,8 @@ export class Text extends MXP.Component {
 	public dispose(): void {
 
 		super.dispose();
-		window.clearInterval( this.interval );
+		this.geometry.dispose();
+		this.material.dispose();
 
 	}
 

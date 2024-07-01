@@ -16,7 +16,7 @@ import { OrbitControls } from './Components/OrbitControls';
 import { ShakeViewer } from "./Components/ShakeViewer";
 import { SkyBox } from "./Components/SkyBox";
 import { TemplateComponent } from './Components/TemplateComponent';
-import { Text } from './Components/Text';
+import { TextEffect } from './Components/TextEffect';
 import { TurnTable } from './Components/TurnTable';
 import { VJCamera } from './Components/VJCamera';
 import { Font1 } from './Fonts/Font1';
@@ -99,7 +99,7 @@ export const initResouces = () => {
 
 	comEntity.register( DashCube );
 
-	comEntity.register( Text );
+	comEntity.register( TextEffect );
 
 	// Other
 
