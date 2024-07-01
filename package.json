@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --config vite-player.config.ts && node compeko.js ./dist/index.js ./dist/out.html",
+    "build": "vite build --config vite-player.config.ts && node compeko.js ./dist/index.js ./dist/index.html",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "hakidame": "npm run build && cp -rf ./dist/. ../hakidame/src/public/14/ && cp ./config.json ../hakidame/src/public/14/"
   },
   "workspaces": [],
   "dependencies": {
