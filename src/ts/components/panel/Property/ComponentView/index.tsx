@@ -20,7 +20,7 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 	const { reflesh } = useContext( EditorContext );
 
 	const propElms: JSX.Element[] = [
-		<Value key='-1' label={"key"} value={keyName} readOnly/>
+		<Value key='-1' label={"key"} value={keyName} readOnly />
 	];
 
 	const compoProps = component.getProps();
@@ -49,6 +49,8 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 				const path_ = path + key;
 
+				if ( prop === undefined ) continue;
+
 				if ( "value" in prop ) {
 
 					const value = prop.value;
@@ -58,7 +60,7 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 						onChange( value, path_ );
 
-					}} {...opt} readOnly={opt?.readOnly || component.disableEdit}/> );
+					}} {...opt} readOnly={opt?.readOnly || component.disableEdit} /> );
 
 				} else {
 
@@ -96,6 +98,9 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 		const entity = component.entity;
 
+		console.log(entity);
+		
+		
 		if ( entity ) {
 
 			entity.removeComponent( component );
@@ -106,25 +111,21 @@ export const ComponentView = ( { component, keyName }: ComponentViewProps ) => {
 
 	}, [ component, reflesh ] );
 
-	const Head = () => {
-
-		return <div className={style.head}>
-			<div className={style.check}>
-				<InputBoolean checked={component.enabled} onChange={onChangeEnabled} readOnly={component.disableEdit} />
-			</div>
-			<div className={style.name}>
-				{component.constructor.name}
-			</div>
-			<div className={style.delete}>
-				<button onClick={onClickDelete}><CrossIcon /></button>
-			</div>
-		</div>;
-
-	};
+	const Head = <div className={style.head}>
+		<div className={style.check}>
+			<InputBoolean checked={component.enabled} onChange={onChangeEnabled} readOnly={component.disableEdit} />
+		</div>
+		<div className={style.name}>
+			{component.constructor.name}
+		</div>
+		<div className={style.delete}>
+			<button onClick={onClickDelete}><CrossIcon /></button>
+		</div>
+	</div>
 
 	return <div className={style.compoView} data-disable_component={component.disableEdit}>
 		<div className={style.content}>
-			<PropertyBlock label={<Head />} accordion={true} defaultClose={false} bg>
+			<PropertyBlock label={Head} accordion={true} defaultClose={false} bg>
 				{propElms}
 			</PropertyBlock>
 		</div>

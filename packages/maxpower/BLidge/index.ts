@@ -308,15 +308,15 @@ export class BLidge extends GLP.EventEmitter {
 
 		if ( gltfPath ) {
 
-			// const loader = new GLTFLoader( this.gl );
+			const loader = new GLTFLoader( this.gl );
 
-			// await loader.load( gltfPath ).then( gltf => {
+			await loader.load( gltfPath ).then( gltf => {
 
-			// 	this.gltf = gltf;
+				this.gltf = gltf;
 
-			// 	this.emit( "gltfLoaded", [ gltf ] );
+				this.emit( "gltfLoaded", [ gltf ] );
 
-			// } );
+			} );
 
 		}
 

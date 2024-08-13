@@ -19,6 +19,7 @@ interface BLidgerParams extends ComponentParams {
 
 export class BLidger extends Component {
 
+	private gl: WebGL2RenderingContext;
 	private blidge: BLidge;
 
 	public node: BLidgeNode;
@@ -33,10 +34,11 @@ export class BLidger extends Component {
 	public uniforms: GLP.Uniforms;
 	public uniformCurves: {name: string, curve: GLP.FCurveGroup}[];
 
-	constructor( params: BLidgerParams ) {
+	constructor( gl: WebGL2RenderingContext, params: BLidgerParams ) {
 
 		super( params );
 
+		this.gl = gl;
 		this.blidge = params.blidge;
 		this.node = params.node;
 		this.rotationOffsetX = 0;
@@ -159,35 +161,35 @@ export class BLidger extends Component {
 
 		} else if ( this.node.type == 'gltf' ) {
 
-			// this.blidge.gltfPrm.then( gltf => {
+			this.blidge.gltfPrm.then( gltf => {
 
-			// 	const gltfEntity = gltf.scene.getEntityByName( this.node.name );
+				const gltfEntity = gltf.scene.getEntityByName( this.node.name );
 
-			// 	if ( gltfEntity ) {
+				if ( gltfEntity ) {
 
-			// 		const geo = gltfEntity.getComponent( Geometry );
+					const geo = gltfEntity.getComponent( Geometry );
 
-			// 		if ( geo ) {
+					if ( geo ) {
 
-			// 			geo.disableEdit = true;
-			// 			entity.addComponent( geo );
+						geo.disableEdit = true;
+						entity.addComponent( geo );
 
-			// 		}
+					}
 
-			// 		const mat = gltfEntity.getComponent( Material );
+					const mat = gltfEntity.getComponent( Material );
 
-			// 		if ( mat ) {
+					if ( mat ) {
 
-			// 			mat.disableEdit = true;
-			// 			entity.addComponent( mat );
+						mat.disableEdit = true;
+						entity.addComponent( mat );
 
-			// 		}
+					}
 
-			// 	}
+				}
 
-			// 	entity.noticeParent( "update/blidge/scene", [ entity ] );
+				entity.noticeParent( "update/blidge/scene", [ entity ] );
 
-			// } );
+			} );
 
 		}
 
@@ -216,7 +218,7 @@ export class BLidger extends Component {
 				...lightParam,
 				lightType: lightParam.type,
 				color: new GLP.Vector().copy( lightParam.color ),
-				useShadowMap: lightParam.shadowMap,
+				castShadow: lightParam.shadowMap,
 			} );
 
 		}

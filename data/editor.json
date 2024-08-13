@@ -3,7 +3,7 @@
 		{
 			"setting": {
 				"name": "New Project",
-				"timeline/duration": 600,
+				"timeline/duration": 1400,
 				"timeline/fps": 60
 			},
 			"objectOverride": [
@@ -14,16 +14,24 @@
 							"key": "blidgeClient",
 							"name": "BLidgeClient",
 							"props": {
-								"mode": "json",
-								"gltfPath": "/scene.glb",
+								"mode": "websocket",
+								"gltf": false,
 								"websocket/connected": true,
 								"websocket/url": "ws://localhost:3100"
 							}
 						},
 						{
 							"key": "music",
-							"name": "Music",
-							"props": {}
+							"name": "Music"
+						}
+					]
+				},
+				{
+					"path": "/root/camera",
+					"components": [
+						{
+							"key": "vjCamera",
+							"name": "VJCamera"
 						}
 					]
 				},
@@ -32,8 +40,7 @@
 					"components": [
 						{
 							"key": "dashCube",
-							"name": "DashCube",
-							"props": {}
+							"name": "DashCube"
 						}
 					]
 				},
@@ -42,8 +49,7 @@
 					"components": [
 						{
 							"key": "flashLine",
-							"name": "FlashLine",
-							"props": {}
+							"name": "FlashLine"
 						}
 					]
 				},
@@ -52,8 +58,7 @@
 					"components": [
 						{
 							"key": "gridCross",
-							"name": "GridCross",
-							"props": {}
+							"name": "GridCross"
 						}
 					]
 				},
@@ -62,8 +67,7 @@
 					"components": [
 						{
 							"key": "matchMove",
-							"name": "MatchMove",
-							"props": {}
+							"name": "MatchMove"
 						}
 					]
 				},
@@ -72,8 +76,7 @@
 					"components": [
 						{
 							"key": "textEffect",
-							"name": "TextEffect",
-							"props": {}
+							"name": "TextEffect"
 						}
 					]
 				},
@@ -82,8 +85,7 @@
 					"components": [
 						{
 							"key": "textEffect",
-							"name": "TextEffect",
-							"props": {}
+							"name": "TextEffect"
 						}
 					]
 				},
@@ -92,8 +94,7 @@
 					"components": [
 						{
 							"key": "fluidCrystal",
-							"name": "FluidCrystal",
-							"props": {}
+							"name": "FluidCrystal"
 						}
 					]
 				},
@@ -102,8 +103,7 @@
 					"components": [
 						{
 							"key": "skybox",
-							"name": "SkyBox",
-							"props": {}
+							"name": "SkyBox"
 						}
 					]
 				}
@@ -114,8 +114,12 @@
 		}
 	],
 	"settings": {
+		"enableRender": true,
 		"currentProjectName": "New Project",
-		"resolutionScale": 0.25,
-		"viewType": "render"
+		"resolutionScale": 0.5,
+		"viewType": "render",
+		"frameLoop/enabled": false,
+		"frameLoop/start": 0,
+		"frameLoop/end": 100
 	}
 }

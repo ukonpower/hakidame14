@@ -74,6 +74,9 @@ export class VJCamera extends MXP.Component {
 
 			cameraComponent.viewMatrix.copy( entity.matrixWorld ).inverse();
 
+			cameraComponent.fov = 50;
+			cameraComponent.updateProjectionMatrix()
+
 		}
 
 
