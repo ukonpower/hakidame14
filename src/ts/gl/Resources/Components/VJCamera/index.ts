@@ -6,6 +6,7 @@ export class VJCamera extends MXP.Component {
 	private position: GLP.Vector;
 	private lookAtPos: GLP.Vector;
 	private animator: GLP.Animator;
+	private cameraComponent: MXP.Camera | null;
 
 	constructor() {
 
@@ -14,6 +15,8 @@ export class VJCamera extends MXP.Component {
 		this.position = new GLP.Vector();
 		this.lookAtPos = new GLP.Vector();
 		this.animator = new GLP.Animator();
+
+		this.cameraComponent = null;
 
 		this.animator.add( "pos", new GLP.Vector( 0, 0, 0 ), GLP.Easings.cubicBezier( .08, .66, .25, .96 ) );
 
@@ -62,20 +65,28 @@ export class VJCamera extends MXP.Component {
 
 	}
 
+	protected setEntityImpl( entity: MXP.Entity ): void {
+
+		this.cameraComponent = entity.getComponent( MXP.Camera ) || null;
+
+		if ( this.cameraComponent ) {
+
+			this.cameraComponent.fov = 50;
+			this.cameraComponent.updateProjectionMatrix();
+
+		}
+
+	}
+
 	protected finalizeImpl( { entity }: MXP.ComponentUpdateEvent ): void {
 
 		entity.matrixWorld.lookAt( entity.position, this.lookAtPos, new GLP.Vector( 0, 1, 0 ) );
 
 		// calc viewmatrix
 
-		const cameraComponent = entity.getComponent( MXP.RenderCamera );
+		if ( this.cameraComponent ) {
 
-		if ( cameraComponent ) {
-
-			cameraComponent.viewMatrix.copy( entity.matrixWorld ).inverse();
-
-			cameraComponent.fov = 50;
-			cameraComponent.updateProjectionMatrix()
+			this.cameraComponent.viewMatrix.copy( entity.matrixWorld ).inverse();
 
 		}
 
